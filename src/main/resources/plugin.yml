@@ -1,0 +1,21 @@
+name: ${project.name}
+main: com.endercrest.voidspawn.VoidSpawn
+version: ${project.version}
+website: ${project.url}
+description: Teleports you on contact with the void.
+authors: [tcvs]
+commands:
+    void:
+        description: All commands for
+        permission: vs.admin
+permissions:
+    vs.admin:
+        description: Grants you the /void command
+        default: op
+    vs.override:
+        description: Disables teleport
+    vs.*:
+        description: Gives all permissions
+        children:
+            vs.override: true
+            vs.admin: true
