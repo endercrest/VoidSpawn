@@ -35,6 +35,8 @@ public class CmdVoid implements CommandExecutor {
                     return showHelp(cs);
                 }else if(args[0].equalsIgnoreCase("clear")){
                     return clearVoidSpawn(cs);
+                }else if(args[0].equalsIgnoreCase("random")){
+                    return setRandomVoidSpawn(cs, args);
                 }
             }
         }
@@ -56,6 +58,7 @@ public class CmdVoid implements CommandExecutor {
         }
         cs.sendMessage(VoidSpawn.colorize("&9--- &aVoidSpawn Commands &9---"));
         cs.sendMessage(VoidSpawn.colorize("&a'/void set'"));
+        cs.sendMessage(VoidSpawn.colorize("&a'/void random [radius]'"));
         cs.sendMessage(VoidSpawn.colorize("&a'/void clear'"));
         cs.sendMessage(VoidSpawn.colorize("&a'/void help'"));
         cs.sendMessage(VoidSpawn.colorize("&a() - Mandatory, [] - Optional"));
@@ -74,6 +77,8 @@ public class CmdVoid implements CommandExecutor {
         plugin.getConfig().set(p.getWorld().getName() + ".world", loc.getWorld().getName());
         plugin.getConfig().set(p.getWorld().getName() + ".pitch", loc.getPitch());
         plugin.getConfig().set(p.getWorld().getName() + ".yaw", loc.getYaw());
+        plugin.getConfig().set(p.getWorld().getName() + ".random", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".radius", null);
         cs.sendMessage(VoidSpawn.colorize("&aVoidSpawn has been set!"));
         plugin.saveConfig();
         return true;
@@ -91,16 +96,66 @@ public class CmdVoid implements CommandExecutor {
         plugin.getConfig().set(p.getWorld().getName() + ".world", null);
         plugin.getConfig().set(p.getWorld().getName() + ".pitch", null);
         plugin.getConfig().set(p.getWorld().getName() + ".yaw", null);
-        cs.sendMessage(VoidSpawn.colorize("&aVoidSpawn has been cleared!"));
+        plugin.getConfig().set(p.getWorld().getName() + ".random", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".radius", null);
+        cs.sendMessage(VoidSpawn.colorize("&aVoidSpawn has been cleared and disabled!"));
         plugin.saveConfig();
         return true;
     }
 
-    private Boolean isConsole(CommandSender sender) {
+    private boolean isConsole(CommandSender sender) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(VoidSpawn.colorize("&4This command is only available to players!"));
             return true;
         }
         return false;
+    }
+
+    private boolean setRandomVoidSpawn(CommandSender cs, String[] args){
+        if(isConsole(cs)){
+            return true;
+        }
+        Player p = (Player) cs;
+        if(!plugin.allowWB){
+            if(args.length == 2) {
+                if(isNumber(cs, args[1])) {
+                    plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
+                    plugin.getConfig().set(p.getWorld().getName() + ".random", true);
+                    cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
+                }
+            }else{
+                plugin.getConfig().set(p.getWorld().getName() + ".radius", 500);
+                plugin.getConfig().set(p.getWorld().getName() + ".random", true);
+                cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of 500"));
+            }
+        }else{
+            if(args.length == 2){
+                if(isNumber(cs, args[1])) {
+                    plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
+                    plugin.getConfig().set(p.getWorld().getName() + ".random", true);
+                    cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
+                }
+            }else {
+                plugin.getConfig().set(p.getWorld().getName() + ".radius", 500);
+                plugin.getConfig().set(p.getWorld().getName() + ".random", true);
+                cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of your WorldBorder or the radius of 500. If WorldBorder is not set"));
+            }
+        }
+        plugin.getConfig().set(p.getWorld().getName() + ".x", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".y", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".z", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".world", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".pitch", null);
+        plugin.getConfig().set(p.getWorld().getName() + ".yaw", null);
+        plugin.saveConfig();
+        return true;
+    }
+
+    private boolean isNumber(CommandSender cs, String args){
+        if(!args.matches("[1-9]+")){
+            cs.sendMessage(VoidSpawn.colorize("&cYou can only have numbers in the radius."));
+            return false;
+        }
+        return true;
     }
 }

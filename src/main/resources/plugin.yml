@@ -14,8 +14,10 @@ permissions:
         default: op
     vs.override:
         description: Disables teleport
+        default: false
     vs.*:
         description: Gives all permissions
+        default: false
         children:
             vs.override: true
             vs.admin: true
