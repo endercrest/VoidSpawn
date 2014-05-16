@@ -122,7 +122,18 @@ public class CmdVoid implements CommandExecutor {
                     plugin.getConfig().set(p.getWorld().getName() + ".random", true);
                     cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
                 }
-            }else if(args.length == 1){
+            }else if(args.length == 3) {
+                if(isNumber(cs, args[1])) {
+                    if (!plugin.getServer().getWorld(args[2]).equals(null)) {
+                        World spawnWorld = plugin.getServer().getWorld(args[2]);
+                        plugin.getConfig().set(p.getWorld().getName() + ".world", spawnWorld);
+                    }
+
+                    plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
+                    plugin.getConfig().set(p.getWorld().getName() + ".random", true);
+                    cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
+                }
+            }else{
                 plugin.getConfig().set(p.getWorld().getName() + ".radius", 500);
                 plugin.getConfig().set(p.getWorld().getName() + ".random", true);
                 cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of 500"));
@@ -130,7 +141,6 @@ public class CmdVoid implements CommandExecutor {
         plugin.getConfig().set(p.getWorld().getName() + ".x", null);
         plugin.getConfig().set(p.getWorld().getName() + ".y", null);
         plugin.getConfig().set(p.getWorld().getName() + ".z", null);
-        plugin.getConfig().set(p.getWorld().getName() + ".world", null);
         plugin.getConfig().set(p.getWorld().getName() + ".pitch", null);
         plugin.getConfig().set(p.getWorld().getName() + ".yaw", null);
         plugin.saveConfig();

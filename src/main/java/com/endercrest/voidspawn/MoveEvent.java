@@ -97,6 +97,10 @@ public class MoveEvent implements Listener {
                 world.getBlockAt((int)newX, (int)newY + 1, (int)newZ).setType(Material.GLASS);
             }
 
+            if(plugin.getConfig().isSet(world.getName() + ".world")){
+                world = plugin.getServer().getWorld(world.getName() + ".world");
+            }
+
             Location loc = new Location(world, newX, newY, newZ);
 
             p.setFallDistance(0F);
