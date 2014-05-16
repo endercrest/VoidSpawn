@@ -1,6 +1,5 @@
 package com.endercrest.voidspawn;
 
-import com.wimbli.WorldBorder.WorldBorder;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
@@ -17,18 +16,11 @@ public class VoidSpawn extends JavaPlugin {
 
     public String config_version = "1.0";
 
-    public boolean allowWB = false;
 
     @Override
     public void onEnable(){
         PluginManager pm = Bukkit.getPluginManager();
         loadConfiguration();
-        if(pm.isPluginEnabled("WorldBorder")){
-            log("&3Detected WorldBorder. Enabling Limited Random Spawn support");
-            allowWB = true;
-        }else {
-            log("&e[WARNING] WorldBorder not found! Disabling Limited Random Spawn support!");
-        }
         getServer().getPluginManager().registerEvents(new MoveEvent(this), this);
         log("&ev" + this.getDescription().getVersion() + " by EnderCrest enabled");
         getCommand("void").setExecutor(new CmdVoid(this));
