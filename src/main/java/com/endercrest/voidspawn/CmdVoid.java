@@ -116,31 +116,17 @@ public class CmdVoid implements CommandExecutor {
             return true;
         }
         Player p = (Player) cs;
-        if(!plugin.allowWB){
             if(args.length == 2) {
                 if(isNumber(cs, args[1])) {
                     plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
                     plugin.getConfig().set(p.getWorld().getName() + ".random", true);
                     cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
                 }
-            }else{
+            }else if(args.length == 1){
                 plugin.getConfig().set(p.getWorld().getName() + ".radius", 500);
                 plugin.getConfig().set(p.getWorld().getName() + ".random", true);
                 cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of 500"));
             }
-        }else{
-            if(args.length == 2){
-                if(isNumber(cs, args[1])) {
-                    plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
-                    plugin.getConfig().set(p.getWorld().getName() + ".random", true);
-                    cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
-                }
-            }else {
-                plugin.getConfig().set(p.getWorld().getName() + ".radius", 500);
-                plugin.getConfig().set(p.getWorld().getName() + ".random", true);
-                cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of your WorldBorder or the radius of 500. If WorldBorder is not set"));
-            }
-        }
         plugin.getConfig().set(p.getWorld().getName() + ".x", null);
         plugin.getConfig().set(p.getWorld().getName() + ".y", null);
         plugin.getConfig().set(p.getWorld().getName() + ".z", null);
