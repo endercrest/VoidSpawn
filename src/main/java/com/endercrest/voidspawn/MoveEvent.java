@@ -1,6 +1,5 @@
 package com.endercrest.voidspawn;
 
-import com.wimbli.WorldBorder.WorldBorder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -83,7 +82,7 @@ public class MoveEvent implements Listener {
     public void teleportRandom(Player p){
         World world = p.getWorld();
 
-        if(plugin.allowWB == false){
+
             double radius = plugin.getConfig().getDouble(world.getName() + ".radius");
             double xMax = radius + world.getSpawnLocation().getBlockX();
             double xMin = -radius + world.getSpawnLocation().getBlockX();
@@ -109,55 +108,6 @@ public class MoveEvent implements Listener {
                 teleportRandom(p);
                 p.sendMessage("Trying Again!");
             }*/
-        }else{
-            WorldBorder wb = (WorldBorder) plugin.getServer().getPluginManager().getPlugin("WorldBorder");
-            if(!wb.getWorldBorder(world.getName()).equals(null)) {
-                double radius = wb.getWorldBorder(world.getName()).getRadius();
-                double xMax = radius + wb.getWorldBorder(world.getName()).getX();
-                double xMin = -radius + wb.getWorldBorder(world.getName()).getX();
-                double zMax = radius + wb.getWorldBorder(world.getName()).getZ();
-                double zMin = -radius + wb.getWorldBorder(world.getName()).getZ();
-
-                double newX = xMin + (int) (Math.random() * ((xMax - xMin) + 1)) + 0.5;
-                double newZ = zMin + (int) (Math.random() * ((zMax - zMin) + 1)) + 0.5;
-                double newY = world.getHighestBlockYAt((int) newX, (int) newZ) + 1;
-
-
-                Location loc = new Location(world, newX, newY, newZ);
-
-                p.setFallDistance(0F);
-                p.teleport(loc);
-            }else{
-                double radius = plugin.getConfig().getDouble(world.getName() + ".radius");
-                double xMax = radius + world.getSpawnLocation().getBlockX();
-                double xMin = -radius + world.getSpawnLocation().getBlockX();
-                double zMax = radius + world.getSpawnLocation().getBlockZ();
-                double zMin = -radius + world.getSpawnLocation().getBlockZ();
-
-                double newX = xMin + (Math.random() * (xMax - xMin)) + 0.5;
-                double newZ = zMin + (Math.random() * (zMax - zMin)) + 0.5;
-                double newY = world.getHighestBlockYAt((int)newX, (int)newZ) + 1;
-
-                if(world.getBlockAt((int)newX, (int)newY, (int)newZ) == null){
-                    world.getBlockAt((int)newX, (int)newY + 1, (int)newZ).setType(Material.GLASS);
-                }
-
-                Location loc = new Location(world, newX, newY, newZ);
-
-                p.setFallDistance(0F);
-                p.teleport(loc);
-            }
-            /*if(wb.getWorldBorder(world.getName()).insideBorder(newX, newY)){
-                if (isSafe(loc)) {
-                    p.teleport(loc);
-                }else{
-                    teleportRandom(p);
-                }
-            } else {
-                teleportRandom(p);
-            }*/
-        }
-
     }
 
     public boolean isSafe(Location loc){
