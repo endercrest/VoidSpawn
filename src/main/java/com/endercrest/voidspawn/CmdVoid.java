@@ -118,7 +118,8 @@ public class CmdVoid implements CommandExecutor {
         Player p = (Player) cs;
             if(args.length == 2) {
                 if(isNumber(cs, args[1])) {
-                    plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
+                    Integer radius = Integer.parseInt(args[1]);
+                    plugin.getConfig().set(p.getWorld().getName() + ".radius", radius);
                     plugin.getConfig().set(p.getWorld().getName() + ".random", true);
                     cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
                 }
@@ -129,7 +130,8 @@ public class CmdVoid implements CommandExecutor {
                         plugin.getConfig().set(p.getWorld().getName() + ".world", spawnWorld.getName());
                     }
 
-                    plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
+                    Integer radius = Integer.parseInt(args[1]);
+                    plugin.getConfig().set(p.getWorld().getName() + ".radius", radius);
                     plugin.getConfig().set(p.getWorld().getName() + ".random", true);
                     cs.sendMessage(VoidSpawn.colorize("&aRandom Spawns have been set in this world. With the radius of " + args[1]));
                 }

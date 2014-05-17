@@ -92,8 +92,11 @@ public class MoveEvent implements Listener {
             double zMax = radius + world.getSpawnLocation().getBlockZ();
             double zMin = -radius + world.getSpawnLocation().getBlockZ();
 
-            double newX = xMin + (Math.random() * (xMax - xMin)) + 0.5;
-            double newZ = zMin + (Math.random() * (zMax - zMin)) + 0.5;
+            double randomX = Math.random();
+            double randomZ = Math.random();
+
+            double newX = xMin + (int)(randomX * (xMax - xMin)) + 0.5;
+            double newZ = zMin + (int)(randomZ * (zMax - zMin)) + 0.5;
             double newY = world.getHighestBlockYAt((int)newX, (int)newZ) + 1;
 
             if(world.getBlockAt((int)newX, (int)newY, (int)newZ) == null) {
