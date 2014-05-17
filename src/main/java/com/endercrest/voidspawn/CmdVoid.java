@@ -126,7 +126,7 @@ public class CmdVoid implements CommandExecutor {
                 if(isNumber(cs, args[1])) {
                     if (!plugin.getServer().getWorld(args[2]).equals(null)) {
                         World spawnWorld = plugin.getServer().getWorld(args[2]);
-                        plugin.getConfig().set(p.getWorld().getName() + ".world", spawnWorld);
+                        plugin.getConfig().set(p.getWorld().getName() + ".world", spawnWorld.getName());
                     }
 
                     plugin.getConfig().set(p.getWorld().getName() + ".radius", args[1]);
@@ -148,7 +148,7 @@ public class CmdVoid implements CommandExecutor {
     }
 
     private boolean isNumber(CommandSender cs, String args){
-        if(!args.matches("[1-9]+")){
+        if(!args.matches("[0-9]+")){
             cs.sendMessage(VoidSpawn.colorize("&cYou can only have numbers in the radius."));
             return false;
         }

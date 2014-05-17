@@ -82,6 +82,9 @@ public class MoveEvent implements Listener {
     public void teleportRandom(Player p){
         World world = p.getWorld();
 
+        if(plugin.getConfig().isSet(world.getName() + ".world")){
+            world = plugin.getServer().getWorld(plugin.getConfig().getString(world.getName() + ".world"));
+        }
 
             double radius = plugin.getConfig().getDouble(world.getName() + ".radius");
             double xMax = radius + world.getSpawnLocation().getBlockX();
@@ -93,12 +96,8 @@ public class MoveEvent implements Listener {
             double newZ = zMin + (Math.random() * (zMax - zMin)) + 0.5;
             double newY = world.getHighestBlockYAt((int)newX, (int)newZ) + 1;
 
-            if(world.getBlockAt((int)newX, (int)newY, (int)newZ) == null){
-                world.getBlockAt((int)newX, (int)newY + 1, (int)newZ).setType(Material.GLASS);
-            }
-
-            if(plugin.getConfig().isSet(world.getName() + ".world")){
-                world = plugin.getServer().getWorld(world.getName() + ".world");
+            if(world.getBlockAt((int)newX, (int)newY, (int)newZ) == null) {
+                world.getBlockAt((int) newX, (int) newY + 1, (int) newZ).setType(Material.GLASS);
             }
 
             Location loc = new Location(world, newX, newY, newZ);
