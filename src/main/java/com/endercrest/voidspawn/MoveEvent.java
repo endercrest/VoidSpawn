@@ -107,13 +107,6 @@ public class MoveEvent implements Listener {
 
             p.setFallDistance(0F);
             p.teleport(loc);
-            /*if (isSafe(loc)) {
-                p.teleport(loc);
-                p.sendMessage("Teleporting!");
-            }else{
-                teleportRandom(p);
-                p.sendMessage("Trying Again!");
-            }*/
     }
 
     public boolean isSafe(Location loc){
