@@ -2,16 +2,38 @@ name: ${project.name}
 main: com.endercrest.voidspawn.VoidSpawn
 version: ${project.version}
 website: ${project.url}
-description: Teleports you on contact with the void.
+description: Telerports player on contact with the void.
 authors: [tcvs]
+softdepend: [IslandWorld]
 commands:
-    void:
-        description: All commands for
-        permission: vs.admin
+    voidspawn:
+        description: All commands for voidspawn
+        aliases: [vs, voidspawn]
 permissions:
-    vs.admin:
+    vs.admin.mode:
+        description: Grants you the /void mode command
+        default: op
+    vs.admin.reload:
+        description: Grants you the /void reload command
+        default: op
+    vs.admin.remove:
+        description: Grants you the /void remove command
+        default: op
+    vs.admin.set:
+        description: Grants you the /void set command
+        default: op
+    vs.admin.help:
+        description: Grants you the /void set command
+        default: op
+    vs.admin.*:
         description: Grants you the /void command
         default: op
+        children:
+            vs.admin.set: true
+            vs.admin.reload: true
+            vs.admin.remove: true
+            vs.admin.mode: true
+            vs.admin.help: true
     vs.override:
         description: Disables teleport
         default: false
@@ -20,4 +42,4 @@ permissions:
         default: false
         children:
             vs.override: true
-            vs.admin: true
+            vs.admin.*: true

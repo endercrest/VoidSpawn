@@ -5,40 +5,45 @@ import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
-/**
- * Main Class for VoidSpawn
- */
 public class VoidSpawn extends JavaPlugin {
 
-    public String config_version = "1.0";
-
+    public static String prefix = "[&6VS&f] ";
+    public static boolean IslandWorld = false;
 
     @Override
     public void onEnable(){
-        PluginManager pm = Bukkit.getPluginManager();
+        loadDependencies();
         loadConfiguration();
-        getServer().getPluginManager().registerEvents(new MoveEvent(this), this);
+        ConfigManager.getInstance().setUp(this);
+        TeleportManager.getInstance().setUp(this);
+        getServer().getPluginManager().registerEvents(new MoveListener(this), this);
+        getCommand("voidspawn").setExecutor(new CommandHandler(this));
         log("&ev" + this.getDescription().getVersion() + " by EnderCrest enabled");
-        getCommand("void").setExecutor(new CmdVoid(this));
+
+    }
+
+    private void loadDependencies(){
+        PluginManager pm = Bukkit.getPluginManager();
+        if(pm.isPluginEnabled("IslandWorld")){
+            IslandWorld = true;
+            log("&eIslandWorld Support Initialized");
+        }
     }
 
     @Override
     public void onDisable(){
-        log("&ePlugin Disabled");
+        log("&ev" + this.getDescription().getVersion() + " saving config");
+        ConfigManager.getInstance().saveConfig();
+        log("&ev" + this.getDescription().getVersion() + " disabled");
     }
 
     /**
-     * Load/Add Configuration
+     * Load Configuration
      */
     public void loadConfiguration(){
-        if(!getConfig().contains("version")){
-            getConfig().addDefault("config_version", config_version);
-        }
-        if (!getConfig().contains("color-logs")){
+        if(!getConfig().contains("color-logs")){
             getConfig().addDefault("color-logs", true);
         }
         getConfig().options().copyDefaults(true);
@@ -65,4 +70,26 @@ public class VoidSpawn extends JavaPlugin {
             Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + (colorize((String) obj)).replaceAll("(?)\u00a7([a-f0-9k-or])", ""));
         }
     }
+
+    public static boolean isValidWorld(String worldName){
+        for(World world: Bukkit.getWorlds()){
+            if(world.getName().equalsIgnoreCase(worldName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isValidMode(String mode){
+        if(mode.equalsIgnoreCase("Spawn") || mode.equalsIgnoreCase("Touch") || mode.equalsIgnoreCase("None")){
+            return true;
+        }if(IslandWorld){
+            if(mode.equalsIgnoreCase("Island")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
