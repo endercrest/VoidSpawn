@@ -60,6 +60,7 @@ public class ConfigManager {
             return;
         }
         set(world + ".mode", mode);
+        saveConfig();
     }
 
     public String getMode(String world){

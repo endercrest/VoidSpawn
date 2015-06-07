@@ -18,7 +18,7 @@ public class Help implements SubCommand {
         if(!p.hasPermission(permission())){
             return true;
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "---&6Help Menu&f---"));
+        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
         for (String command : commands.keySet()) {
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));
         }

@@ -23,6 +23,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("set", new Set());
         commands.put("remove", new Remove());
         commands.put("reload", new Reload());
+        commands.put("modes", new Modes());
         commands.put("mode", new Mode());
         commands.put("help", new Help(commands));
     }

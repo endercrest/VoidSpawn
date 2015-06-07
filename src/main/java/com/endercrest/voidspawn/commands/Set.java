@@ -17,7 +17,7 @@ public class Set implements SubCommand {
         }else{
             ConfigManager.getInstance().setSpawn(p);
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&6Spawn Set"));
+        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Spawn Set"));
         return true;
     }
 

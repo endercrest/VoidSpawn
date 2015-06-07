@@ -18,17 +18,20 @@ public class VoidSpawn extends JavaPlugin {
         loadConfiguration();
         ConfigManager.getInstance().setUp(this);
         TeleportManager.getInstance().setUp(this);
+        ModeManager.getInstance().setUp();
         getServer().getPluginManager().registerEvents(new MoveListener(this), this);
         getCommand("voidspawn").setExecutor(new CommandHandler(this));
         log("&ev" + this.getDescription().getVersion() + " by EnderCrest enabled");
-
     }
 
     private void loadDependencies(){
         PluginManager pm = Bukkit.getPluginManager();
         if(pm.isPluginEnabled("IslandWorld")){
+            log("&eIslandWorld Found. Initializing Support");
             IslandWorld = true;
-            log("&eIslandWorld Support Initialized");
+            log("&eIslandWorld Support Initialized.");
+        }else{
+            log("&eIslandWorld Not Found. Disabling IslandWorld Support.");
         }
     }
 

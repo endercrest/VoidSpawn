@@ -1,6 +1,7 @@
 package com.endercrest.voidspawn;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import pl.islandworld.IslandWorld;
@@ -56,12 +57,46 @@ public class TeleportManager {
 
     public void teleportTouch(Player p){
         UUID uuid = p.getUniqueId();
-        p.teleport(playerLocation.get(uuid));
+        Location loc;
+        if(playerLocation.get(uuid) == null){
+           loc = p.getLocation();
+        }else {
+            loc = playerLocation.get(uuid);
+        }
+        Location below = new Location(loc.getWorld(), loc.getX(), loc.getY() - 1, loc.getZ());
+        if(below.getBlock().getType().equals(Material.AIR)){
+            for(int i = 1; i < 10; i++){
+                Location newLoc = new Location(loc.getWorld(), loc.getX() + i, loc.getWorld().getHighestBlockYAt(loc.getBlockX() + i, loc.getBlockZ()), loc.getZ());
+                Location newLocBelow = new Location(loc.getWorld(), loc.getX() + i, loc.getWorld().getHighestBlockYAt(loc.getBlockX() + i, loc.getBlockZ()) - 1, loc.getZ());
+                if(!newLocBelow.getBlock().getType().equals(Material.AIR)){
+                    p.setFallDistance(0);
+                    p.teleport(newLoc);
+                    return;
+                }
+            }
+            for(int i = 1; i < 10; i++){
+                Location newLoc = new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ() + i), loc.getZ() + i);
+                Location newLocBelow = new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()) - 1, loc.getZ() + i);
+                if(!newLocBelow.getBlock().getType().equals(Material.AIR)){
+                    p.setFallDistance(0);
+                    p.teleport(newLoc);
+                    return;
+                }
+            }
+            p.setFallDistance(0);
+            p.teleport(loc.getWorld().getSpawnLocation());
+            return;
+        }
+        p.setFallDistance(0);
+        p.teleport(loc);
     }
 
     public void teleportIsland(Player p){
-        MyLocation coords = IslandWorld.getInstance().getPlayerIsland(p.getName()).getLocation();
-        Location location = new Location(IslandWorld.getInstance().getIslandWorld(), coords.getX(), coords.getY(), coords.getZ());
-        p.teleport(location);
+        if(IslandWorld.getInstance().haveIsland(p.getName())) {
+            MyLocation coords = IslandWorld.getInstance().getPlayerIsland(p.getName()).getLocation();
+            Location location = new Location(IslandWorld.getInstance().getIslandWorld(), coords.getX(), coords.getY(), coords.getZ());
+            p.setFallDistance(0);
+            p.teleport(location);
+        }
     }
 }
