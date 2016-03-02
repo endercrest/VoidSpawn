@@ -24,38 +24,61 @@ public class TeleportManager {
         this.plugin = plugin;
     }
 
-    public void teleportSpawn(String worldName, Player player){
-        double x = ConfigManager.getInstance().getDouble(worldName + ".x");
-        double y = ConfigManager.getInstance().getDouble(worldName + ".y");
-        double z = ConfigManager.getInstance().getDouble(worldName + ".z");
-        float pitch = ConfigManager.getInstance().getFloat(worldName + ".pitch");
-        float yaw = ConfigManager.getInstance().getFloat(worldName + ".yaw");
-        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".world"));
+    /**
+     * Teleport the player to the selected world.
+     * @param player The Player that will be teleported.
+     * @param worldName Name of world to get coordinates from.
+     * @return Whether the teleport was successful.
+     */
+    public boolean teleportSpawn(Player player, String worldName){
+        double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x");
+        double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y");
+        double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z");
+        float pitch = ConfigManager.getInstance().getFloat(worldName + ".spawn.pitch");
+        float yaw = ConfigManager.getInstance().getFloat(worldName + ".spawn.yaw");
+        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".spawn.world"));
 
         Location location = new Location(world, x, y, z, yaw, pitch);
         player.setFallDistance(0);
         player.teleport(location);
+        return true;
     }
 
-    public void teleportSpawn(Player player){
+    /**
+     * Teleport Player to that worlds VoidSpawn Location
+     * @param player The player to be teleported.
+     * @return Whether the teleport was successful.
+     */
+    public boolean teleportSpawn(Player player){
         String worldName = player.getWorld().getName();
-        double x = ConfigManager.getInstance().getDouble(worldName + ".x");
-        double y = ConfigManager.getInstance().getDouble(worldName + ".y");
-        double z = ConfigManager.getInstance().getDouble(worldName + ".z");
-        float pitch = ConfigManager.getInstance().getFloat(worldName + ".pitch");
-        float yaw = ConfigManager.getInstance().getFloat(worldName + ".yaw");
-        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".world"));
+        double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x");
+        double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y");
+        double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z");
+        float pitch = ConfigManager.getInstance().getFloat(worldName + ".spawn.pitch");
+        float yaw = ConfigManager.getInstance().getFloat(worldName + ".spawn.yaw");
+        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".spawn.world"));
 
         Location location = new Location(world, x, y, z, yaw, pitch);
         player.setFallDistance(0);
         player.teleport(location);
+        return true;
     }
 
+    /**
+     * Update the players location for touch spawn mode.
+     * @param uuid The UUID of the player.
+     * @param loc The location of the player.
+     */
     public void setPlayerLocation(UUID uuid, Location loc){
         playerLocation.put(uuid, loc);
     }
 
-    public void teleportTouch(Player p){
+    /**
+     * Teleports the player to thier last touched location.
+     * @param p The Player that will be teleported.
+     * @return Whether the teleport was successful.
+     */
+    public boolean teleportTouch(Player p){
         UUID uuid = p.getUniqueId();
         Location loc;
         if(playerLocation.get(uuid) == null){
@@ -71,7 +94,7 @@ public class TeleportManager {
                 if(!newLocBelow.getBlock().getType().equals(Material.AIR)){
                     p.setFallDistance(0);
                     p.teleport(newLoc);
-                    return;
+                    return true;
                 }
             }
             for(int i = 1; i < 10; i++){
@@ -80,23 +103,33 @@ public class TeleportManager {
                 if(!newLocBelow.getBlock().getType().equals(Material.AIR)){
                     p.setFallDistance(0);
                     p.teleport(newLoc);
-                    return;
+                    return true;
                 }
             }
             p.setFallDistance(0);
             p.teleport(loc.getWorld().getSpawnLocation());
-            return;
+            return true;
         }
         p.setFallDistance(0);
         p.teleport(loc);
+        return true;
     }
 
-    public void teleportIsland(Player p){
-        if(IslandWorld.getInstance().haveIsland(p.getName())) {
-            MyLocation coords = IslandWorld.getInstance().getPlayerIsland(p.getName()).getLocation();
-            Location location = new Location(IslandWorld.getInstance().getIslandWorld(), coords.getX(), coords.getY(), coords.getZ());
-            p.setFallDistance(0);
-            p.teleport(location);
+    /**
+     * Teleports the player to their sky block island. (Only Avaialable if IslandWorld is installed).
+     * @param p The player that will be teleported.
+     * @return Whether the teleport was successful.
+     */
+    public boolean teleportIsland(Player p){
+        if(VoidSpawn.IslandWorld) {
+            if (IslandWorld.getInstance().haveIsland(p.getName())) {
+                MyLocation coords = IslandWorld.getInstance().getPlayerIsland(p.getName()).getLocation();
+                Location location = new Location(IslandWorld.getInstance().getIslandWorld(), coords.getX(), coords.getY(), coords.getZ());
+                p.setFallDistance(0);
+                p.teleport(location);
+                return true;
+            }
         }
+        return false;
     }
 }

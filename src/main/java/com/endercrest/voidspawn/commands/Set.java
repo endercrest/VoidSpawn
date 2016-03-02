@@ -13,7 +13,7 @@ public class Set implements SubCommand {
             return true;
         }
         if(args.length > 1){
-            ConfigManager.getInstance().setSpawn(args[1], p);
+            ConfigManager.getInstance().setSpawn(p, args[1]);
         }else{
             ConfigManager.getInstance().setSpawn(p);
         }

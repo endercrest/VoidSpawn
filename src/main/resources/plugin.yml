@@ -23,7 +23,10 @@ permissions:
         description: Grants you the /void set command
         default: op
     vs.admin.help:
-        description: Grants you the /void set command
+        description: Grants you the /void help command
+        default: op
+    vs.admin.message:
+        description: Grants you the /void message command
         default: op
     vs.admin.*:
         description: Grants you the /void command
@@ -34,6 +37,7 @@ permissions:
             vs.admin.remove: true
             vs.admin.mode: true
             vs.admin.help: true
+            vs.admin.message: true
     vs.override:
         description: Disables teleport
         default: false

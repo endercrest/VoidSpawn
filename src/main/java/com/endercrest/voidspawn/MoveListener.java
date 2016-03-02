@@ -1,6 +1,5 @@
 package com.endercrest.voidspawn;
 
-import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +26,9 @@ public class MoveListener implements Listener {
             if(!player.hasPermission("vs.override"))
                 if(ConfigManager.getInstance().isModeSet(worldName))
                     for(String mode: ModeManager.getInstance().getModes().keySet())
-                        if(ConfigManager.getInstance().getMode(worldName).equalsIgnoreCase(mode))
+                        if(ConfigManager.getInstance().getMode(worldName).equalsIgnoreCase(mode)) {
+                            player.sendMessage(VoidSpawn.colorize(ConfigManager.getInstance().getMessage(worldName)));
                             ModeManager.getInstance().getSubMode(mode).onActivate(player, worldName);
+                        }
     }
 }
