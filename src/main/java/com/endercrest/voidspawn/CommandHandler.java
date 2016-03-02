@@ -19,6 +19,9 @@ public class CommandHandler implements CommandExecutor {
         loadCommands();
     }
 
+    /**
+     * Load the commands into the HashMap that make it accessible to players.
+     */
     private void loadCommands(){
         commands.put("set", new Set());
         commands.put("remove", new Remove());
@@ -26,6 +29,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("modes", new Modes());
         commands.put("mode", new Mode());
         commands.put("help", new Help(commands));
+        commands.put("message", new Message());
     }
 
     @Override

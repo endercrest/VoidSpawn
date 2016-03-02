@@ -1,7 +1,6 @@
 package com.endercrest.voidspawn;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -74,24 +73,13 @@ public class VoidSpawn extends JavaPlugin {
         }
     }
 
+    /**
+     * Checks if the selected world is a valid world.
+     * @param worldName The world name that will be checked.
+     * @return True if the world does not return null.
+     */
     public static boolean isValidWorld(String worldName){
-        for(World world: Bukkit.getWorlds()){
-            if(world.getName().equalsIgnoreCase(worldName)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isValidMode(String mode){
-        if(mode.equalsIgnoreCase("Spawn") || mode.equalsIgnoreCase("Touch") || mode.equalsIgnoreCase("None")){
-            return true;
-        }if(IslandWorld){
-            if(mode.equalsIgnoreCase("Island")){
-                return true;
-            }
-        }
-        return false;
+        return Bukkit.getWorld(worldName)!= null;
     }
 
 

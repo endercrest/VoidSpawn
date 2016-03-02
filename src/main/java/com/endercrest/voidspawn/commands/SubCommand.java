@@ -4,9 +4,26 @@ import org.bukkit.entity.Player;
 
 public interface SubCommand {
 
-    public boolean onCommand(Player p, String[] args);
+    /**
+     * Method is called when the subcommand is ran via a command.
+     *
+     * @param p The player who executed the command
+     * @param args The arguments passed along with the command. First arg will be the sub command.
+     * @return Returns whether successfully executed.
+     */
+    boolean onCommand(Player p, String[] args);
 
-    public String helpInfo();
+    /**
+     * The help info given to the players upon help with commands.
+     *      ie. "/vs set [name] - Sets the spawn for the world"
+     *
+     * @return Returns string with details of command and paramteters.
+     */
+    String helpInfo();
 
-    public String permission();
+    /**
+     * The permission required for a player to execute that command.
+     * @return The permission node.
+     */
+    String permission();
 }

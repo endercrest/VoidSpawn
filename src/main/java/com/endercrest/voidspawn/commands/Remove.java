@@ -16,7 +16,7 @@ public class Remove implements SubCommand {
                 p.sendMessage(VoidSpawn.colorize("&cThat world does not exist!"));
                 return true;
             }
-            ConfigManager.getInstance().removeSpawn(args[1], p);
+            ConfigManager.getInstance().removeSpawn(args[1]);
         }else{
             ConfigManager.getInstance().removeSpawn(p);
         }

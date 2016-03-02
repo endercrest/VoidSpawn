@@ -2,12 +2,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.endercrest.voidspawn</groupId>
     <artifactId>VoidSpawn</artifactId>
-    <version>1.8.0</version>
+    <version>1.9.0</version>
     <name>VoidSpawn</name>
     <developers>
         <developer>
             <id>endercrest</id>
-            <name>ThomasCordua-vonSpecht</name>
+            <name>Thomas Cordua-von Specht</name>
             <email>tcvs@endercrest.com</email>
         </developer>
     </developers>
@@ -16,12 +16,12 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8.6-R0.1-SNAPSHOT</version>
+            <version>1.9-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.islandworld.api</groupId>
             <artifactId>IslandWorld</artifactId>
-            <version>4.5</version>
+            <version>6.4</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/IslandWorld.jar</systemPath>
         </dependency>

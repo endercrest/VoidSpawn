@@ -10,6 +10,7 @@ public class Mode implements SubCommand {
     @Override
     public boolean onCommand(Player p, String[] args) {
         if(!p.hasPermission(permission())){
+            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
         }
         if(args.length == 1){
