@@ -7,6 +7,12 @@ VoidSpawn is a easy to use plugin built for Bukkit & Spigot where the player is 
 * Multi-World support
 * Saves players from death.
 
+Requirements
+------
+* Maven 3
+* Spigot MC 1.8+ (1.8-R0.1-SNAPSHOT or Higher)
+* IslandWorld 6.4 (Optional) - Adds additional features.
+
 Compiling
 ------
 Begin by cloning the repository.
