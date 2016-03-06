@@ -9,12 +9,13 @@ VoidSpawn is a easy to use plugin built for Bukkit & Spigot where the player is 
 
 Requirements
 ------
-* Maven 3
 * Spigot MC 1.8+ (1.8-R0.1-SNAPSHOT or Higher)
 * IslandWorld 6.4 (Optional) - Adds additional features.
 
 Compiling
 ------
+Requires **Maven 3** & **Git**
+
 Begin by cloning the repository.
 
 ```git clone https://github.com/endercrest/VoidSpawn.git```
