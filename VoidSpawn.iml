@@ -3,6 +3,10 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <javadoc-paths>
+      <root url="http://tastybento.github.io/askyblock/" />
+      <root url="http://rzuc.pl/islandworld.pl/" />
+    </javadoc-paths>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
@@ -10,7 +14,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.9-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.8-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.9.4-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.10" level="project" />
@@ -20,11 +25,20 @@
     <orderEntry type="library" name="Maven: org.avaje:ebean:2.8.1" level="project" />
     <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.15" level="project" />
-    <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.8-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: net.md-5:bungeecord-chat:1.9-SNAPSHOT" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: pl.islandworld.api:IslandWorld:6.4">
+      <library name="Maven: pl.islandworld.api:IslandWorld:6.7">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/IslandWorld.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.wasteofplastic.askyblock:ASkyBlock:3.0.0.8">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/askyblock.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

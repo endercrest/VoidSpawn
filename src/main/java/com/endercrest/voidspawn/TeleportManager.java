@@ -1,10 +1,14 @@
 package com.endercrest.voidspawn;
 
+import com.wasteofplastic.askyblock.ASkyBlock;
+import com.wasteofplastic.askyblock.ASkyBlockAPI;
+import com.wasteofplastic.askyblock.Island;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import pl.islandworld.IslandWorld;
+import pl.islandworld.api.IslandWorldApi;
 import pl.islandworld.entity.MyLocation;
 
 import java.util.HashMap;
@@ -116,18 +120,31 @@ public class TeleportManager {
     }
 
     /**
-     * Teleports the player to their sky block island. (Only Avaialable if IslandWorld is installed).
+     * Teleports the player to their sky block island. (Only Available if IslandWorld or ASkyBlock is installed).
      * @param p The player that will be teleported.
      * @return Whether the teleport was successful.
      */
     public boolean teleportIsland(Player p){
         if(VoidSpawn.IslandWorld) {
-            if (IslandWorld.getInstance().haveIsland(p.getName())) {
+            if (IslandWorldApi.haveIsland(p.getName())) {
                 MyLocation coords = IslandWorld.getInstance().getPlayerIsland(p.getName()).getLocation();
                 Location location = new Location(IslandWorld.getInstance().getIslandWorld(), coords.getX(), coords.getY(), coords.getZ());
                 p.setFallDistance(0);
                 p.teleport(location);
                 return true;
+            }
+        }else if(VoidSpawn.ASkyBlock){
+            if(ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId())){
+                Location location = ASkyBlockAPI.getInstance().getHomeLocation(p.getUniqueId());
+                if(location != null) {
+                    p.setFallDistance(0);
+                    p.teleport(location);
+                    return true;
+                }else{
+                    p.setFallDistance(0);
+                    p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
+                    return true;
+                }
             }
         }
         return false;
