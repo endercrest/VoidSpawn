@@ -9,19 +9,27 @@ import pl.islandworld.IslandWorld;
 public class Island implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName) {
-        TeleportManager.getInstance().teleportIsland(player);
-        return true;
+            return TeleportManager.getInstance().teleportIsland(player);
     }
 
     @Override
     public boolean onSet(String[] args, String worldName, Player p) {
-        if(worldName.equalsIgnoreCase(IslandWorld.getInstance().getIslandWorld().getName())){
-            ConfigManager.getInstance().setMode(worldName, args[1]);
-            return true;
+        ConfigManager.getInstance().setMode(worldName, args[1]);
+        /*if(VoidSpawn.IslandWorld) {
+            if (worldName.equalsIgnoreCase(IslandWorld.getInstance().getIslandWorld().getName())) {
+                ConfigManager.getInstance().setMode(worldName, args[1]);
+                return true;
+            } else {
+                p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThis mode can not be set for this world"));
+                return false;
+            }
+        }else if(VoidSpawn.ASkyBlock){
+
         }else{
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThis mode can not be set for this world"));
+            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cNo Skyblock plugin detected!"));
             return false;
-        }
+        }*/
+        return true;
     }
 
     @Override

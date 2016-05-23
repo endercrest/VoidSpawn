@@ -10,6 +10,7 @@ public class VoidSpawn extends JavaPlugin {
 
     public static String prefix = "[&6VS&f] ";
     public static boolean IslandWorld = false;
+    public static boolean ASkyBlock = false;
 
     @Override
     public void onEnable(){
@@ -29,8 +30,16 @@ public class VoidSpawn extends JavaPlugin {
             log("&eIslandWorld Found. Initializing Support");
             IslandWorld = true;
             log("&eIslandWorld Support Initialized.");
-        }else{
-            log("&eIslandWorld Not Found. Disabling IslandWorld Support.");
+        }
+
+        if(pm.isPluginEnabled("ASkyBlock")){
+            log("&eASkyBlock Found. Initializing Support");
+            ASkyBlock = true;
+            log("&eASkyBlock Support Initialized.");
+        }
+
+        if(!IslandWorld && !ASkyBlock){
+            log("&eNo SkyBlock Plugins Found. Disabling Island Mode Support.");
         }
     }
 
