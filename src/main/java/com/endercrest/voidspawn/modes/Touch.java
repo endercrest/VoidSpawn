@@ -8,8 +8,7 @@ import sun.security.krb5.Config;
 public class Touch implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName) {
-        TeleportManager.getInstance().teleportTouch(player);
-        return false;
+        return TeleportManager.getInstance().teleportTouch(player);
     }
 
     @Override
