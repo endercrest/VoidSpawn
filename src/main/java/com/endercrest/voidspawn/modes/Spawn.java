@@ -10,8 +10,7 @@ public class Spawn implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName) {
         if (ConfigManager.getInstance().isWorldSpawnSet(worldName)) {
-            TeleportManager.getInstance().teleportSpawn(player);
-            return true;
+            return TeleportManager.getInstance().teleportSpawn(player);
         } else {
             player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Mode has been set but spawn has not been."));
             return false;
