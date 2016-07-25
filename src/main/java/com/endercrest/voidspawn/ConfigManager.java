@@ -71,6 +71,10 @@ public class ConfigManager {
             set(world + ".mode", null);
             return;
         }
+        if(mode.equalsIgnoreCase("command")){
+            if(!isSet(world + ".command"))
+                set(world + ".command", "spawn");
+        }
         set(world + ".mode", mode);
         saveConfig();
     }
