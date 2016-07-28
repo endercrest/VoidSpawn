@@ -12,18 +12,14 @@ public class Set implements SubCommand {
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
         }
-        if(args.length > 1){
-            ConfigManager.getInstance().setSpawn(p, args[1]);
-        }else{
-            ConfigManager.getInstance().setSpawn(p);
-        }
+        ConfigManager.getInstance().setSpawn(p);
         p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Spawn Set"));
         return true;
     }
 
     @Override
     public String helpInfo() {
-        return "/vs set [name] - Sets the spawn for the world";
+        return "/vs set - Sets the spawn for the world";
     }
 
     @Override
