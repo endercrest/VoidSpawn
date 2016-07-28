@@ -103,10 +103,10 @@ public class ConfigManager {
      * Set spawn for a specific world at the location of the specified player.
      *
      * @param player The player who is setting the location.
+     * @param world The world in which the spawn is being set for.
      */
-    public void setSpawn(Player player){
+    public void setSpawn(Player player, String world){
         Location loc = player.getLocation();
-        String world = loc.getWorld().getName();
         set(world + ".spawn.x", loc.getX());
         set(world + ".spawn.y", loc.getY());
         set(world + ".spawn.z", loc.getZ());
