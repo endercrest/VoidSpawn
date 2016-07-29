@@ -49,26 +49,6 @@ public class TeleportManager {
     }
 
     /**
-     * Teleport Player to that worlds VoidSpawn Location
-     * @param player The player to be teleported.
-     * @return Whether the teleport was successful.
-     */
-    public boolean teleportSpawn(Player player){
-        String worldName = player.getWorld().getName();
-        double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x");
-        double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y");
-        double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z");
-        float pitch = ConfigManager.getInstance().getFloat(worldName + ".spawn.pitch");
-        float yaw = ConfigManager.getInstance().getFloat(worldName + ".spawn.yaw");
-        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".spawn.world"));
-
-        Location location = new Location(world, x, y, z, yaw, pitch);
-        player.setFallDistance(0);
-        player.teleport(location);
-        return true;
-    }
-
-    /**
      * Update the players location for touch spawn mode.
      * @param uuid The UUID of the player.
      * @param loc The location of the player.

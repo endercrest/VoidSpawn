@@ -27,7 +27,9 @@ public class MoveListener implements Listener {
                 if(ConfigManager.getInstance().isModeSet(worldName))
                     for(String mode: ModeManager.getInstance().getModes().keySet())
                         if(ConfigManager.getInstance().getMode(worldName).equalsIgnoreCase(mode)) {
-                            player.sendMessage(VoidSpawn.colorize(ConfigManager.getInstance().getMessage(worldName)));
+                            String string = ConfigManager.getInstance().getMessage(worldName);
+                            if (string != "")
+                                player.sendMessage(VoidSpawn.colorize(string));
                             boolean success = ModeManager.getInstance().getSubMode(mode).onActivate(player, worldName);
                             if(!success){
                                 player.sendMessage(VoidSpawn.colorize("&cAn error occurred! Please notify an administrator."));

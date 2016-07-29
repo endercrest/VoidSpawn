@@ -15,7 +15,7 @@ public class Set implements SubCommand {
         if(args.length > 1){
             ConfigManager.getInstance().setSpawn(p, args[1]);
         }else{
-            ConfigManager.getInstance().setSpawn(p);
+            ConfigManager.getInstance().setSpawn(p, p.getWorld().getName());
         }
         p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Spawn Set"));
         return true;
