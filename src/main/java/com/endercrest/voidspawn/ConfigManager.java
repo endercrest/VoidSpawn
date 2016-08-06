@@ -71,6 +71,10 @@ public class ConfigManager {
             set(world + ".mode", null);
             return;
         }
+        if(mode.equalsIgnoreCase("command")){
+            if(!isSet(world + ".command"))
+                set(world + ".command", "spawn");
+        }
         set(world + ".mode", mode);
         saveConfig();
     }
@@ -103,23 +107,6 @@ public class ConfigManager {
      */
     public void setSpawn(Player player, String world){
         Location loc = player.getLocation();
-        set(world + ".spawn.x", loc.getX());
-        set(world + ".spawn.y", loc.getY());
-        set(world + ".spawn.z", loc.getZ());
-        set(world + ".spawn.pitch", loc.getPitch());
-        set(world + ".spawn.yaw", loc.getYaw());
-        set(world + ".spawn.world", loc.getWorld().getName());
-        saveConfig();
-    }
-
-    /**
-     * Set the spawn for the world the player is in at the location of the player.
-     *
-     * @param player The player who is setting the spawn.
-     */
-    public void setSpawn(Player player){
-        Location loc = player.getLocation();
-        String world = loc.getWorld().getName();
         set(world + ".spawn.x", loc.getX());
         set(world + ".spawn.y", loc.getY());
         set(world + ".spawn.z", loc.getZ());
