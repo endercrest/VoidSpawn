@@ -8,11 +8,18 @@ public class Command implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName) {
         player.setFallDistance(0);
-        Boolean cmdsucc = player.performCommand(ConfigManager.getInstance().getString(worldName + ".command"));
-        if (!cmdsucc) {
+        String commandString = ConfigManager.getInstance().getString(worldName + ".command");
+        String[] commands = commandString.split(";");
+        boolean success = true;
+        for (String command : commands) {
+            boolean b = player.performCommand(command);
+            if (!b)
+                success = false;
+        }
+        if (!success) {
             player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Command to teleport to spawn failed."));
         }
-        return cmdsucc;
+        return success;
     }
 
     @Override

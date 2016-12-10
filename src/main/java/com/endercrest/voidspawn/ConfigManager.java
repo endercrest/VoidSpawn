@@ -174,7 +174,7 @@ public class ConfigManager {
      * @param world The world that the message will be removed from.
      */
     public void removeMessage(String world){
-        set(world + ".message", "");
+        set(world + ".message", null);
         saveConfig();
     }
 
