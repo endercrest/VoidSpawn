@@ -273,6 +273,13 @@ public class ConfigManager {
         return getInt(world + ".offset");
     }
 
+    public void setCommand(String command, String world){
+        world = WorldName.configSafe(world);
+
+        set(world + ".command", command);
+        saveConfig();
+    }
+
     /**
      * Checks if the path is set.
      *

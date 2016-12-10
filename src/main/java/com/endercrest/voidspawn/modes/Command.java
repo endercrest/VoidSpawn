@@ -12,7 +12,7 @@ public class Command implements SubMode {
         String[] commands = commandString.split(";");
         boolean success = true;
         for (String command : commands) {
-            boolean b = player.performCommand(command);
+            boolean b = player.performCommand(command.trim());
             if (!b)
                 success = false;
         }
@@ -30,6 +30,6 @@ public class Command implements SubMode {
 
     @Override
     public String getHelp() {
-        return "&6Command &f- Uses configurable command to send player to spawn";
+        return "&6Command &f- Uses configurable command(s) to send player to spawn";
     }
 }

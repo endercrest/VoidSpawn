@@ -31,6 +31,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("help", new Help(commands));
         commands.put("message", new Message());
         commands.put("offset", new Offset());
+        commands.put("command", new com.endercrest.voidspawn.commands.Command());
     }
 
     @Override

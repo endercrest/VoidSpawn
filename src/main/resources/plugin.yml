@@ -31,6 +31,9 @@ permissions:
     vs.admin.offset:
         description: Grants you the /void offset command
         default: op
+    vs.admin.command:
+        description: Grants you the /void command command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
@@ -42,6 +45,7 @@ permissions:
             vs.admin.help: true
             vs.admin.message: true
             vs.admin.offset: true
+            vs.admin.command: true
     vs.override:
         description: Disables teleport
         default: false
