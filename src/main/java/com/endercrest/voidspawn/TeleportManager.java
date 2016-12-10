@@ -1,8 +1,6 @@
 package com.endercrest.voidspawn;
 
-import com.wasteofplastic.askyblock.ASkyBlock;
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import com.wasteofplastic.askyblock.Island;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

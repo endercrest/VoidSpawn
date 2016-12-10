@@ -30,12 +30,15 @@ public class CommandHandler implements CommandExecutor {
         commands.put("mode", new Mode());
         commands.put("help", new Help(commands));
         commands.put("message", new Message());
+        commands.put("offset", new Offset());
+        commands.put("command", new com.endercrest.voidspawn.commands.Command());
     }
 
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String s, String[] args) {
         if(!(cs instanceof Player)){
             cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
+            return false;
         }
         if(cmd.getName().equalsIgnoreCase("voidspawn")){
             if (args == null || args.length < 1) {

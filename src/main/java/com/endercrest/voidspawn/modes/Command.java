@@ -7,11 +7,19 @@ import org.bukkit.entity.Player;
 public class Command implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName) {
-        Boolean cmdsucc = player.performCommand(ConfigManager.getInstance().getString(worldName + ".command"));
-        if (!cmdsucc) {
+        player.setFallDistance(0);
+        String commandString = ConfigManager.getInstance().getString(worldName + ".command");
+        String[] commands = commandString.split(";");
+        boolean success = true;
+        for (String command : commands) {
+            boolean b = player.performCommand(command.trim());
+            if (!b)
+                success = false;
+        }
+        if (!success) {
             player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Command to teleport to spawn failed."));
         }
-        return cmdsucc;
+        return success;
     }
 
     @Override
@@ -22,6 +30,6 @@ public class Command implements SubMode {
 
     @Override
     public String getHelp() {
-        return "&6Command &f- Uses configurable command to send player to spawn";
+        return "&6Command &f- Uses configurable command(s) to send player to spawn";
     }
 }

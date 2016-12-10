@@ -4,7 +4,7 @@ version: ${project.version}
 website: ${project.url}
 description: Telerports player on contact with the void.
 authors: [tcvs]
-softdepend: [IslandWorld]
+softdepend: [IslandWorld, ASkyBlock]
 commands:
     voidspawn:
         description: All commands for voidspawn
@@ -28,6 +28,12 @@ permissions:
     vs.admin.message:
         description: Grants you the /void message command
         default: op
+    vs.admin.offset:
+        description: Grants you the /void offset command
+        default: op
+    vs.admin.command:
+        description: Grants you the /void command command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
@@ -38,6 +44,8 @@ permissions:
             vs.admin.mode: true
             vs.admin.help: true
             vs.admin.message: true
+            vs.admin.offset: true
+            vs.admin.command: true
     vs.override:
         description: Disables teleport
         default: false
