@@ -13,7 +13,11 @@ public class Set implements SubCommand {
             return true;
         }
         if(args.length > 1){
-            ConfigManager.getInstance().setSpawn(p, args[1]);
+            String worldName = "";
+            for(int i = 1; i < args.length; i++){
+                worldName += args[i]+" ";
+            }
+            ConfigManager.getInstance().setSpawn(p, worldName);
         }else{
             ConfigManager.getInstance().setSpawn(p, p.getWorld().getName());
         }

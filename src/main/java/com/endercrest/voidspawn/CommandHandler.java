@@ -36,6 +36,7 @@ public class CommandHandler implements CommandExecutor {
     public boolean onCommand(CommandSender cs, Command cmd, String s, String[] args) {
         if(!(cs instanceof Player)){
             cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
+            return false;
         }
         if(cmd.getName().equalsIgnoreCase("voidspawn")){
             if (args == null || args.length < 1) {

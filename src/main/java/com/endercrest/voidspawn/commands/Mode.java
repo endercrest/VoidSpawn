@@ -30,14 +30,19 @@ public class Mode implements SubCommand {
                 p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
             }
         }else if(args.length >= 3) {
-            if(!VoidSpawn.isValidWorld(args[2])) {
+            String worldName = "";
+            for(int i = 2; i < args.length; i++){
+                worldName += args[i]+" ";
+            }
+
+            if(!VoidSpawn.isValidWorld(worldName)) {
                 p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
                 return false;
             }
             if(ModeManager.getInstance().getModes().containsKey(args[1].toLowerCase())) {
                 SubMode mode = ModeManager.getInstance().getSubMode(args[1].toLowerCase());
-                if(mode.onSet(args, args[2], p)) {
-                    p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Set mode for '&6" + p.getWorld().getName() + "&f'"));
+                if(mode.onSet(args, worldName, p)) {
+                    p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Set mode for '&6" + worldName + "&f'"));
                     return true;
                 }
             }else {

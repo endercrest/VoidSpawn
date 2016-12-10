@@ -4,7 +4,7 @@ version: ${project.version}
 website: ${project.url}
 description: Telerports player on contact with the void.
 authors: [tcvs]
-softdepend: [IslandWorld]
+softdepend: [IslandWorld, ASkyBlock]
 commands:
     voidspawn:
         description: All commands for voidspawn

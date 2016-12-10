@@ -12,11 +12,16 @@ public class Remove implements SubCommand {
             return true;
         }
         if(args.length > 1){
-            if(!VoidSpawn.isValidWorld(args[1])){
+            String worldName = "";
+            for(int i = 1; i < args.length; i++){
+                worldName += args[i]+" ";
+            }
+
+            if(!VoidSpawn.isValidWorld(worldName)){
                 p.sendMessage(VoidSpawn.colorize("&cThat world does not exist!"));
                 return true;
             }
-            ConfigManager.getInstance().removeSpawn(args[1]);
+            ConfigManager.getInstance().removeSpawn(worldName);
         }else{
             ConfigManager.getInstance().removeSpawn(p);
         }
