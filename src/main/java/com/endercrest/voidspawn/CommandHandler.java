@@ -30,6 +30,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("mode", new Mode());
         commands.put("help", new Help(commands));
         commands.put("message", new Message());
+        commands.put("offset", new Offset());
     }
 
     @Override

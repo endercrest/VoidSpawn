@@ -251,6 +251,29 @@ public class ConfigManager {
     }
 
     /**
+     * Set the offset for a world, this will move the teleportation zone downward.
+     * @param offset The offset, ie 2
+     * @param world The world that the offset is being sent for.
+     */
+    public void setOffset(int offset, String world){
+        world = WorldName.configSafe(world);
+
+        set(world +".offset", offset);
+        saveConfig();
+    }
+
+    /**
+     * Return the offset for a specific world.
+     * @param world The world.
+     * @return the offset of will return -1 if it is not set.
+     */
+    public int getOffSet(String world){
+        world = WorldName.configSafe(world);
+
+        return getInt(world + ".offset");
+    }
+
+    /**
      * Checks if the path is set.
      *
      * @param path The YAML path to check.
@@ -288,6 +311,15 @@ public class ConfigManager {
      */
     public String getString(String path){
         return config.getString(path, "");
+    }
+
+    /**
+     * Get the int at the specified path.
+     * @param path The YAML path.
+     * @return Returns the int or -1 if it does not exist.
+     */
+    public int getInt(String path){
+        return config.getInt(path, -1);
     }
 
     /**
