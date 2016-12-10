@@ -1,6 +1,8 @@
 package com.endercrest.voidspawn;
 
+import com.endercrest.voidspawn.utils.WorldName;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,6 +16,7 @@ public class ConfigManager {
     private static ConfigManager instance = new ConfigManager();
     private File worldFile;
     private FileConfiguration config;
+    private final int CURRENT_VERSION = 1;
 
     /**
      * Get the running instance of the ConfigManager.
@@ -32,10 +35,52 @@ public class ConfigManager {
     public void setUp(VoidSpawn plugin){
         ConfigManager.plugin = plugin;
         worldFile = new File(plugin.getDataFolder(), "worlds.yml");
-        if(!isFileCreated()){
+        boolean isCreated = isFileCreated();
+        if(!isCreated)
             createFile();
-        }
+
         config = YamlConfiguration.loadConfiguration(worldFile);
+
+        if(!isCreated)
+            config.set("version", CURRENT_VERSION);
+
+        //Migration
+        migrate();
+    }
+
+    /**
+     * Migrate the config to new versions.
+     */
+    private void migrate(){
+        migrateV1();
+
+        saveConfig();
+    }
+
+    /**
+     * Migrate the config to version 1 from 0.
+     *
+     * This migration involves converting names to safe names that do not contains spaces.
+     */
+    private void migrateV1(){
+        if(!config.isSet("version")){
+            plugin.log("Converting world.yml to version 1");
+            config.set("version", 1);
+
+            ConfigurationSection section = config.getRoot();
+            if(section != null) {
+                for (String key : section.getKeys(false)) {
+                    //Convert world names into safe world names.
+                    if (!key.equalsIgnoreCase("version")) {
+                        if(!key.equals(WorldName.configSafe(key))) {
+                            config.set(WorldName.configSafe(key), config.get(key));
+                            config.set(key, null);
+                        }
+                    }
+                }
+            }
+            plugin.log("Version 1 conversion complete.");
+        }
     }
 
     /**
@@ -45,6 +90,8 @@ public class ConfigManager {
      * @return boolean whether the world is set in the config.
      */
     public boolean isWorldSpawnSet(String world){
+        world = WorldName.configSafe(world);
+
         return isSet(world) && isSet(world + ".spawn.x") && isSet(world + ".spawn.y") && isSet(world + ".spawn.z")
                 && isSet(world + ".spawn.pitch") && isSet(world + ".spawn.yaw") && isSet(world + ".spawn.world");
     }
@@ -67,6 +114,8 @@ public class ConfigManager {
      * @param mode The mode for teleporting.
      */
     public void setMode(String world, String mode){
+        world = WorldName.configSafe(world);
+
         if(mode.equalsIgnoreCase("none")){
             set(world + ".mode", null);
             return;
@@ -86,6 +135,8 @@ public class ConfigManager {
      * @return String name of the mode.
      */
     public String getMode(String world){
+        world = WorldName.configSafe(world);
+
         return getString(world + ".mode");
     }
 
@@ -96,6 +147,8 @@ public class ConfigManager {
      * @return true if world has a mode set. Does not verify whether mode is valid.
      */
     public boolean isModeSet(String world){
+        world = WorldName.configSafe(world);
+
         return isSet(world + ".mode");
     }
 
@@ -106,6 +159,8 @@ public class ConfigManager {
      * @param world The world in which the spawn is being set for.
      */
     public void setSpawn(Player player, String world){
+        world = WorldName.configSafe(world);
+
         Location loc = player.getLocation();
         set(world + ".spawn.x", loc.getX());
         set(world + ".spawn.y", loc.getY());
@@ -122,7 +177,7 @@ public class ConfigManager {
      * @param player The player.
      */
     public void removeSpawn(Player player){
-        String world = player.getWorld().getName();
+        String world = WorldName.configSafe(player.getWorld().getName());
         set(world+".spawn", null);
         saveConfig();
     }
@@ -133,6 +188,7 @@ public class ConfigManager {
      * @param world The world name.
      */
     public void removeSpawn(String world){
+        world = WorldName.configSafe(world);
         set(world+".spawn", null);
         saveConfig();
     }
@@ -164,6 +220,8 @@ public class ConfigManager {
      * @param world The world being set for.
      */
     public void setMessage(String message, String world){
+        world = WorldName.configSafe(world);
+
         set(world + ".message", message);
         saveConfig();
     }
@@ -174,6 +232,8 @@ public class ConfigManager {
      * @param world The world that the message will be removed from.
      */
     public void removeMessage(String world){
+        world = WorldName.configSafe(world);
+
         set(world + ".message", null);
         saveConfig();
     }
@@ -185,6 +245,8 @@ public class ConfigManager {
      * @return The message.
      */
     public String getMessage(String world){
+        world = WorldName.configSafe(world);
+
         return getString(world + ".message");
     }
 
