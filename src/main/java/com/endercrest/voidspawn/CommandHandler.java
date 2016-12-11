@@ -37,6 +37,13 @@ public class CommandHandler implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender cs, Command cmd, String s, String[] args) {
         if(!(cs instanceof Player)){
+            if(args.length >= 1){
+                if(args[0].equalsIgnoreCase("reload")){
+                    ConfigManager.getInstance().reloadConfig();
+                    cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
+                    return true;
+                }
+            }
             cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
             return false;
         }
