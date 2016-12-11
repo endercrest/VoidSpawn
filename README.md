@@ -9,8 +9,11 @@ VoidSpawn is a easy to use plugin built for Bukkit & Spigot where the player is 
 
 Requirements
 ------
-* Spigot MC 1.8+ (1.8-R0.1-SNAPSHOT or Higher)
-* IslandWorld 6.4 (Optional) - Adds additional features.
+* Spigot MC 1.11+ (1.11-R0.1-SNAPSHOT or Higher)
+* IslandWorld 6.9 (Optional) - Adds additional features.
+* ASkyBlock 3.0.5 (Optional) - Adds additional features.
+
+Currently known supported versions include Spigot 1.8, 1.9, 1.10 & 1.11.
 
 Compiling
 ------
