@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.endercrest.voidspawn</groupId>
     <artifactId>VoidSpawn</artifactId>
-    <version>1.12.1</version>
+    <version>1.12.2</version>
     <name>VoidSpawn</name>
     <developers>
         <developer>
@@ -26,8 +26,8 @@
             <systemPath>${basedir}/lib/IslandWorld.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.wasteofplastic.askyblock</groupId>
-            <artifactId>ASkyBlock</artifactId>
+            <groupId>com.wasteofplastic</groupId>
+            <artifactId>askyblock</artifactId>
             <version>3.0.5</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/askyblock.jar</systemPath>
@@ -37,6 +37,11 @@
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>bintray-tastybento-maven-repo</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
     </repositories>
     <build>
