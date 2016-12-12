@@ -2,7 +2,7 @@ name: ${project.name}
 main: com.endercrest.voidspawn.VoidSpawn
 version: ${project.version}
 website: ${project.url}
-description: Telerports player on contact with the void.
+description: Teleports player on contact with the void.
 authors: [tcvs]
 softdepend: [IslandWorld, ASkyBlock]
 commands:

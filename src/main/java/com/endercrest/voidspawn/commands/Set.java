@@ -17,6 +17,11 @@ public class Set implements SubCommand {
             for(int i = 1; i < args.length; i++){
                 worldName += args[i]+" ";
             }
+            worldName = worldName.trim();
+            if(!VoidSpawn.isValidWorld(worldName)) {
+                p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
+                return false;
+            }
             ConfigManager.getInstance().setSpawn(p, worldName);
         }else{
             ConfigManager.getInstance().setSpawn(p, p.getWorld().getName());

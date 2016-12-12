@@ -25,6 +25,11 @@ public class Offset implements SubCommand {
                     for (int i = 2; i < args.length; i++) {
                         worldName += args[i] + " ";
                     }
+                    worldName = worldName.trim();
+                    if(!VoidSpawn.isValidWorld(worldName)) {
+                        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
+                        return false;
+                    }
                     ConfigManager.getInstance().setOffset(Integer.parseInt(args[1]), worldName);
                 } else {
                     ConfigManager.getInstance().setOffset(Integer.parseInt(args[1]), p.getWorld().getName());
