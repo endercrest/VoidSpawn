@@ -46,12 +46,8 @@ permissions:
             vs.admin.message: true
             vs.admin.offset: true
             vs.admin.command: true
-    vs.override:
-        description: Disables teleport
-        default: false
     vs.*:
         description: Gives all permissions
         default: false
         children:
-            vs.override: true
             vs.admin.*: true

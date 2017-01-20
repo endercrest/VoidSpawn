@@ -8,12 +8,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MoveListener implements Listener {
 
-    private VoidSpawn plugin;
-
-    public MoveListener(VoidSpawn plugin) {
-        this.plugin = plugin;
-    }
-
     @EventHandler
     public void onMoveEvent(PlayerMoveEvent event){
         Player player = event.getPlayer();
@@ -22,24 +16,23 @@ public class MoveListener implements Listener {
         if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid())
             TeleportManager.getInstance().setPlayerLocation(player.getUniqueId(), player.getLocation());
 
-        if(player.getLocation().getY() <= 0)
-            if(!player.hasPermission("vs.override")) {
-                int offset = Math.max(0, ConfigManager.getInstance().getOffSet(player.getWorld().getName()));
-                if (player.getLocation().getY() < -offset) {
-                    if (ConfigManager.getInstance().isModeSet(worldName)) {
-                        for (String mode : ModeManager.getInstance().getModes().keySet()) {
-                            if (ConfigManager.getInstance().getMode(worldName).equalsIgnoreCase(mode)) {
-                                String string = ConfigManager.getInstance().getMessage(worldName);
-                                if (string != "")
-                                    player.sendMessage(VoidSpawn.colorize(string));
-                                boolean success = ModeManager.getInstance().getSubMode(mode).onActivate(player, worldName);
-                                if (!success) {
-                                    player.sendMessage(VoidSpawn.colorize("&cAn error occurred! Please notify an administrator."));
-                                }
+        if(player.getLocation().getY() <= 0) {
+            int offset = Math.max(0, ConfigManager.getInstance().getOffSet(player.getWorld().getName()));
+            if (player.getLocation().getY() < -offset) {
+                if (ConfigManager.getInstance().isModeSet(worldName)) {
+                    for (String mode : ModeManager.getInstance().getModes().keySet()) {
+                        if (ConfigManager.getInstance().getMode(worldName).equalsIgnoreCase(mode)) {
+                            String string = ConfigManager.getInstance().getMessage(worldName);
+                            if (!string.equals(""))
+                                player.sendMessage(VoidSpawn.colorize(string));
+                            boolean success = ModeManager.getInstance().getSubMode(mode).onActivate(player, worldName);
+                            if (!success) {
+                                player.sendMessage(VoidSpawn.colorize("&cAn error occurred! Please notify an administrator."));
                             }
                         }
                     }
                 }
             }
+        }
     }
 }
