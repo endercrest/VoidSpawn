@@ -1,0 +1,3 @@
+test:
+  post:
+    - mv target/*.jar $CIRCLE_ARTIFACTS/
