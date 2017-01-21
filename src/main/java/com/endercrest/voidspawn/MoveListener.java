@@ -1,5 +1,7 @@
 package com.endercrest.voidspawn;
 
+import com.endercrest.voidspawn.modes.Command;
+import com.endercrest.voidspawn.modes.SubMode;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +29,10 @@ public class MoveListener implements Listener {
                                 player.sendMessage(VoidSpawn.colorize(string));
                             if(!ConfigManager.getInstance().getKeepInventory(worldName))
                                 player.getInventory().clear();
-                            boolean success = ModeManager.getInstance().getSubMode(mode).onActivate(player, worldName);
+                            SubMode subMode = ModeManager.getInstance().getSubMode(mode);
+                            boolean success = subMode.onActivate(player, worldName);
+                            if(!(subMode instanceof Command) && ConfigManager.getInstance().isHybrid(worldName))
+                                ModeManager.getInstance().getSubMode("command").onActivate(player, worldName);
                             if (!success) {
                                 player.sendMessage(VoidSpawn.colorize("&cAn error occurred! Please notify an administrator."));
                             }

@@ -237,6 +237,29 @@ public class ConfigManager {
     }
 
     /**
+     * Update the keep inventory setting.
+     * @param bool The updated boolean
+     * @param world The world.
+     */
+    public void setHybrid(boolean bool, String world){
+        world = WorldName.configSafe(world);
+
+        set(world+".hybrid", bool);
+        saveConfig();
+    }
+
+    /**
+     * Get the value of the keep inventory.
+     * @param world The world.
+     * @return defaults to true if setting is not found.
+     */
+    public boolean isHybrid(String world){
+        world = WorldName.configSafe(world);
+
+        return config.getBoolean(world+".hybrid", false);
+    }
+
+    /**
      * Set the teleport message for the specified world.
      *
      * @param message The message that will be set.

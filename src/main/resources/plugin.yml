@@ -35,7 +35,10 @@ permissions:
         description: Grants you the /void command command
         default: op
     vs.admin.keepinventory:
-        description: Grants you the /void command command
+        description: Grants you the /void keepinventory command
+        default: op
+    vs.admin.hybrid:
+        description: Grants you the /void hybrid command
         default: op
     vs.admin.*:
         description: Grants you the /void command
@@ -50,6 +53,7 @@ permissions:
             vs.admin.offset: true
             vs.admin.command: true
             vs.admin.keepinventory: true
+            vs.admin.hybrid: true
     vs.*:
         description: Gives all permissions
         default: false
