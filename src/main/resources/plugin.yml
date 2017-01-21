@@ -34,6 +34,9 @@ permissions:
     vs.admin.command:
         description: Grants you the /void command command
         default: op
+    vs.admin.keepinventory:
+        description: Grants you the /void command command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
@@ -46,6 +49,7 @@ permissions:
             vs.admin.message: true
             vs.admin.offset: true
             vs.admin.command: true
+            vs.admin.keepinventory: true
     vs.*:
         description: Gives all permissions
         default: false
