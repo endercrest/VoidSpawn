@@ -2,6 +2,7 @@ package com.endercrest.voidspawn;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import com.wasteofplastic.askyblock.Island;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -10,6 +11,8 @@ import pl.islandworld.IslandWorld;
 import pl.islandworld.api.IslandWorldApi;
 import pl.islandworld.entity.MyLocation;
 import pl.islandworld.entity.SimpleIsland;
+import us.talabrek.ultimateskyblock.api.IslandInfo;
+import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -108,15 +111,6 @@ public class TeleportManager {
     public boolean teleportIsland(Player p){
         if(VoidSpawn.IslandWorld) {
             if (IslandWorldApi.haveIsland(p.getName()) || IslandWorldApi.isHelpingIsland(p.getName())) {
-                //int[] coords = IslandWorld.getInstance().getPlayerIsland()IslandWorldApi.getIslandCoords(p.getName(), true);
-                //if(coords != null) {
-                //    p.sendMessage("X: "+coords[0] + " Z: " + coords[1]);
-                //    Location location = new Location(IslandWorldApi.getIslandWorld(), coords[0],
-                //            IslandWorldApi.getIslandWorld().getHighestBlockYAt(coords[0], coords[1]), coords[1]);
-                //    p.setFallDistance(0);
-                //    p.teleport(location);
-                //    return true;
-                //}
                 SimpleIsland island = IslandWorld.getInstance().getPlayerIsland(p);
                 if(island != null) {
                     p.setFallDistance(0);
@@ -139,7 +133,6 @@ public class TeleportManager {
             if(ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId()) || ASkyBlockAPI.getInstance().inTeam(p.getUniqueId())){
                 Location location = ASkyBlockAPI.getInstance().getHomeLocation(p.getUniqueId());
                 if(location != null) {
-                    //location.setY(location.getWorld().getHighestBlockYAt(location.getBlockX(), location.getBlockZ()));
                     p.setFallDistance(0);
                     p.teleport(location);
                     return true;
@@ -147,12 +140,24 @@ public class TeleportManager {
                     Location loc = ASkyBlockAPI.getInstance().getIslandLocation(p.getUniqueId());
                     p.setFallDistance(0);
                     if(loc != null) {
-                        loc.setY(location.getWorld().getHighestBlockYAt(location.getBlockX(), location.getBlockZ()));
+                        loc.setY(loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()));
                         p.teleport(loc);
                     }else
                         p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
                     return true;
                 }
+            }
+        }else if(VoidSpawn.USkyBlock){
+            uSkyBlockAPI usb = (uSkyBlockAPI) Bukkit.getPluginManager().getPlugin("uSkyBlock");
+            IslandInfo info = usb.getIslandInfo(p);
+            if(info.getWarpLocation() != null){
+                p.setFallDistance(0);
+                p.teleport(info.getWarpLocation());
+                return true;
+            }else if(info.getIslandLocation() != null){
+                p.setFallDistance(0);
+                p.teleport(info.getIslandLocation());
+                return true;
             }
         }
         return false;

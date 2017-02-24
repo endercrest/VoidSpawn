@@ -9,8 +9,9 @@ import java.util.logging.Level;
 public class VoidSpawn extends JavaPlugin {
 
     public static String prefix = "[&6VS&f] ";
-    public static boolean IslandWorld = false;
-    public static boolean ASkyBlock = false;
+    static boolean IslandWorld = false;
+    static boolean ASkyBlock = false;
+    static boolean USkyBlock = false;
 
     @Override
     public void onEnable(){
@@ -27,19 +28,25 @@ public class VoidSpawn extends JavaPlugin {
     private void loadDependencies(){
         PluginManager pm = Bukkit.getPluginManager();
         if(pm.isPluginEnabled("IslandWorld")){
-            log("&eIslandWorld Found. Initializing Support");
+            log("&eIslandWorld found, initializing support.");
             IslandWorld = true;
-            log("&eIslandWorld Support Initialized.");
+            log("&eIslandWorld support initialized.");
         }
 
         if(pm.isPluginEnabled("ASkyBlock")){
-            log("&eASkyBlock Found. Initializing Support");
+            log("&eASkyBlock found, initializing support.");
             ASkyBlock = true;
-            log("&eASkyBlock Support Initialized.");
+            log("&eASkyBlock support initialized.");
         }
 
-        if(!IslandWorld && !ASkyBlock){
-            log("&eNo SkyBlock Plugins Found. Disabling Island Mode Support.");
+        if(pm.isPluginEnabled("uSkyBlock")){
+            log("&eUSkyBlock found, initializing support.");
+            USkyBlock = true;
+            log("&eUSkyBlock support initialized.");
+        }
+
+        if(!IslandWorld && !ASkyBlock && !USkyBlock){
+            log("&eNo SkyBlock plugins found, disabling island mode support.");
         }
     }
 

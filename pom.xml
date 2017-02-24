@@ -32,6 +32,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/askyblock.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.github.rlf</groupId>
+            <artifactId>uSkyBlock-API</artifactId>
+            <version>2.7.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/uSkyBlock.jar</systemPath>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
