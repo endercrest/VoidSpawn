@@ -1,6 +1,8 @@
 package com.endercrest.voidspawn;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
+import com.wasteofplastic.askyblock.Island;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -8,8 +10,12 @@ import org.bukkit.entity.Player;
 import pl.islandworld.IslandWorld;
 import pl.islandworld.api.IslandWorldApi;
 import pl.islandworld.entity.MyLocation;
+import pl.islandworld.entity.SimpleIsland;
+import us.talabrek.ultimateskyblock.api.IslandInfo;
+import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 
 public class TeleportManager {
@@ -104,25 +110,54 @@ public class TeleportManager {
      */
     public boolean teleportIsland(Player p){
         if(VoidSpawn.IslandWorld) {
-            if (IslandWorldApi.haveIsland(p.getName())) {
-                MyLocation coords = IslandWorld.getInstance().getPlayerIsland(p.getName()).getLocation();
-                Location location = new Location(IslandWorld.getInstance().getIslandWorld(), coords.getX(), coords.getY(), coords.getZ());
-                p.setFallDistance(0);
-                p.teleport(location);
-                return true;
+            if (IslandWorldApi.haveIsland(p.getName()) || IslandWorldApi.isHelpingIsland(p.getName())) {
+                SimpleIsland island = IslandWorld.getInstance().getPlayerIsland(p);
+                if(island != null) {
+                    p.setFallDistance(0);
+                    Location loc = island.getLocation().toLocation();
+                    loc.setWorld(IslandWorldApi.getIslandWorld());
+                    p.teleport(loc);
+                    return true;
+                }else{
+                    island = IslandWorld.getInstance().getHelpingIsland(p);
+                    if(island != null){
+                        p.setFallDistance(0);
+                        Location loc = island.getLocation().toLocation();
+                        loc.setWorld(IslandWorldApi.getIslandWorld());
+                        p.teleport(loc);
+                        return true;
+                    }
+                }
             }
         }else if(VoidSpawn.ASkyBlock){
-            if(ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId())){
+            if(ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId()) || ASkyBlockAPI.getInstance().inTeam(p.getUniqueId())){
                 Location location = ASkyBlockAPI.getInstance().getHomeLocation(p.getUniqueId());
                 if(location != null) {
                     p.setFallDistance(0);
                     p.teleport(location);
                     return true;
                 }else{
+                    Location loc = ASkyBlockAPI.getInstance().getIslandLocation(p.getUniqueId());
                     p.setFallDistance(0);
-                    p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
+                    if(loc != null) {
+                        loc.setY(loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()));
+                        p.teleport(loc);
+                    }else
+                        p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
                     return true;
                 }
+            }
+        }else if(VoidSpawn.USkyBlock){
+            uSkyBlockAPI usb = (uSkyBlockAPI) Bukkit.getPluginManager().getPlugin("uSkyBlock");
+            IslandInfo info = usb.getIslandInfo(p);
+            if(info.getWarpLocation() != null){
+                p.setFallDistance(0);
+                p.teleport(info.getWarpLocation());
+                return true;
+            }else if(info.getIslandLocation() != null){
+                p.setFallDistance(0);
+                p.teleport(info.getIslandLocation());
+                return true;
             }
         }
         return false;

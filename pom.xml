@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.endercrest.voidspawn</groupId>
     <artifactId>VoidSpawn</artifactId>
-    <version>1.13.0</version>
+    <version>1.14.0</version>
     <name>VoidSpawn</name>
     <developers>
         <developer>
@@ -31,6 +31,13 @@
             <version>3.0.5</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/askyblock.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rlf</groupId>
+            <artifactId>uSkyBlock-API</artifactId>
+            <version>2.7.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/uSkyBlock.jar</systemPath>
         </dependency>
     </dependencies>
     <repositories>
