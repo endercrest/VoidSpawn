@@ -14,6 +14,7 @@ Requirements
 * Spigot MC 1.11+ (1.11-R0.1-SNAPSHOT or Higher)
 * IslandWorld 6.9 (Optional) - Adds additional features.
 * ASkyBlock 3.0.5 (Optional) - Adds additional features.
+* uSkyBlock 2.7.2 (Optional) - Adds additional features.
 
 Currently known supported versions include Spigot 1.8, 1.9, 1.10 & 1.11.
 
