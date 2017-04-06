@@ -23,16 +23,21 @@ Compiling
 Requires **Maven 3** & **Git**
 
 Begin by cloning the repository.
-
-```git clone https://github.com/endercrest/VoidSpawn.git```
-
+```
+git clone https://github.com/endercrest/VoidSpawn.git
+```
 Navigate to created directory
-
-```cd VoidSpawn```
-
+```
+cd VoidSpawn
+```
 Next Compile the project.
+```
+mvn install
+```
 
-```mvn install```
+Contributing
+------
+Feel free to make contributions to the repository. When making pull-requests, I ask that you have it aimed at the develop branch where all pre-release development goes. 
 
 Installation/Setup
 ------
