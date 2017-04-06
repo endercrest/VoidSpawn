@@ -1,3 +1,4 @@
 target/
 *.iml
 .idea/
+src/main/java/com/endercrest/voidspawn/commands/PlayerToggle.java
