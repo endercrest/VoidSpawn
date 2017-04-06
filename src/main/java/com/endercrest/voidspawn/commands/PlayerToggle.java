@@ -8,40 +8,39 @@ public class PlayerToggle implements SubCommand
 
 {
 	VoidSpawn plugin;
-	public PlayerToggle(VoidSpawn instance){
+
+	public PlayerToggle(VoidSpawn instance) {
 		this.plugin = instance;
 	}
-	public boolean onCommand(Player p, String[] args)
-	{
-		if(p.hasPermission("vs.player.toggle")){
-			if(this.plugin.Toggle.containsKey(p.getUniqueId())){
-				if(this.plugin.Toggle.get(p.getUniqueId()) == false){
+
+	@Override
+	public boolean onCommand(Player p, String[] args) {
+		if (p.hasPermission("vs.player.toggle")) {
+			if (this.plugin.Toggle.containsKey(p.getUniqueId())) {
+				if (this.plugin.Toggle.get(p.getUniqueId()) == false) {
 					this.plugin.Toggle.put(p.getUniqueId(), true);
 					p.sendMessage("Toggled teleport to: On");
-				}
-				else{
+				} else {
 					p.sendMessage("Toggled teleport to: Off");
 					this.plugin.Toggle.put(p.getUniqueId(), false);
 				}
-			}
-			else{
+			} else {
 				p.sendMessage("Toggled teleport to: Off");
 				this.plugin.Toggle.put(p.getUniqueId(), false);
 			}
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs toggle - Turns off void teleport.";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.player.toggle";
 	}
 }
