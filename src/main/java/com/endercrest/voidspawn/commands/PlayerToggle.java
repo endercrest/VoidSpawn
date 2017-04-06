@@ -13,25 +13,25 @@ public class PlayerToggle implements SubCommand
    public boolean onCommand(Player p, String[] args)
    {
      if(p.hasPermission("vs.player.toggle")){
-				if(this.plugin.Toggle.containsKey(p.getUniqueId())){
-					if(this.plugin.Toggle.get(p.getUniqueId()) == false){
-						this.plugin.Toggle.put(p.getUniqueId(), true);
-						p.sendMessage("Toggled teleport to: On");
-					}
-					else{
-						p.sendMessage("Toggled teleport to: Off");
-						this.plugin.Toggle.put(p.getUniqueId(), false);
-					}
-				}
-				else{
-					p.sendMessage("Toggled teleport to: Off");
-					this.plugin.Toggle.put(p.getUniqueId(), false);
-				}
-				return true;
-		     }
-			 else{
-				return false;
-			 }
+	if(this.plugin.Toggle.containsKey(p.getUniqueId())){
+		if(this.plugin.Toggle.get(p.getUniqueId()) == false){
+			this.plugin.Toggle.put(p.getUniqueId(), true);
+			p.sendMessage("Toggled teleport to: On");
+		}
+		else{
+			p.sendMessage("Toggled teleport to: Off");
+			this.plugin.Toggle.put(p.getUniqueId(), false);
+		}
+	}
+	else{
+		p.sendMessage("Toggled teleport to: Off");
+		this.plugin.Toggle.put(p.getUniqueId(), false);
+	}
+	return true;
+     }
+     else{
+	return false;
+	}
    }
    
    public String helpInfo()
