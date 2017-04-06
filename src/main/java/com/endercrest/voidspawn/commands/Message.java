@@ -4,10 +4,9 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-public class Message implements SubCommand
-{
-	public boolean onCommand(Player p, String[] args)
-	{
+public class Message implements SubCommand {
+	@Override
+	public boolean onCommand(Player p, String[] args) {
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -26,13 +25,13 @@ public class Message implements SubCommand
 		return true;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs message [message] - Adds a teleport message upon a player teleports, removes message if empty.";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.admin.message";
 	}
 }

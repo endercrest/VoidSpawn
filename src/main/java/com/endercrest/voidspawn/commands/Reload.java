@@ -4,10 +4,9 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-public class Reload implements SubCommand
-{
-	public boolean onCommand(Player p, String[] args)
-	{
+public class Reload implements SubCommand {
+	@Override
+	public boolean onCommand(Player p, String[] args) {
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -17,13 +16,13 @@ public class Reload implements SubCommand
 		return true;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs reload - Reloads VoidSpawn configs";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.admin.reload";
 	}
 }

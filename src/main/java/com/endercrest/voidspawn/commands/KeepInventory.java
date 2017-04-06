@@ -3,10 +3,9 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-public class KeepInventory implements SubCommand
-{
-	public boolean onCommand(Player p, String[] args)
-	{
+public class KeepInventory implements SubCommand {
+	@Override
+	public boolean onCommand(Player p, String[] args) {
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -33,21 +32,23 @@ public class KeepInventory implements SubCommand
 				p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
 				return false;
 			}
-			com.endercrest.voidspawn.ConfigManager.getInstance().setKeepInventory(Boolean.parseBoolean(args[1]), worldName);
+			com.endercrest.voidspawn.ConfigManager.getInstance().setKeepInventory(Boolean.parseBoolean(args[1]),
+					worldName);
 		} else {
-			com.endercrest.voidspawn.ConfigManager.getInstance().setKeepInventory(Boolean.parseBoolean(args[1]), p.getWorld().getName());
+			com.endercrest.voidspawn.ConfigManager.getInstance().setKeepInventory(Boolean.parseBoolean(args[1]),
+					p.getWorld().getName());
 		}
 		p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Updated keep inventory flag!"));
 		return false;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs keepinventory (true/false) [name] - Sets the keep inventory flag.";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.admin.keepinventory";
 	}
 }

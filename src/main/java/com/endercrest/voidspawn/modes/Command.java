@@ -4,10 +4,9 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-public class Command implements SubMode
-{
-	public boolean onActivate(Player player, String worldName)
-	{
+public class Command implements SubMode {
+	@Override
+	public boolean onActivate(Player player, String worldName) {
 		player.setFallDistance(0.0F);
 		String commandString = ConfigManager.getInstance().getString(worldName + ".command");
 		String[] commands = commandString.split(";");
@@ -23,14 +22,14 @@ public class Command implements SubMode
 		return success;
 	}
 
-	public boolean onSet(String[] args, String worldName, Player p)
-	{
+	@Override
+	public boolean onSet(String[] args, String worldName, Player p) {
 		ConfigManager.getInstance().setMode(worldName, args[1]);
 		return true;
 	}
 
-	public String getHelp()
-	{
+	@Override
+	public String getHelp() {
 		return "&6Command &f- Uses configurable command(s) to send player to spawn";
 	}
 }

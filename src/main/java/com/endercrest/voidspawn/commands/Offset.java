@@ -3,14 +3,13 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.NumberUtil;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class Offset
 implements SubCommand
 {
-	public boolean onCommand(Player p, String[] args)
-	{
+	@Override
+	public boolean onCommand(Player p, String[] args){
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -43,13 +42,13 @@ implements SubCommand
 		return true;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo(){
 		return "/vs offset (offset) [world] - Adds a teleport offset in the void.";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission(){
 		return "vs.admin.offset";
 	}
 }

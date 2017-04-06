@@ -3,10 +3,9 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-public class Hybrid implements SubCommand
-{
-	public boolean onCommand(Player p, String[] args)
-	{
+public class Hybrid implements SubCommand {
+	@Override
+	public boolean onCommand(Player p, String[] args) {
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -35,19 +34,20 @@ public class Hybrid implements SubCommand
 			}
 			com.endercrest.voidspawn.ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]), worldName);
 		} else {
-			com.endercrest.voidspawn.ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]), p.getWorld().getName());
+			com.endercrest.voidspawn.ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]),
+					p.getWorld().getName());
 		}
 		p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Updated hybrid mode!"));
 		return false;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs hybrid (true/false) [name] - Sets hybrid mode.";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.admin.hybrid";
 	}
 }

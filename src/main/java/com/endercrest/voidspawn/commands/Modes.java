@@ -5,10 +5,9 @@ import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.modes.SubMode;
 import org.bukkit.entity.Player;
 
-public class Modes implements SubCommand
-{
-	public boolean onCommand(Player p, String[] args)
-	{
+public class Modes implements SubCommand {
+	@Override
+	public boolean onCommand(Player p, String[] args) {
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -21,13 +20,13 @@ public class Modes implements SubCommand
 		return true;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs modes - Gets all available modes";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.admin.modes";
 	}
 }

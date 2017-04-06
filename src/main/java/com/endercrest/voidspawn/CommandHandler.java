@@ -7,22 +7,17 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandHandler implements CommandExecutor
-{
+public class CommandHandler implements CommandExecutor {
 	private VoidSpawn plugin;
 	private HashMap<String, SubCommand> commands;
 
-	public CommandHandler(VoidSpawn plugin)
-	{
+	public CommandHandler(VoidSpawn plugin) {
 		this.plugin = plugin;
 		this.commands = new HashMap();
 		loadCommands();
 	}
 
-
-
-	private void loadCommands()
-	{
+	private void loadCommands() {
 		this.commands.put("set", new com.endercrest.voidspawn.commands.Set());
 		this.commands.put("remove", new com.endercrest.voidspawn.commands.Remove());
 		this.commands.put("reload", new com.endercrest.voidspawn.commands.Reload());
@@ -37,11 +32,10 @@ public class CommandHandler implements CommandExecutor
 		this.commands.put("toggle", new com.endercrest.voidspawn.commands.PlayerToggle(this.plugin));
 	}
 
-	public boolean onCommand(CommandSender cs, org.bukkit.command.Command cmd, String s, String[] args)
-	{
+	@Override
+	public boolean onCommand(CommandSender cs, org.bukkit.command.Command cmd, String s, String[] args) {
 		if (!(cs instanceof Player)) {
-			if ((args.length >= 1) && 
-					(args[0].equalsIgnoreCase("reload"))) {
+			if ((args.length >= 1) && (args[0].equalsIgnoreCase("reload"))) {
 				ConfigManager.getInstance().reloadConfig();
 				cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
 				return true;
@@ -52,7 +46,8 @@ public class CommandHandler implements CommandExecutor
 		}
 		if (cmd.getName().equalsIgnoreCase("voidspawn")) {
 			if ((args == null) || (args.length < 1)) {
-				cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Version &6" + this.plugin.getDescription().getVersion() + "&f by &6EnderCrest"));
+				cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Version &6"
+						+ this.plugin.getDescription().getVersion() + "&f by &6EnderCrest"));
 				cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
 				return true;
 			}
@@ -63,7 +58,7 @@ public class CommandHandler implements CommandExecutor
 				return true;
 			}
 			try {
-				((SubCommand)this.commands.get(sub)).onCommand((Player)cs, args);
+				this.commands.get(sub).onCommand((Player) cs, args);
 			} catch (Exception e) {
 				e.printStackTrace();
 				cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThere was an error"));

@@ -3,10 +3,9 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-public class Remove implements SubCommand
-{
-	public boolean onCommand(Player p, String[] args)
-	{
+public class Remove implements SubCommand {
+	@Override
+	public boolean onCommand(Player p, String[] args) {
 		if (!p.hasPermission(permission())) {
 			p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
 			return true;
@@ -29,13 +28,13 @@ public class Remove implements SubCommand
 		return true;
 	}
 
-	public String helpInfo()
-	{
+	@Override
+	public String helpInfo() {
 		return "/vs remove [name] - Removes the spawn for the world";
 	}
 
-	public String permission()
-	{
+	@Override
+	public String permission() {
 		return "vs.admin.remove";
 	}
 }
