@@ -9,11 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MoveListener implements Listener {
-    private VoidSpawn plugin;
-
-    public MoveListener(VoidSpawn instance){
-        this.plugin = instance;
-    }
 
     @EventHandler
     public void onMoveEvent(PlayerMoveEvent event){
@@ -27,8 +22,7 @@ public class MoveListener implements Listener {
         if((player.getLocation().getY() < -offset) && (ConfigManager.getInstance().isModeSet(worldName))){
             for(String mode : ModeManager.getInstance().getModes().keySet()){
                 if(ConfigManager.getInstance().getMode(worldName).equalsIgnoreCase(mode)){
-                    //TODO Re-implement -- Stores more info then required.
-                    if(!plugin.Toggle.containsKey(player.getUniqueId()) || plugin.Toggle.get(player.getUniqueId())){
+                    if(!TeleportManager.getInstance().isPlayerToggled(player.getUniqueId())){
                         String string = ConfigManager.getInstance().getMessage(worldName);
                         if(!string.equals(""))
                             player.sendMessage(VoidSpawn.colorize(string));

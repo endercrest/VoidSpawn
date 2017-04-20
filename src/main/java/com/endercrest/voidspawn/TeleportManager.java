@@ -2,7 +2,9 @@ package com.endercrest.voidspawn;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -19,7 +21,8 @@ import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
 public class TeleportManager {
     private VoidSpawn plugin;
     private static TeleportManager instance = new TeleportManager();
-    private HashMap<UUID, Location> playerLocation = new HashMap<UUID, Location>();
+    private HashMap<UUID, Location> playerLocation;
+    private List<UUID> playerToggle;
 
     public static TeleportManager getInstance(){
         return instance;
@@ -27,6 +30,8 @@ public class TeleportManager {
 
     public void setUp(VoidSpawn plugin){
         this.plugin = plugin;
+        playerLocation = new HashMap<UUID, Location>();
+        playerToggle = new ArrayList<UUID>();
     }
 
     /**
@@ -162,5 +167,45 @@ public class TeleportManager {
         loc.setWorld(IslandWorldApi.getIslandWorld());
         p.teleport(loc);
         return true;
+    }
+
+    /**
+     * Checks whether the player is toggled disabled.
+     * @param uuid The players UUID.
+     * @return Returns true if player has teleportation toggled.
+     */
+    public boolean isPlayerToggled(UUID uuid){
+        return playerToggle.contains(uuid);
+    }
+
+    /**
+     * Toggle the current status of the player.
+     * @param uuid The uuid of the player.
+     * @return Returns true if the player has just been toggled to disable teleportation.
+     */
+    public boolean togglePlayer(UUID uuid){
+        if(playerToggle.contains(uuid)){
+            playerToggle.remove(uuid);
+            return false;
+        }else{
+            playerToggle.add(uuid);
+            return true;
+        }
+    }
+
+    /**
+     * Disables toggle and re-enables the player to be teleported.
+     * @param uuid The UUID of the player.
+     */
+    public void disableToggle(UUID uuid){
+        playerToggle.remove(uuid);
+    }
+
+    /**
+     * Enables toggle and disables the player to be teleported.
+     * @param uuid The UUID of the player.
+     */
+    public void enableToggle(UUID uuid){
+        playerToggle.add(uuid);
     }
 }

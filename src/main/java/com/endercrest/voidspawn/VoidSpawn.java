@@ -1,7 +1,5 @@
 package com.endercrest.voidspawn;
 
-import java.util.HashMap;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -13,8 +11,6 @@ public class VoidSpawn extends JavaPlugin {
     static boolean IslandWorld = false;
     static boolean ASkyBlock = false;
     static boolean USkyBlock = false;
-    //TODO Relocate this hashmap
-    public HashMap<UUID, Boolean> Toggle;
 
     public void onEnable(){
         loadDependencies();
@@ -22,10 +18,9 @@ public class VoidSpawn extends JavaPlugin {
         ConfigManager.getInstance().setUp(this);
         TeleportManager.getInstance().setUp(this);
         ModeManager.getInstance().setUp();
-        getServer().getPluginManager().registerEvents(new MoveListener(this), this);
+        getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getCommand("voidspawn").setExecutor(new CommandHandler(this));
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
-        Toggle = new HashMap<UUID, Boolean>();
     }
 
     private void loadDependencies(){

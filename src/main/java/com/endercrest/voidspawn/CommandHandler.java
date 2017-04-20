@@ -34,7 +34,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("command", new com.endercrest.voidspawn.commands.Command());
         commands.put("keepinventory", new KeepInventory());
         commands.put("hybrid", new Hybrid());
-        commands.put("toggle", new PlayerToggle(plugin));
+        commands.put("toggle", new Toggle());
     }
 
     @Override
