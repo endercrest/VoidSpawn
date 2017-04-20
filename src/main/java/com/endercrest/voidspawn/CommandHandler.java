@@ -1,7 +1,6 @@
 package com.endercrest.voidspawn;
 
-import com.endercrest.voidspawn.commands.Message;
-import com.endercrest.voidspawn.commands.SubCommand;
+import com.endercrest.voidspawn.commands.*;
 import java.util.HashMap;
 
 import org.bukkit.command.Command;
@@ -15,7 +14,7 @@ public class CommandHandler implements CommandExecutor {
 
     public CommandHandler(VoidSpawn plugin) {
         this.plugin = plugin;
-        this.commands = new HashMap<String, SubCommand>();
+        commands = new HashMap<String, SubCommand>();
         loadCommands();
     }
 
@@ -23,18 +22,18 @@ public class CommandHandler implements CommandExecutor {
      * Load the commands into the HashMap that makes it accessible to players.
      */
     private void loadCommands() {
-        commands.put("set", new com.endercrest.voidspawn.commands.Set());
-        commands.put("remove", new com.endercrest.voidspawn.commands.Remove());
-        commands.put("reload", new com.endercrest.voidspawn.commands.Reload());
-        commands.put("modes", new com.endercrest.voidspawn.commands.Modes());
-        commands.put("mode", new com.endercrest.voidspawn.commands.Mode());
-        commands.put("help", new com.endercrest.voidspawn.commands.Help(commands));
+        commands.put("set", new Set());
+        commands.put("remove", new Remove());
+        commands.put("reload", new Reload());
+        commands.put("modes", new Modes());
+        commands.put("mode", new Mode());
+        commands.put("help", new Help(commands));
         commands.put("message", new Message());
-        commands.put("offset", new com.endercrest.voidspawn.commands.Offset());
+        commands.put("offset", new Offset());
         commands.put("command", new com.endercrest.voidspawn.commands.Command());
-        commands.put("keepinventory", new com.endercrest.voidspawn.commands.KeepInventory());
-        commands.put("hybrid", new com.endercrest.voidspawn.commands.Hybrid());
-        commands.put("toggle", new com.endercrest.voidspawn.commands.PlayerToggle(plugin));
+        commands.put("keepinventory", new KeepInventory());
+        commands.put("hybrid", new Hybrid());
+        commands.put("toggle", new PlayerToggle(plugin));
     }
 
     @Override

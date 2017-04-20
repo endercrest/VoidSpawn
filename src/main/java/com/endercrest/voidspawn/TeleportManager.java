@@ -17,7 +17,7 @@ import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
 public class TeleportManager {
     private VoidSpawn plugin;
     private static TeleportManager instance = new TeleportManager();
-    private HashMap<UUID, Location> playerLocation = new HashMap();
+    private HashMap<UUID, Location> playerLocation = new HashMap<UUID, Location>();
 
     public static TeleportManager getInstance() {
         return instance;

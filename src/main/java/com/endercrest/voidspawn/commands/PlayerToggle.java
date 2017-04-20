@@ -4,43 +4,43 @@ import org.bukkit.entity.Player;
 
 import com.endercrest.voidspawn.VoidSpawn;
 
-public class PlayerToggle implements SubCommand
+//TODO Revisit and clean up
+public class PlayerToggle implements SubCommand {
+    private VoidSpawn plugin;
 
-{
-	VoidSpawn plugin;
+    public PlayerToggle(VoidSpawn instance) {
+        this.plugin = instance;
+    }
 
-	public PlayerToggle(VoidSpawn instance) {
-		this.plugin = instance;
-	}
+    @Override
+    public boolean onCommand(Player p, String[] args) {
+        if (p.hasPermission("vs.player.toggle")) {
+            if (this.plugin.Toggle.containsKey(p.getUniqueId())) {
+                if (!plugin.Toggle.get(p.getUniqueId())) {
+                    plugin.Toggle.put(p.getUniqueId(), true);
+                    p.sendMessage("Toggled teleport to: On");
+                } else {
+                    p.sendMessage("Toggled teleport to: Off");
+                    plugin.Toggle.put(p.getUniqueId(), false);
+                }
+            } else {
+                p.sendMessage("Toggled teleport to: Off");
+                plugin.Toggle.put(p.getUniqueId(), false);
+            }
+            return true;
+        } else {
+            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
+            return false;
+        }
+    }
 
-	@Override
-	public boolean onCommand(Player p, String[] args) {
-		if (p.hasPermission("vs.player.toggle")) {
-			if (this.plugin.Toggle.containsKey(p.getUniqueId())) {
-				if (this.plugin.Toggle.get(p.getUniqueId()) == false) {
-					this.plugin.Toggle.put(p.getUniqueId(), true);
-					p.sendMessage("Toggled teleport to: On");
-				} else {
-					p.sendMessage("Toggled teleport to: Off");
-					this.plugin.Toggle.put(p.getUniqueId(), false);
-				}
-			} else {
-				p.sendMessage("Toggled teleport to: Off");
-				this.plugin.Toggle.put(p.getUniqueId(), false);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
+    @Override
+    public String helpInfo() {
+        return "/vs toggle - Turns off void teleport.";
+    }
 
-	@Override
-	public String helpInfo() {
-		return "/vs toggle - Turns off void teleport.";
-	}
-
-	@Override
-	public String permission() {
-		return "vs.player.toggle";
-	}
+    @Override
+    public String permission() {
+        return "vs.player.toggle";
+    }
 }
