@@ -1,11 +1,11 @@
 package com.endercrest.voidspawn;
 
+import com.endercrest.voidspawn.modes.SubMode;
 import com.endercrest.voidspawn.modes.*;
 
 import java.util.HashMap;
 
 public class ModeManager {
-
     private static ModeManager instance = new ModeManager();
 
     private HashMap<String, SubMode> modes = new HashMap<String, SubMode>();
@@ -13,7 +13,7 @@ public class ModeManager {
     /**
      * Get the running instance of the ModeManager.
      *
-     * @return The ModerManager.
+     * @return The ModeManager
      */
     public static ModeManager getInstance(){
         return instance;
@@ -27,7 +27,7 @@ public class ModeManager {
         addMode("touch", new Touch());
         addMode("none", new None());
         addMode("command", new Command());
-        if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock) {
+        if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock){
             addMode("island", new Island());
         }
     }
@@ -36,7 +36,7 @@ public class ModeManager {
      * Add a new mode that is accessible via command and can be set for worlds.
      *
      * @param modeName The name of the mode which is used throughout settings and selection via commands.
-     * @param mode Class that implements SubMode with the functionality of the mode.
+     * @param mode     Class that implements SubMode with the functionality of the mode.
      */
     public void addMode(String modeName, SubMode mode){
         modes.put(modeName, mode);
@@ -44,6 +44,7 @@ public class ModeManager {
 
     /**
      * Removes the mode from being selectable.
+     *
      * @param modeName The mode name.
      */
     public void removeMode(String modeName){
@@ -51,7 +52,8 @@ public class ModeManager {
     }
 
     /**
-     * Get a mode from it's mode name.
+     * Get a mode's class from it's mode name.
+     *
      * @param modeName The mode name.
      * @return Returns the SubMode containing the logic behind the mode.
      */
@@ -60,12 +62,11 @@ public class ModeManager {
     }
 
     /**
-     * Gets the HashMap containing all the modes and it's mode names.
+     * Gets the HashMap containing all the modes and it's mode names. This is not a copy of the HashMap.
+     *
      * @return HashMap containing to the mode names and SubMode class.
      */
     public HashMap<String, SubMode> getModes(){
         return modes;
     }
-
-
 }

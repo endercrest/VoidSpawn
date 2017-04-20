@@ -4,14 +4,10 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
-/**
- * Created by Thomas Cordua-von Specht on 12/10/2016.
- */
 public class Command implements SubCommand {
 
-
     @Override
-    public boolean onCommand(Player p, String[] args) {
+    public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
@@ -19,7 +15,7 @@ public class Command implements SubCommand {
         if(args.length > 1){
             String command = "";
             for(int i = 1; i < args.length; i++){
-                    command += args[i]+" ";
+                command += args[i] + " ";
             }
             ConfigManager.getInstance().setCommand(command, p.getWorld().getName());
         }else{
@@ -32,12 +28,12 @@ public class Command implements SubCommand {
     }
 
     @Override
-    public String helpInfo() {
+    public String helpInfo(){
         return "/vs command [commands] - Set command(s) for the command mode, separate commands with semicolon.";
     }
 
     @Override
-    public String permission() {
+    public String permission(){
         return "vs.admin.command";
     }
 }

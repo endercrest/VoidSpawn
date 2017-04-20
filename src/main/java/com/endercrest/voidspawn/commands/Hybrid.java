@@ -5,8 +5,9 @@ import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
 public class Hybrid implements SubCommand {
+
     @Override
-    public boolean onCommand(Player p, String[] args) {
+    public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
@@ -14,7 +15,7 @@ public class Hybrid implements SubCommand {
 
         if(args.length == 1){
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cMust include true or false!"));
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&c"+helpInfo()));
+            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&c" + helpInfo()));
             return false;
         }
 
@@ -26,15 +27,15 @@ public class Hybrid implements SubCommand {
         if(args.length > 2){
             String worldName = "";
             for(int i = 2; i < args.length; i++){
-                worldName += args[i]+" ";
+                worldName += args[i] + " ";
             }
             worldName = worldName.trim();
-            if(!VoidSpawn.isValidWorld(worldName)) {
+            if(!VoidSpawn.isValidWorld(worldName)){
                 p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
                 return false;
             }
             ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]), worldName);
-        } else {
+        }else{
             ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]), p.getWorld().getName());
         }
         p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Updated hybrid mode!"));
@@ -42,12 +43,12 @@ public class Hybrid implements SubCommand {
     }
 
     @Override
-    public String helpInfo() {
+    public String helpInfo(){
         return "/vs hybrid (true/false) [name] - Sets hybrid mode.";
     }
 
     @Override
-    public String permission() {
+    public String permission(){
         return "vs.admin.hybrid";
     }
 }
