@@ -32,15 +32,15 @@ public class ConfigManager {
      */
     public void setUp(VoidSpawn plugin) {
         this.plugin = plugin;
-        this.worldFile = new File(plugin.getDataFolder(), "worlds.yml");
+        worldFile = new File(plugin.getDataFolder(), "worlds.yml");
         boolean isCreated = isFileCreated();
         if (!isCreated) {
             createFile();
         }
-        this.config = YamlConfiguration.loadConfiguration(this.worldFile);
+        config = YamlConfiguration.loadConfiguration(worldFile);
 
         if (!isCreated) {
-            this.config.set("version", CURRENT_VERSION);
+            config.set("version", CURRENT_VERSION);
         }
 
         //Run Migration
@@ -331,10 +331,10 @@ public class ConfigManager {
     /**
      * Checks if the path is set.
      * @param path The YAML path to check.
-     * @return True if there is a values assigned to it.
+     * @return True if there is a value assigned to it.
      */
     private boolean isSet(String path) {
-        return this.config.isSet(path);
+        return config.isSet(path);
     }
 
     /**
@@ -343,7 +343,7 @@ public class ConfigManager {
      * @return double if it exists.
      */
     public double getDouble(String path) {
-        return this.config.getDouble(path);
+        return config.getDouble(path);
     }
 
     /**
@@ -352,7 +352,7 @@ public class ConfigManager {
      * @return float if it exists.
      */
     public float getFloat(String path) {
-        return (float) this.config.getDouble(path);
+        return (float) config.getDouble(path);
     }
 
     /**
@@ -361,7 +361,7 @@ public class ConfigManager {
      * @return string if it exists.
      */
     public String getString(String path) {
-        return this.config.getString(path, "");
+        return config.getString(path, "");
     }
 
     /**
@@ -370,7 +370,7 @@ public class ConfigManager {
      * @return boolean if it exists.
      */
     public boolean getBoolean(String path) {
-        return this.config.getBoolean(path, true);
+        return config.getBoolean(path, true);
     }
 
     /**
@@ -379,7 +379,7 @@ public class ConfigManager {
      * @return integer if it exists.
      */
     public int getInt(String path) {
-        return this.config.getInt(path, -1);
+        return config.getInt(path, -1);
     }
 
     /**
@@ -388,7 +388,7 @@ public class ConfigManager {
      * @param obj The object being saved into the file.
      */
     private void set(String path, Object obj) {
-        this.config.set(path, obj);
+        config.set(path, obj);
     }
 
     /**
@@ -396,7 +396,7 @@ public class ConfigManager {
      */
     public void saveConfig() {
         try {
-            this.config.save(this.worldFile);
+            config.save(worldFile);
         } catch (IOException e) {
             plugin.log("&4Could not save worldFile");
             e.printStackTrace();

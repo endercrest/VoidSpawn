@@ -25,7 +25,7 @@ public class ModeManager {
         addMode("touch", new Touch());
         addMode("none", new None());
         addMode("command", new Command());
-        if ((VoidSpawn.IslandWorld) || (VoidSpawn.ASkyBlock) || (VoidSpawn.USkyBlock)) {
+        if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock) {
             addMode("island", new Island());
         }
     }
