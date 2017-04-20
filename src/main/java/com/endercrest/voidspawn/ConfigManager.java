@@ -23,7 +23,7 @@ public class ConfigManager {
      *
      * @return The ConfigManager
      */
-    public static ConfigManager getInstance() {
+    public static ConfigManager getInstance(){
         return instance;
     }
 
@@ -32,16 +32,16 @@ public class ConfigManager {
      *
      * @param plugin VoidSpawn Plugin.
      */
-    public void setUp(VoidSpawn plugin) {
+    public void setUp(VoidSpawn plugin){
         this.plugin = plugin;
         worldFile = new File(plugin.getDataFolder(), "worlds.yml");
         boolean isCreated = isFileCreated();
-        if(!isCreated) {
+        if(!isCreated){
             createFile();
         }
         config = YamlConfiguration.loadConfiguration(worldFile);
 
-        if(!isCreated) {
+        if(!isCreated){
             config.set("version", CURRENT_VERSION);
         }
 
@@ -52,7 +52,7 @@ public class ConfigManager {
     /**
      * Migrate the config to new versions.
      */
-    private void migrate() {
+    private void migrate(){
         migrateV1();
 
         saveConfig();
@@ -63,16 +63,16 @@ public class ConfigManager {
      * <p>
      * This migration involves converting names to safe names that do not contain spaces.
      */
-    private void migrateV1() {
-        if(!config.isSet("version")) {
+    private void migrateV1(){
+        if(!config.isSet("version")){
             plugin.log("Converting world.yml to version 1");
             config.set("version", 1);
 
             ConfigurationSection section = config.getRoot();
-            if(section != null) {
-                for(String key : section.getKeys(false)) {
+            if(section != null){
+                for(String key : section.getKeys(false)){
                     //Convert world names into safe world names.
-                    if((!key.equalsIgnoreCase("version")) && (!key.equals(WorldName.configSafe(key)))) {
+                    if((!key.equalsIgnoreCase("version")) && (!key.equals(WorldName.configSafe(key)))){
                         config.set(WorldName.configSafe(key), config.get(key));
                         config.set(key, null);
                     }
@@ -89,7 +89,7 @@ public class ConfigManager {
      * @param world The world name
      * @return boolean whether the world is set in the config.
      */
-    public boolean isWorldSpawnSet(String world) {
+    public boolean isWorldSpawnSet(String world){
         world = WorldName.configSafe(world);
 
         return (isSet(world)) && (isSet(world + ".spawn.x")) && (isSet(world + ".spawn.y"))
@@ -100,9 +100,9 @@ public class ConfigManager {
     /**
      * Reloads the config from the original file. DOES NOT SAVE BEFORE RELOADING.
      */
-    public void reloadConfig() {
+    public void reloadConfig(){
         worldFile = new File(plugin.getDataFolder(), "worlds.yml");
-        if(!isFileCreated()) {
+        if(!isFileCreated()){
             createFile();
         }
         config = YamlConfiguration.loadConfiguration(worldFile);
@@ -114,14 +114,14 @@ public class ConfigManager {
      * @param world The world being set.
      * @param mode  The mode for teleporting.
      */
-    public void setMode(String world, String mode) {
+    public void setMode(String world, String mode){
         world = WorldName.configSafe(world);
 
-        if(mode.equalsIgnoreCase("none")) {
+        if(mode.equalsIgnoreCase("none")){
             set(world + ".mode", null);
             return;
         }
-        if((mode.equalsIgnoreCase("command")) && (!isSet(world + ".command"))) {
+        if((mode.equalsIgnoreCase("command")) && (!isSet(world + ".command"))){
             set(world + ".command", "spawn");
         }
         set(world + ".mode", mode);
@@ -134,7 +134,7 @@ public class ConfigManager {
      * @param world The world that the mode is set for.
      * @return String name of the mode.
      */
-    public String getMode(String world) {
+    public String getMode(String world){
         world = WorldName.configSafe(world);
 
         return getString(world + ".mode");
@@ -146,7 +146,7 @@ public class ConfigManager {
      * @param world The wolrd to be checked.
      * @return true if world has a mode set. Does not verify whether mode is valid.
      */
-    public boolean isModeSet(String world) {
+    public boolean isModeSet(String world){
         world = WorldName.configSafe(world);
 
         return isSet(world + ".mode");
@@ -158,7 +158,7 @@ public class ConfigManager {
      * @param player The player who is setting the location.
      * @param world  THe world in which the spawn is being set for.
      */
-    public void setSpawn(Player player, String world) {
+    public void setSpawn(Player player, String world){
         world = WorldName.configSafe(world);
 
         Location loc = player.getLocation();
@@ -176,7 +176,7 @@ public class ConfigManager {
      *
      * @param player The player.
      */
-    public void removeSpawn(Player player) {
+    public void removeSpawn(Player player){
         String world = WorldName.configSafe(player.getWorld().getName());
         set(world + ".spawn", null);
         saveConfig();
@@ -187,7 +187,7 @@ public class ConfigManager {
      *
      * @param world The world name.
      */
-    public void removeSpawn(String world) {
+    public void removeSpawn(String world){
         world = WorldName.configSafe(world);
         set(world + ".spawn", null);
         saveConfig();
@@ -198,17 +198,17 @@ public class ConfigManager {
      *
      * @return True if world.yml exists.
      */
-    public boolean isFileCreated() {
+    public boolean isFileCreated(){
         return worldFile.exists();
     }
 
     /**
      * Create the world file.
      */
-    public void createFile() {
-        try {
+    public void createFile(){
+        try{
             worldFile.createNewFile();
-        } catch(IOException e) {
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
@@ -219,7 +219,7 @@ public class ConfigManager {
      * @param bool  The updated boolean
      * @param world The world.
      */
-    public void setKeepInventory(boolean bool, String world) {
+    public void setKeepInventory(boolean bool, String world){
         world = WorldName.configSafe(world);
 
         set(world + ".keep_inventory", bool);
@@ -232,7 +232,7 @@ public class ConfigManager {
      * @param world The world.
      * @return defaults to true if setting is not found.
      */
-    public boolean getKeepInventory(String world) {
+    public boolean getKeepInventory(String world){
         world = WorldName.configSafe(world);
 
         return config.getBoolean(world + ".keep_inventory", true);
@@ -244,7 +244,7 @@ public class ConfigManager {
      * @param bool  The update boolean
      * @param world The world.
      */
-    public void setHybrid(boolean bool, String world) {
+    public void setHybrid(boolean bool, String world){
         world = WorldName.configSafe(world);
 
         set(world + ".hybrid", bool);
@@ -257,7 +257,7 @@ public class ConfigManager {
      * @param world The world
      * @return defaults to false if setting is not found.
      */
-    public boolean isHybrid(String world) {
+    public boolean isHybrid(String world){
         world = WorldName.configSafe(world);
 
         return config.getBoolean(world + ".hybrid", false);
@@ -269,7 +269,7 @@ public class ConfigManager {
      * @param message The message that will be set.
      * @param world   The world being set for.
      */
-    public void setMessage(String message, String world) {
+    public void setMessage(String message, String world){
         world = WorldName.configSafe(world);
 
         set(world + ".message", message);
@@ -281,7 +281,7 @@ public class ConfigManager {
      *
      * @param world The world that the message will be removed from.
      */
-    public void removeMessage(String world) {
+    public void removeMessage(String world){
         world = WorldName.configSafe(world);
 
         set(world + ".message", null);
@@ -294,7 +294,7 @@ public class ConfigManager {
      * @param world The world to retrieve the message from.
      * @return The message.
      */
-    public String getMessage(String world) {
+    public String getMessage(String world){
         world = WorldName.configSafe(world);
 
         return getString(world + ".message");
@@ -308,7 +308,7 @@ public class ConfigManager {
      * @param offset The offset
      * @param world  The world that the offset is being sent for.
      */
-    public void setOffset(int offset, String world) {
+    public void setOffset(int offset, String world){
         world = WorldName.configSafe(world);
 
         set(world + ".offset", offset);
@@ -321,7 +321,7 @@ public class ConfigManager {
      * @param world The world.
      * @return the offset, will return -1 if it is not set.
      */
-    public int getOffSet(String world) {
+    public int getOffSet(String world){
         world = WorldName.configSafe(world);
 
         return getInt(world + ".offset");
@@ -333,7 +333,7 @@ public class ConfigManager {
      * @param command The command(s) to be set for the world. Each command should be separated by ';'
      * @param world   The world.
      */
-    public void setCommand(String command, String world) {
+    public void setCommand(String command, String world){
         world = WorldName.configSafe(world);
 
         set(world + ".command", command);
@@ -346,7 +346,7 @@ public class ConfigManager {
      * @param path The YAML path to check.
      * @return True if there is a value assigned to it.
      */
-    private boolean isSet(String path) {
+    private boolean isSet(String path){
         return config.isSet(path);
     }
 
@@ -356,7 +356,7 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return double if it exists.
      */
-    public double getDouble(String path) {
+    public double getDouble(String path){
         return config.getDouble(path);
     }
 
@@ -366,7 +366,7 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return float if it exists.
      */
-    public float getFloat(String path) {
+    public float getFloat(String path){
         return (float) config.getDouble(path);
     }
 
@@ -376,7 +376,7 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return string if it exists.
      */
-    public String getString(String path) {
+    public String getString(String path){
         return config.getString(path, "");
     }
 
@@ -386,7 +386,7 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return boolean if it exists.
      */
-    public boolean getBoolean(String path) {
+    public boolean getBoolean(String path){
         return config.getBoolean(path, true);
     }
 
@@ -396,7 +396,7 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return integer if it exists.
      */
-    public int getInt(String path) {
+    public int getInt(String path){
         return config.getInt(path, -1);
     }
 
@@ -406,17 +406,17 @@ public class ConfigManager {
      * @param path The path in the YAML file.
      * @param obj  The object being saved into the file.
      */
-    private void set(String path, Object obj) {
+    private void set(String path, Object obj){
         config.set(path, obj);
     }
 
     /**
      * Save the world data file.
      */
-    public void saveConfig() {
-        try {
+    public void saveConfig(){
+        try{
             config.save(worldFile);
-        } catch(IOException e) {
+        } catch(IOException e){
             plugin.log("&4Could not save worldFile");
             e.printStackTrace();
         }

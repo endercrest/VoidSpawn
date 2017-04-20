@@ -16,7 +16,7 @@ public class VoidSpawn extends JavaPlugin {
     //TODO Relocate this hashmap
     public HashMap<UUID, Boolean> Toggle;
 
-    public void onEnable() {
+    public void onEnable(){
         loadDependencies();
         loadConfiguration();
         ConfigManager.getInstance().setUp(this);
@@ -28,39 +28,39 @@ public class VoidSpawn extends JavaPlugin {
         Toggle = new HashMap<UUID, Boolean>();
     }
 
-    private void loadDependencies() {
+    private void loadDependencies(){
         PluginManager pm = Bukkit.getPluginManager();
-        if(pm.isPluginEnabled("IslandWorld")) {
+        if(pm.isPluginEnabled("IslandWorld")){
             log("&eIslandWorld found, initializing support.");
             IslandWorld = true;
             log("&eIslandWorld support initialized.");
         }
 
-        if(pm.isPluginEnabled("ASkyBlock")) {
+        if(pm.isPluginEnabled("ASkyBlock")){
             log("&eASkyBlock found, initializing support.");
             ASkyBlock = true;
             log("&eASkyBlock support initialized.");
         }
 
-        if(pm.isPluginEnabled("uSkyBlock")) {
+        if(pm.isPluginEnabled("uSkyBlock")){
             log("&eUSkyBlock found, initializing support.");
             USkyBlock = true;
             log("&eUSkyBlock support initialized.");
         }
 
-        if(!IslandWorld && !ASkyBlock && !USkyBlock) {
+        if(!IslandWorld && !ASkyBlock && !USkyBlock){
             log("&eNo SkyBlock plugins found, disabling island mode support.");
         }
     }
 
-    public void onDisable() {
+    public void onDisable(){
         log("&ev" + getDescription().getVersion() + " saving config");
         ConfigManager.getInstance().saveConfig();
         log("&ev" + getDescription().getVersion() + " disabled");
     }
 
-    public void loadConfiguration() {
-        if(!getConfig().contains("color-logs")) {
+    public void loadConfiguration(){
+        if(!getConfig().contains("color-logs")){
             getConfig().addDefault("color-logs", true);
         }
         getConfig().options().copyDefaults(true);
@@ -73,7 +73,7 @@ public class VoidSpawn extends JavaPlugin {
      * @param str The String
      * @return Coloured String
      */
-    public static String colorize(String str) {
+    public static String colorize(String str){
         return str.replaceAll("(?i)&([a-f0-9k-or])", "\\u00a7$1");
     }
 
@@ -82,10 +82,10 @@ public class VoidSpawn extends JavaPlugin {
      *
      * @param obj The Obj(Message)
      */
-    public void log(Object obj) {
-        if(getConfig().getBoolean("color-logs", true)) {
+    public void log(Object obj){
+        if(getConfig().getBoolean("color-logs", true)){
             getServer().getConsoleSender().sendMessage(colorize("&3[&d" + getName() + "&3] &r" + obj));
-        } else {
+        }else{
             Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + colorize((String) obj).replaceAll("(?)\\u00a7([a-f0-9k-or])", ""));
         }
     }
@@ -96,7 +96,7 @@ public class VoidSpawn extends JavaPlugin {
      * @param worldName The world name that will be checked.
      * @return True if the world does not return null.
      */
-    public static boolean isValidWorld(String worldName) {
+    public static boolean isValidWorld(String worldName){
         return Bukkit.getWorld(worldName) != null;
     }
 }

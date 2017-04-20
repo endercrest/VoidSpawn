@@ -7,19 +7,19 @@ import org.bukkit.entity.Player;
 public class Island implements SubMode {
 
     @Override
-    public boolean onActivate(Player player, String worldName) {
+    public boolean onActivate(Player player, String worldName){
         return TeleportManager.getInstance().teleportIsland(player);
     }
 
     @Override
-    public boolean onSet(String[] args, String worldName, Player p) {
+    public boolean onSet(String[] args, String worldName, Player p){
         ConfigManager.getInstance().setMode(worldName, args[1]);
 
         return true;
     }
 
     @Override
-    public String getHelp() {
+    public String getHelp(){
         return "&6Island &f- Will teleport player back to IslandWorld island";
     }
 }

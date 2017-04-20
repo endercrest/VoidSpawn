@@ -21,11 +21,11 @@ public class TeleportManager {
     private static TeleportManager instance = new TeleportManager();
     private HashMap<UUID, Location> playerLocation = new HashMap<UUID, Location>();
 
-    public static TeleportManager getInstance() {
+    public static TeleportManager getInstance(){
         return instance;
     }
 
-    public void setUp(VoidSpawn plugin) {
+    public void setUp(VoidSpawn plugin){
         this.plugin = plugin;
     }
 
@@ -36,7 +36,7 @@ public class TeleportManager {
      * @param worldName Name of the world to get coordinates from.
      * @return Whether the teleport was successful.
      */
-    public boolean teleportSpawn(Player player, String worldName) {
+    public boolean teleportSpawn(Player player, String worldName){
         double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x");
         double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y");
         double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z");
@@ -56,7 +56,7 @@ public class TeleportManager {
      * @param uuid The UUID of the player.
      * @param loc  The location of the player.
      */
-    public void setPlayerLocation(UUID uuid, Location loc) {
+    public void setPlayerLocation(UUID uuid, Location loc){
         playerLocation.put(uuid, loc);
     }
 
@@ -66,29 +66,29 @@ public class TeleportManager {
      * @param p The player that will be teleported.
      * @return Whether the teleport was successful.
      */
-    public boolean teleportTouch(Player p) {
+    public boolean teleportTouch(Player p){
         UUID uuid = p.getUniqueId();
         Location loc;
-        if(playerLocation.get(uuid) == null) {
+        if(playerLocation.get(uuid) == null){
             loc = p.getLocation();
-        } else {
+        }else{
             loc = playerLocation.get(uuid);
         }
         Location below = new Location(loc.getWorld(), loc.getX(), loc.getY() - 1, loc.getZ());
-        if(below.getBlock().getType().equals(Material.AIR)) {
-            for(int i = 1; i < 10; i++) {
+        if(below.getBlock().getType().equals(Material.AIR)){
+            for(int i = 1; i < 10; i++){
                 Location newLoc = new Location(loc.getWorld(), loc.getX() + i, loc.getWorld().getHighestBlockYAt(loc.getBlockX() + i, loc.getBlockZ()), loc.getZ());
                 Location newLocBelow = new Location(loc.getWorld(), loc.getX() + i, loc.getWorld().getHighestBlockYAt(loc.getBlockX() + i, loc.getBlockZ()) - 1, loc.getZ());
-                if(!newLocBelow.getBlock().getType().equals(Material.AIR)) {
+                if(!newLocBelow.getBlock().getType().equals(Material.AIR)){
                     p.setFallDistance(0);
                     p.teleport(newLoc);
                     return true;
                 }
             }
-            for(int i = 1; i < 10; i++) {
+            for(int i = 1; i < 10; i++){
                 Location newLoc = new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ() + i), loc.getZ() + i);
                 Location newLocBelow = new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()) - 1, loc.getZ() + i);
-                if(!newLocBelow.getBlock().getType().equals(Material.AIR)) {
+                if(!newLocBelow.getBlock().getType().equals(Material.AIR)){
                     p.setFallDistance(0);
                     p.teleport(newLoc);
                     return true;
@@ -109,45 +109,45 @@ public class TeleportManager {
      * @param p The player that will be teleported.
      * @return Whether the teleport was successful.
      */
-    public boolean teleportIsland(Player p) {
-        if(VoidSpawn.IslandWorld) {
-            if(IslandWorldApi.haveIsland(p.getName()) || IslandWorldApi.isHelpingIsland(p.getName())) {
+    public boolean teleportIsland(Player p){
+        if(VoidSpawn.IslandWorld){
+            if(IslandWorldApi.haveIsland(p.getName()) || IslandWorldApi.isHelpingIsland(p.getName())){
                 SimpleIsland island = IslandWorld.getInstance().getPlayerIsland(p);
-                if(island != null) {
+                if(island != null){
                     return islandWorldTeleport(island, p);
                 }
                 island = IslandWorld.getInstance().getHelpingIsland(p);
-                if(island != null) {
+                if(island != null){
                     return islandWorldTeleport(island, p);
                 }
             }
-        } else if(VoidSpawn.ASkyBlock) {
-            if(ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId()) || ASkyBlockAPI.getInstance().inTeam(p.getUniqueId())) {
+        }else if(VoidSpawn.ASkyBlock){
+            if(ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId()) || ASkyBlockAPI.getInstance().inTeam(p.getUniqueId())){
                 Location location = ASkyBlockAPI.getInstance().getHomeLocation(p.getUniqueId());
-                if(location != null) {
+                if(location != null){
                     p.setFallDistance(0);
                     p.teleport(location);
                     return true;
                 }
                 Location loc = ASkyBlockAPI.getInstance().getIslandLocation(p.getUniqueId());
                 p.setFallDistance(0);
-                if(loc != null) {
+                if(loc != null){
                     loc.setY(loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()));
                     p.teleport(loc);
-                } else {
+                }else{
                     p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
                 }
                 return true;
             }
-        } else if(VoidSpawn.USkyBlock) {
+        }else if(VoidSpawn.USkyBlock){
             uSkyBlockAPI usb = (uSkyBlockAPI) Bukkit.getPluginManager().getPlugin("uSkyBlock");
             IslandInfo info = usb.getIslandInfo(p);
-            if(info.getWarpLocation() != null) {
+            if(info.getWarpLocation() != null){
                 p.setFallDistance(0);
                 p.teleport(info.getWarpLocation());
                 return true;
             }
-            if(info.getIslandLocation() != null) {
+            if(info.getIslandLocation() != null){
                 p.setFallDistance(0);
                 p.teleport(info.getIslandLocation());
                 return true;
@@ -156,7 +156,7 @@ public class TeleportManager {
         return false;
     }
 
-    private boolean islandWorldTeleport(SimpleIsland island, Player p) {
+    private boolean islandWorldTeleport(SimpleIsland island, Player p){
         p.setFallDistance(0);
         Location loc = island.getLocation().toLocation();
         loc.setWorld(IslandWorldApi.getIslandWorld());

@@ -8,13 +8,13 @@ import org.bukkit.entity.Player;
 public class Modes implements SubCommand {
 
     @Override
-    public boolean onCommand(Player p, String[] args) {
-        if(!p.hasPermission(permission())) {
+    public boolean onCommand(Player p, String[] args){
+        if(!p.hasPermission(permission())){
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
         }
         p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
-        for(String s : ModeManager.getInstance().getModes().keySet()) {
+        for(String s : ModeManager.getInstance().getModes().keySet()){
             SubMode mode = ModeManager.getInstance().getSubMode(s);
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + mode.getHelp()));
         }
@@ -22,12 +22,12 @@ public class Modes implements SubCommand {
     }
 
     @Override
-    public String helpInfo() {
+    public String helpInfo(){
         return "/vs modes - Gets all available modes";
     }
 
     @Override
-    public String permission() {
+    public String permission(){
         return "vs.admin.modes";
     }
 }

@@ -15,19 +15,19 @@ public class ModeManager {
      *
      * @return The ModeManager
      */
-    public static ModeManager getInstance() {
+    public static ModeManager getInstance(){
         return instance;
     }
 
     /**
      * Setup the ModeManager instance. Should only be called on startup.
      */
-    public void setUp() {
+    public void setUp(){
         addMode("spawn", new Spawn());
         addMode("touch", new Touch());
         addMode("none", new None());
         addMode("command", new Command());
-        if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock) {
+        if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock){
             addMode("island", new Island());
         }
     }
@@ -38,7 +38,7 @@ public class ModeManager {
      * @param modeName The name of the mode which is used throughout settings and selection via commands.
      * @param mode     Class that implements SubMode with the functionality of the mode.
      */
-    public void addMode(String modeName, SubMode mode) {
+    public void addMode(String modeName, SubMode mode){
         modes.put(modeName, mode);
     }
 
@@ -47,7 +47,7 @@ public class ModeManager {
      *
      * @param modeName The mode name.
      */
-    public void removeMode(String modeName) {
+    public void removeMode(String modeName){
         modes.remove(modeName);
     }
 
@@ -57,7 +57,7 @@ public class ModeManager {
      * @param modeName The mode name.
      * @return Returns the SubMode containing the logic behind the mode.
      */
-    public SubMode getSubMode(String modeName) {
+    public SubMode getSubMode(String modeName){
         return modes.get(modeName);
     }
 
@@ -66,7 +66,7 @@ public class ModeManager {
      *
      * @return HashMap containing to the mode names and SubMode class.
      */
-    public HashMap<String, SubMode> getModes() {
+    public HashMap<String, SubMode> getModes(){
         return modes;
     }
 }
