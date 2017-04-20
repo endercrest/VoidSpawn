@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class Message implements SubCommand {
 
     @Override
-    public boolean onCommand(Player p, String[] args) {
+    public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
@@ -15,10 +15,10 @@ public class Message implements SubCommand {
         if(args.length == 1){
             ConfigManager.getInstance().removeMessage(p.getWorld().getName());
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Message has been cleared."));
-        }else if(args.length > 1) {
+        }else if(args.length > 1){
             String message = "";
             for(int i = 1; i < args.length; i++){
-                message += args[i]+" ";
+                message += args[i] + " ";
             }
             ConfigManager.getInstance().setMessage(message, p.getWorld().getName());
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Message Set!"));
@@ -27,12 +27,12 @@ public class Message implements SubCommand {
     }
 
     @Override
-    public String helpInfo() {
+    public String helpInfo(){
         return "/vs message [message] - Adds a teleport message upon a player teleports, removes message if empty.";
     }
 
     @Override
-    public String permission() {
+    public String permission(){
         return "vs.admin.message";
     }
 }

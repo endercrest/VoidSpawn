@@ -8,26 +8,25 @@ import org.bukkit.entity.Player;
 public class Spawn implements SubMode {
 
     @Override
-    public boolean onActivate(Player player, String worldName) {
-        if (ConfigManager.getInstance().isWorldSpawnSet(worldName)) {
+    public boolean onActivate(Player player, String worldName){
+        if(ConfigManager.getInstance().isWorldSpawnSet(worldName)){
             return TeleportManager.getInstance().teleportSpawn(player, worldName);
-        } else {
-            player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Mode has been set but spawn has not been."));
-            return false;
         }
+        player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Mode has been set but spawn has not been."));
+        return false;
     }
 
     @Override
-    public boolean onSet(String[] args, String worldName, Player p) {
-        ConfigManager.getInstance().setMode(worldName, args[1]);
-        if(!ConfigManager.getInstance().isWorldSpawnSet(worldName) && args[1].equalsIgnoreCase("Spawn")){
+    public boolean onSet(String[] args, String worldName, Player p){
+        ConfigManager.getInstance().setMode(worldName, "spawn");
+        if(!ConfigManager.getInstance().isWorldSpawnSet(worldName)){
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Next set the &6spawn point."));
         }
         return true;
     }
 
     @Override
-    public String getHelp() {
+    public String getHelp(){
         return "&6Spawn &f- Will teleport player to set spot.";
     }
 }

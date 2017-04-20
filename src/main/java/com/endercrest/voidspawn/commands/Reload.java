@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class Reload implements SubCommand {
 
     @Override
-    public boolean onCommand(Player p, String[] args) {
+    public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
@@ -18,12 +18,12 @@ public class Reload implements SubCommand {
     }
 
     @Override
-    public String helpInfo() {
+    public String helpInfo(){
         return "/vs reload - Reloads VoidSpawn configs";
     }
 
     @Override
-    public String permission() {
+    public String permission(){
         return "vs.admin.reload";
     }
 }

@@ -5,8 +5,9 @@ import com.endercrest.voidspawn.VoidSpawn;
 import org.bukkit.entity.Player;
 
 public class Remove implements SubCommand {
+
     @Override
-    public boolean onCommand(Player p, String[] args) {
+    public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
@@ -14,7 +15,7 @@ public class Remove implements SubCommand {
         if(args.length > 1){
             String worldName = "";
             for(int i = 1; i < args.length; i++){
-                worldName += args[i]+" ";
+                worldName += args[i] + " ";
             }
 
             if(!VoidSpawn.isValidWorld(worldName)){
@@ -30,12 +31,12 @@ public class Remove implements SubCommand {
     }
 
     @Override
-    public String helpInfo() {
+    public String helpInfo(){
         return "/vs remove [name] - Removes the spawn for the world";
     }
 
     @Override
-    public String permission() {
+    public String permission(){
         return "vs.admin.remove";
     }
 }
