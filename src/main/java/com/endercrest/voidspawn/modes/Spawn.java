@@ -18,8 +18,8 @@ public class Spawn implements SubMode {
 
     @Override
     public boolean onSet(String[] args, String worldName, Player p){
-        ConfigManager.getInstance().setMode(worldName, args[1]);
-        if(!ConfigManager.getInstance().isWorldSpawnSet(worldName) && args[1].equalsIgnoreCase("Spawn")){
+        ConfigManager.getInstance().setMode(worldName, "spawn");
+        if(!ConfigManager.getInstance().isWorldSpawnSet(worldName)){
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Next set the &6spawn point."));
         }
         return true;

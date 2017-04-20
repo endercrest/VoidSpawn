@@ -1,7 +1,9 @@
 package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.ConfigManager;
+import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
+import com.endercrest.voidspawn.modes.Spawn;
 import org.bukkit.entity.Player;
 
 public class Set implements SubCommand {
@@ -23,10 +25,12 @@ public class Set implements SubCommand {
                 return false;
             }
             ConfigManager.getInstance().setSpawn(p, worldName);
+            ModeManager.getInstance().getSubMode("spawn").onSet(new String[]{}, worldName, p);
         }else{
             ConfigManager.getInstance().setSpawn(p, p.getWorld().getName());
+            ModeManager.getInstance().getSubMode("spawn").onSet(new String[]{}, p.getWorld().getName(), p);
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Spawn Set"));
+        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Spawn Set & Mode set to Spawn"));
         return true;
     }
 
