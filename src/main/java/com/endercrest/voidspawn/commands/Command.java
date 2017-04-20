@@ -8,13 +8,13 @@ public class Command implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args) {
-        if (!p.hasPermission(permission())) {
+        if(!p.hasPermission(permission())) {
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
         }
-        if (args.length > 1) {
+        if(args.length > 1) {
             String command = "";
-            for (int i = 1; i < args.length; i++) {
+            for(int i = 1; i < args.length; i++) {
                 command += args[i] + " ";
             }
             ConfigManager.getInstance().setCommand(command, p.getWorld().getName());

@@ -60,7 +60,7 @@ public class VoidSpawn extends JavaPlugin {
     }
 
     public void loadConfiguration() {
-        if (!getConfig().contains("color-logs")) {
+        if(!getConfig().contains("color-logs")) {
             getConfig().addDefault("color-logs", true);
         }
         getConfig().options().copyDefaults(true);
@@ -69,6 +69,7 @@ public class VoidSpawn extends JavaPlugin {
 
     /**
      * Add Color to Messages
+     *
      * @param str The String
      * @return Coloured String
      */
@@ -78,10 +79,11 @@ public class VoidSpawn extends JavaPlugin {
 
     /**
      * Sends Messages to Console
+     *
      * @param obj The Obj(Message)
      */
     public void log(Object obj) {
-        if (getConfig().getBoolean("color-logs", true)) {
+        if(getConfig().getBoolean("color-logs", true)) {
             getServer().getConsoleSender().sendMessage(colorize("&3[&d" + getName() + "&3] &r" + obj));
         } else {
             Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + colorize((String) obj).replaceAll("(?)\\u00a7([a-f0-9k-or])", ""));
@@ -90,6 +92,7 @@ public class VoidSpawn extends JavaPlugin {
 
     /**
      * Checks if the selected world is a valid world.
+     *
      * @param worldName The world name that will be checked.
      * @return True if the world does not return null.
      */

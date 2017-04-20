@@ -12,12 +12,12 @@ public class Command implements SubMode {
         String commandString = ConfigManager.getInstance().getString(worldName + ".command");
         String[] commands = commandString.split(";");
         boolean success = true;
-        for (String command : commands) {
+        for(String command : commands) {
             boolean b = player.performCommand(command.trim());
-            if (!b)
+            if(!b)
                 success = false;
         }
-        if (!success) {
+        if(!success) {
             player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Command failed."));
         }
         return success;

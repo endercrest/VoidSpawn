@@ -9,12 +9,12 @@ public class Modes implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args) {
-        if (!p.hasPermission(permission())) {
+        if(!p.hasPermission(permission())) {
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
         }
         p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
-        for (String s : ModeManager.getInstance().getModes().keySet()) {
+        for(String s : ModeManager.getInstance().getModes().keySet()) {
             SubMode mode = ModeManager.getInstance().getSubMode(s);
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + mode.getHelp()));
         }

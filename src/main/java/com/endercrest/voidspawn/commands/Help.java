@@ -1,7 +1,9 @@
 package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.VoidSpawn;
+
 import java.util.HashMap;
+
 import org.bukkit.entity.Player;
 
 public class Help implements SubCommand {
@@ -14,11 +16,11 @@ public class Help implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args) {
-        if (!p.hasPermission(permission())) {
+        if(!p.hasPermission(permission())) {
             return true;
         }
         p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
-        for (String command : commands.keySet()) {
+        for(String command : commands.keySet()) {
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));
         }
         return true;

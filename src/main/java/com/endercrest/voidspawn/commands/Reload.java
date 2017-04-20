@@ -8,7 +8,7 @@ public class Reload implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args) {
-        if (!p.hasPermission(permission())) {
+        if(!p.hasPermission(permission())) {
             p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
             return true;
         }
