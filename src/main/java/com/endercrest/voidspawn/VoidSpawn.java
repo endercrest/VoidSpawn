@@ -69,7 +69,7 @@ public class VoidSpawn extends JavaPlugin {
      * @return Coloured String
      */
     public static String colorize(String str){
-        return str.replaceAll("(?i)&([a-f0-9k-or])", "\\u00a7$1");
+        return str.replaceAll("(?i)&([a-f0-9k-or])", "\u00a7$1");
     }
 
     /**
@@ -81,7 +81,7 @@ public class VoidSpawn extends JavaPlugin {
         if(getConfig().getBoolean("color-logs", true)){
             getServer().getConsoleSender().sendMessage(colorize("&3[&d" + getName() + "&3] &r" + obj));
         }else{
-            Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + colorize((String) obj).replaceAll("(?)\\u00a7([a-f0-9k-or])", ""));
+            Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + colorize((String) obj).replaceAll("(?)\u00a7([a-f0-9k-or])", ""));
         }
     }
 
