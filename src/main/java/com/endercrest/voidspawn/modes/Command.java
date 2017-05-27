@@ -10,13 +10,17 @@ public class Command implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName){
         player.setFallDistance(0);
-        String commandString = ConfigManager.getInstance().getString(worldName + ".command");
+        String commandString = ConfigManager.getInstance().getString(worldName + ".command")
+                .replace("${player.name}", player.getName())
+                .replace("${player.uuid}", player.getUniqueId().toString())
+                .replace("${player.coord.x}", player.getLocation().getBlockX()+"")
+                .replace("${player.coord.y}", player.getLocation().getBlockY()+"")
+                .replace("${player.coord.z}", player.getLocation().getBlockZ()+"")
+                .replace("${player.coord.world}", player.getLocation().getWorld().getName());
         String[] commands = commandString.split(";");
         boolean success = true;
         for(String command : commands){
-            command = command.replace("${playername}", player.getName());
             boolean status;
-
             String[] perms = command.split(":", 2);
             //Check if cmd needs to be ran as OP/Console
             if(perms.length > 1 && perms[0].equalsIgnoreCase("op")){
@@ -30,7 +34,7 @@ public class Command implements SubMode {
                 success = false;
         }
         if(!success){
-            player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. Command failed."));
+            player.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cContact Admin. One of the commands failed."));
         }
         return success;
     }
