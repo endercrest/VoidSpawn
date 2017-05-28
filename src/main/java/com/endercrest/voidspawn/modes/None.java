@@ -20,4 +20,9 @@ public class None implements SubMode {
     public String getHelp(){
         return "&6None &f- Sets the world to have no mode";
     }
+
+    @Override
+    public String getName(){
+        return "None";
+    }
 }

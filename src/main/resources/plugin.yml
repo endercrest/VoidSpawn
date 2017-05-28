@@ -40,6 +40,9 @@ permissions:
     vs.admin.hybrid:
         description: Grants you the /void hybrid command
         default: op
+    vs.admin.detector:
+        description: Grants you the /void detector command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
@@ -54,6 +57,7 @@ permissions:
             vs.admin.command: true
             vs.admin.keepinventory: true
             vs.admin.hybrid: true
+            vs.admin.detector: true
     vs.*:
         description: Gives all permissions
         default: false

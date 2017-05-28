@@ -31,4 +31,10 @@ public interface SubMode {
      * @return Returns the string that will be displayed upon player request details of the mode.
      */
     String getHelp();
+
+    /**
+     * Get the name of the mode.
+     * @return The string version of the mode.
+     */
+    String getName();
 }

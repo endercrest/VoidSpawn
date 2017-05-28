@@ -22,4 +22,9 @@ public class Island implements SubMode {
     public String getHelp(){
         return "&6Island &f- Will teleport player back to IslandWorld island";
     }
+
+    @Override
+    public String getName(){
+        return "Island";
+    }
 }

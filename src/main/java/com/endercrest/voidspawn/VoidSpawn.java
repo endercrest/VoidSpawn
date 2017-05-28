@@ -18,6 +18,7 @@ public class VoidSpawn extends JavaPlugin {
         ConfigManager.getInstance().setUp(this);
         TeleportManager.getInstance().setUp(this);
         ModeManager.getInstance().setUp();
+        DetectorManager.getInstance().setUp();
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getCommand("voidspawn").setExecutor(new CommandHandler(this));
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");

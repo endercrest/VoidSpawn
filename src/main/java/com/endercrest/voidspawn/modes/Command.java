@@ -49,4 +49,9 @@ public class Command implements SubMode {
     public String getHelp(){
         return "&6Command &f- Uses configurable command(s) to send player to spawn";
     }
+
+    @Override
+    public String getName(){
+        return "Command";
+    }
 }

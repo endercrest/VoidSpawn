@@ -35,6 +35,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("keepinventory", new KeepInventory());
         commands.put("hybrid", new Hybrid());
         commands.put("toggle", new Toggle());
+        commands.put("detector", new Detector());
     }
 
     @Override

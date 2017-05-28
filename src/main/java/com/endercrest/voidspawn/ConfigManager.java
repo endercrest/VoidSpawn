@@ -132,7 +132,7 @@ public class ConfigManager {
      * Get the current mode for the specified world.
      *
      * @param world The world that the mode is set for.
-     * @return String name of the mode.
+     * @return String name of the mode or empty string if nothing is found.
      */
     public String getMode(String world){
         world = WorldName.configSafe(world);
@@ -338,6 +338,31 @@ public class ConfigManager {
 
         set(world + ".command", command);
         saveConfig();
+    }
+
+    /**
+     * Set the detector value for a world, this method doesn't validate whether it is a valid detector.
+     * @param detector The detector value to set.
+     * @param world The world.
+     */
+    public void setDetector(String detector, String world){
+        world = WorldName.configSafe(world);
+
+        set(world + ".detector", detector);
+        saveConfig();
+    }
+
+    /**
+     * Gets the detector set for a world. If it is not set, the value will return the default detector
+     * defined in DetectorManager.
+     * @param world The world
+     * @return The string name of the detector or defaults to default value set in DetectorManager.
+     */
+    public String getDetector(String world){
+        world = WorldName.configSafe(world);
+
+        String detector = getString(world+".detector");
+        return !detector.isEmpty() ? detector : DetectorManager.getInstance().getDefaultDetectorName();
     }
 
     /**

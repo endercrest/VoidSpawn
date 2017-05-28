@@ -62,11 +62,22 @@ public class ModeManager {
     }
 
     /**
+     * Get the mode's class for the specified world. Returns null if not set or if mode can't be found.
+     *
+     * @param world The world name.
+     * @return Class of mode or null if can't find it.
+     */
+    public SubMode getWorldSubMode(String world){
+        String mode = ConfigManager.getInstance().getMode(world);
+        return getSubMode(mode);
+    }
+
+    /**
      * Gets the HashMap containing all the modes and it's mode names. This is not a copy of the HashMap.
      *
-     * @return HashMap containing to the mode names and SubMode class.
+     * @return HashMap clone containing to the mode names and SubMode class.
      */
     public HashMap<String, SubMode> getModes(){
-        return modes;
+        return new HashMap<>(modes);
     }
 }

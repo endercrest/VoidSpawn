@@ -29,4 +29,9 @@ public class Spawn implements SubMode {
     public String getHelp(){
         return "&6Spawn &f- Will teleport player to set spot.";
     }
+
+    @Override
+    public String getName(){
+        return "Spawn";
+    }
 }

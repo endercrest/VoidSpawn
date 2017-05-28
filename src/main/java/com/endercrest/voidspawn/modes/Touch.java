@@ -21,4 +21,9 @@ public class Touch implements SubMode {
     public String getHelp(){
         return "&6Touch &f- Will teleport player to place they last touched the ground.";
     }
+
+    @Override
+    public String getName(){
+        return "Touch";
+    }
 }
