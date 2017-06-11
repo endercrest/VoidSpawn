@@ -9,6 +9,10 @@ public class Sound implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
+        if(!p.hasPermission(permission())){
+            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
+            return true;
+        }
         if(args.length == 1){
             p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix +
                     "All sounds available are listed here: https://goo.gl/jGcL8B or use 'clear' to remove the sound."));

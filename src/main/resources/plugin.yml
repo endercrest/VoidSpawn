@@ -43,6 +43,9 @@ permissions:
     vs.admin.detector:
         description: Grants you the /void detector command
         default: op
+    vs.admin.sound:
+        description: Grants you the /void sound command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
