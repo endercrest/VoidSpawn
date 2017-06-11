@@ -5,6 +5,7 @@ import com.endercrest.voidspawn.utils.WorldName;
 import java.io.File;
 import java.io.IOException;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -137,7 +138,7 @@ public class ConfigManager {
     public String getMode(String world){
         world = WorldName.configSafe(world);
 
-        return getString(world + ".mode");
+        return getString(world + ".mode", "");
     }
 
     /**
@@ -150,6 +151,94 @@ public class ConfigManager {
         world = WorldName.configSafe(world);
 
         return isSet(world + ".mode");
+    }
+
+    /**
+     * Checks if the specified world has a sound set. This just requires the name of a sound to be set.
+     * This also doesn't check if it is a valid sound either.
+     * @param world The world to be checked.
+     * @return true if a world has a sound set. Does not verify that the sound is valid.
+     */
+    public boolean isSoundSet(String world){
+        world = WorldName.configSafe(world);
+
+        return isSet(world + ".sound.name");
+    }
+
+    /**
+     * Sets the sound for the specific world.
+     * @param world The world
+     * @param sound The sound, does not require to be a valid world.
+     */
+    public void setSound(String world, String sound){
+        world = WorldName.configSafe(world);
+
+        set(world+".sound.name", sound);
+    }
+
+    /**
+     * Get the sound for a world.
+     * @param world The world to retrieve the value from.
+     * @return A string with the name of the sound. Does not validate and returns null if no sound is set.
+     */
+    public String getSound(String world){
+        world = WorldName.configSafe(world);
+
+        return getString(world+".sound.name", null);
+    }
+
+    /**
+     * Removes the sounds from the world's config. As well as removing the value and pitch values.
+     * @param world The world to remove the sound from.
+     */
+    public void removeSound(String world){
+        world = WorldName.configSafe(world);
+
+        set(world+".sound", null);
+    }
+
+    /**
+     * Set the volume of a sound.
+     * @param world The world
+     * @param value THe value, does not validate, but should be between 0 - 1
+     */
+    public void setVolume(String world, float value){
+        world = WorldName.configSafe(world);
+
+        set(world+".sound.volume", value);
+    }
+
+    /**
+     * Set the pitch of the sound.
+     * @param world The world
+     * @param value The value, does not validate, but should be between 0 - 2
+     */
+    public void setPitch(String world, float value){
+        world = WorldName.configSafe(world);
+
+        set(world+".sound.pitch", value);
+    }
+
+    /**
+     * Get the volume of the sound for the world.
+     * @param world The world.
+     * @return Returns the volume set or defaults to 1.0
+     */
+    public float getVolume(String world){
+        world = WorldName.configSafe(world);
+
+        return getFloat(world+".sound.volume", 1f);
+    }
+
+    /**
+     * Get the pitch of the sound for the world.
+     * @param world The world
+     * @return Returns the pitch set or defaults to 1.0
+     */
+    public float getPitch(String world){
+        world = WorldName.configSafe(world);
+
+        return getFloat(world+"sound.pitch", 1f);
     }
 
     /**
@@ -235,7 +324,7 @@ public class ConfigManager {
     public boolean getKeepInventory(String world){
         world = WorldName.configSafe(world);
 
-        return config.getBoolean(world + ".keep_inventory", true);
+        return getBoolean(world + ".keep_inventory", true);
     }
 
     /**
@@ -260,7 +349,7 @@ public class ConfigManager {
     public boolean isHybrid(String world){
         world = WorldName.configSafe(world);
 
-        return config.getBoolean(world + ".hybrid", false);
+        return getBoolean(world + ".hybrid", false);
     }
 
     /**
@@ -297,7 +386,7 @@ public class ConfigManager {
     public String getMessage(String world){
         world = WorldName.configSafe(world);
 
-        return getString(world + ".message");
+        return getString(world + ".message", "");
     }
 
     /**
@@ -324,7 +413,7 @@ public class ConfigManager {
     public int getOffSet(String world){
         world = WorldName.configSafe(world);
 
-        return getInt(world + ".offset");
+        return getInt(world + ".offset", -1);
     }
 
     /**
@@ -361,7 +450,7 @@ public class ConfigManager {
     public String getDetector(String world){
         world = WorldName.configSafe(world);
 
-        String detector = getString(world+".detector");
+        String detector = getString(world+".detector", "");
         return !detector.isEmpty() ? detector : DetectorManager.getInstance().getDefaultDetectorName();
     }
 
@@ -381,8 +470,8 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return double if it exists.
      */
-    public double getDouble(String path){
-        return config.getDouble(path);
+    public double getDouble(String path, double def){
+        return config.getDouble(path, def);
     }
 
     /**
@@ -391,8 +480,8 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return float if it exists.
      */
-    public float getFloat(String path){
-        return (float) config.getDouble(path);
+    public float getFloat(String path, float def){
+        return (float) config.getDouble(path, def);
     }
 
     /**
@@ -401,8 +490,8 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return string if it exists.
      */
-    public String getString(String path){
-        return config.getString(path, "");
+    public String getString(String path, String def){
+        return config.getString(path, def);
     }
 
     /**
@@ -411,8 +500,8 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return boolean if it exists.
      */
-    public boolean getBoolean(String path){
-        return config.getBoolean(path, true);
+    public boolean getBoolean(String path, boolean def){
+        return config.getBoolean(path, def);
     }
 
     /**
@@ -421,8 +510,8 @@ public class ConfigManager {
      * @param path THe YAML path.
      * @return integer if it exists.
      */
-    public int getInt(String path){
-        return config.getInt(path, -1);
+    public int getInt(String path, int def){
+        return config.getInt(path, def);
     }
 
     /**

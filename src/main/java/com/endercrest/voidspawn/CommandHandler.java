@@ -36,6 +36,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("hybrid", new Hybrid());
         commands.put("toggle", new Toggle());
         commands.put("detector", new Detector());
+        commands.put("sound", new Sound());
     }
 
     @Override

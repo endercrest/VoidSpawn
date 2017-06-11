@@ -42,13 +42,12 @@ public class TeleportManager {
      * @return Whether the teleport was successful.
      */
     public boolean teleportSpawn(Player player, String worldName){
-        double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x");
-        double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y");
-        double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z");
-        float pitch = ConfigManager.getInstance().getFloat(worldName + ".spawn.pitch");
-        float yaw = ConfigManager.getInstance().getFloat(worldName + ".spawn.yaw");
-        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".spawn.world"));
-
+        double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x", 0);
+        double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y", 0);
+        double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z", 0);
+        float pitch = ConfigManager.getInstance().getFloat(worldName + ".spawn.pitch", 0);
+        float yaw = ConfigManager.getInstance().getFloat(worldName + ".spawn.yaw", 0);
+        World world = plugin.getServer().getWorld(ConfigManager.getInstance().getString(worldName + ".spawn.world", "world"));
         Location location = new Location(world, x, y, z, yaw, pitch);
         player.setFallDistance(0);
         player.teleport(location);

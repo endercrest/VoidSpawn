@@ -3,6 +3,7 @@ package com.endercrest.voidspawn;
 import com.endercrest.voidspawn.modes.SubMode;
 import com.endercrest.voidspawn.modes.*;
 
+import javax.naming.NameAlreadyBoundException;
 import java.util.HashMap;
 
 public class ModeManager {
@@ -23,12 +24,16 @@ public class ModeManager {
      * Setup the ModeManager instance. Should only be called on startup.
      */
     public void setUp(){
-        addMode("spawn", new Spawn());
-        addMode("touch", new Touch());
-        addMode("none", new None());
-        addMode("command", new Command());
-        if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock){
-            addMode("island", new Island());
+        try{
+            addMode("spawn", new Spawn());
+            addMode("touch", new Touch());
+            addMode("none", new None());
+            addMode("command", new Command());
+            if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock){
+                addMode("island", new Island());
+            }
+        }catch(NameAlreadyBoundException e){
+            e.printStackTrace();
         }
     }
 
@@ -37,18 +42,24 @@ public class ModeManager {
      *
      * @param modeName The name of the mode which is used throughout settings and selection via commands.
      * @param mode     Class that implements SubMode with the functionality of the mode.
+     *
+     * @throws NameAlreadyBoundException Thrown when a mode with the name specified already exists.
      */
-    public void addMode(String modeName, SubMode mode){
+    public void addMode(String modeName, SubMode mode) throws NameAlreadyBoundException{
+        modeName = modeName.toLowerCase();
+
+        if(modes.containsKey(modeName))
+            throw new NameAlreadyBoundException(String.format("A mode with the name %s has already been set.", modeName));
         modes.put(modeName, mode);
     }
 
     /**
-     * Removes the mode from being selectable.
+     * Removes the mode from being selectable, if it exists..
      *
      * @param modeName The mode name.
      */
     public void removeMode(String modeName){
-        modes.remove(modeName);
+        modes.remove(modeName.toLowerCase());
     }
 
     /**
@@ -58,7 +69,7 @@ public class ModeManager {
      * @return Returns the SubMode containing the logic behind the mode.
      */
     public SubMode getSubMode(String modeName){
-        return modes.get(modeName);
+        return modes.get(modeName.toLowerCase());
     }
 
     /**
@@ -69,7 +80,7 @@ public class ModeManager {
      */
     public SubMode getWorldSubMode(String world){
         String mode = ConfigManager.getInstance().getMode(world);
-        return getSubMode(mode);
+        return getSubMode(mode.toLowerCase());
     }
 
     /**

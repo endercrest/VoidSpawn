@@ -4,7 +4,16 @@ public class NumberUtil {
 
     public static boolean isInteger(String s){
         try{
-            int d = Integer.parseInt(s);
+            Integer.parseInt(s);
+        }catch(NumberFormatException nfe){
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isFloat(String s){
+        try{
+            Float.parseFloat(s);
         }catch(NumberFormatException nfe){
             return false;
         }

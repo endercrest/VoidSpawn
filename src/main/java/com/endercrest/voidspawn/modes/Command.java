@@ -10,7 +10,7 @@ public class Command implements SubMode {
     @Override
     public boolean onActivate(Player player, String worldName){
         player.setFallDistance(0);
-        String commandString = ConfigManager.getInstance().getString(worldName + ".command")
+        String commandString = ConfigManager.getInstance().getString(worldName + ".command", "")
                 .replace("${player.name}", player.getName())
                 .replace("${player.uuid}", player.getUniqueId().toString())
                 .replace("${player.coord.x}", player.getLocation().getBlockX()+"")

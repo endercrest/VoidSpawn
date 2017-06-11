@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.detectors.NetherDetector;
 import com.endercrest.voidspawn.detectors.SubDetector;
 import com.endercrest.voidspawn.detectors.VoidDetector;
 
+import javax.naming.NameAlreadyBoundException;
 import java.util.HashMap;
 
 public class DetectorManager {
@@ -38,13 +39,38 @@ public class DetectorManager {
     }
 
     /**
+     * Add a new detector that can be accessed in-game and be set for worlds.
+     *
+     * @param name The name of the detector.
+     * @param detector The class definition.
+     *
+     * @throws NameAlreadyBoundException Thrown when the detector has already been set with that name.
+     */
+    public void addDetector(String name, SubDetector detector) throws NameAlreadyBoundException{
+        name = name.toLowerCase();
+
+        if(detectors.containsKey(name))
+            throw new NameAlreadyBoundException(String.format("A detector with the name %s has already been set.", name));
+
+        detectors.put(name, detector);
+    }
+
+    /**
+     * Removes detector, from being selectable and stops world from using this detector.
+     * @param name The name of the detector.
+     */
+    public void removeDetector(String name){
+        detectors.remove(name.toLowerCase());
+    }
+
+    /**
      * Get the world detector or returns the default detector (VoidDetector)
      * @param worldName The world name.
      * @return Detector if set or defaults to VoidDetector.
      */
     public SubDetector getWorldDetector(String worldName){
         String detector = ConfigManager.getInstance().getDetector(worldName);
-        return getDetector(detector);
+        return getDetector(detector.toLowerCase());
     }
 
     /**
@@ -53,7 +79,7 @@ public class DetectorManager {
      * @return Detector or default if not exists.
      */
     public SubDetector getDetector(String detector){
-        SubDetector sd = detectors.get(detector);
+        SubDetector sd = detectors.get(detector.toLowerCase());
         return sd == null ? defaultDetector : sd;
     }
 
@@ -71,5 +97,19 @@ public class DetectorManager {
      */
     public SubDetector getDefaultDetector(){
         return defaultDetector;
+    }
+
+    /**
+     * Set a new default detector.
+     * @param name The name of the detector.
+     * @return Returns true if the default detector has successfully been set.
+     */
+    public boolean setDefaultDetector(String name){
+        SubDetector newDetector = getDetector(name);
+
+        if(newDetector != null)
+            defaultDetector = newDetector;
+
+        return newDetector != null;
     }
 }
