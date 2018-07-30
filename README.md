@@ -11,12 +11,13 @@ VoidSpawn is a easy to use plugin built for Bukkit & Spigot where the player is 
 
 Requirements
 ------
-* Spigot MC 1.11+ (1.11-R0.1-SNAPSHOT or Higher)
-* IslandWorld 6.9 (Optional) - Adds additional features.
-* ASkyBlock 3.0.5 (Optional) - Adds additional features.
-* uSkyBlock 2.7.2 (Optional) - Adds additional features.
+* Spigot MC 1.13+ (1.13-R0.1-SNAPSHOT or Higher)
+* IslandWorld 8.0 (Optional) - Adds additional features.
+* ASkyBlock 3.0.9.3 (Optional) - Adds additional features.
+* uSkyBlock 2.7.5 (Optional) - Adds additional features.
 
-Currently known supported versions include Spigot 1.8, 1.9, 1.10 & 1.11.
+VoidSpawn 1.17.0 only supports MC/Spigot 1.13 and above. For MC/Spigot versions below,
+there are unsupported versions under the releases tab.
 
 Compiling
 ------
@@ -37,12 +38,20 @@ mvn install
 
 Contributing
 ------
-Feel free to make contributions to the repository. When making pull-requests, I ask that you have it aimed at the develop branch where all pre-release development goes. 
+Feel free to make contributions to the repository. When making
+pull-requests, I ask that you have it aimed at the develop branch
+where all pre-release development goes. 
 
 Installation/Setup
 ------
-VoidSpawn requires a working version of [Spigot](http://www.spigotmc.org/) or [Bukkit](https://bukkit.org/) to be installed and setup. Once a Spigot or Bukkit server is setup, drop VoidSpawn.jar into the plugins folder of the server and restart the server. For details on how to use the plugin in-game, head over to the VoidSpawn resource page on [SpigotMC](https://www.spigotmc.org/resources/voidspawn.19350/).
+VoidSpawn requires a working version of [Spigot](http://www.spigotmc.org/)
+or [Bukkit](https://bukkit.org/) to be installed and setup. Once a Spigot
+or Bukkit server is setup, drop VoidSpawn.jar into the plugins folder of
+the server and restart the server. For details on how to use the plugin
+in-game, head over to the VoidSpawn resource page on
+[SpigotMC](https://www.spigotmc.org/resources/voidspawn.19350/).
 
 Reporting Issues
 ------
-Run into an issue? Please use the issue tracker provided by GitHub. Issues will hopefully be resolved as soon a possible.
+Run into an issue? Please use the issue tracker provided by GitHub.
+Issues will hopefully be resolved as soon a possible.

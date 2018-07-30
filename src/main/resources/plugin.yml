@@ -5,6 +5,7 @@ website: ${project.url}
 description: Teleports player on contact with the void.
 authors: [tcvs]
 softdepend: [IslandWorld, ASkyBlock, uSkyBlock]
+api-version: 1.13
 commands:
     voidspawn:
         description: All commands for voidspawn
