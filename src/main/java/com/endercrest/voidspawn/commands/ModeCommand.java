@@ -33,7 +33,10 @@ public class ModeCommand implements SubCommand {
         }else if(args.length == 2){
             if(ModeManager.getInstance().getModes().containsKey(args[1].toLowerCase())){
                 SubMode mode = ModeManager.getInstance().getSubMode(args[1].toLowerCase());
-                if(mode.onSet(args, p.getWorld().getName(), p)){
+                if(!mode.isEnabled()){
+                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
+                    return false;
+                } else if(mode.onSet(args, p.getWorld().getName(), p)){
                     p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Set mode for '&6" + p.getWorld().getName() + "&f'"));
                     return true;
                 }
@@ -53,7 +56,10 @@ public class ModeCommand implements SubCommand {
             }
             if(ModeManager.getInstance().getModes().containsKey(args[1].toLowerCase())){
                 SubMode mode = ModeManager.getInstance().getSubMode(args[1].toLowerCase());
-                if(mode.onSet(args, worldName, p)){
+                if(!mode.isEnabled()){
+                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
+                    return false;
+                } else if(mode.onSet(args, worldName, p)){
                     p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Set mode for '&6" + worldName + "&f'"));
                     return true;
                 }

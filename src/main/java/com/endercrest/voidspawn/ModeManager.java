@@ -23,15 +23,13 @@ public class ModeManager {
     /**
      * Setup the ModeManager instance. Should only be called on startup.
      */
-    public void setUp(){
+    public void setUp(VoidSpawn plugin){
         try{
             addMode("spawn", new Spawn());
             addMode("touch", new Touch());
             addMode("none", new None());
-            addMode("command", new Command());
-            if(VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.USkyBlock){
-                addMode("island", new Island());
-            }
+            addMode("command", new Command(plugin));
+            addMode("island", new Island());
         }catch(NameAlreadyBoundException e){
             e.printStackTrace();
         }

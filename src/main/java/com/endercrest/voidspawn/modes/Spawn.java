@@ -4,7 +4,13 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import sun.security.krb5.Config;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Spawn implements SubMode {
 
@@ -23,6 +29,33 @@ public class Spawn implements SubMode {
         if(!ConfigManager.getInstance().isWorldSpawnSet(worldName)){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Next set the &6spawn point."));
         }
+        return true;
+    }
+
+    @Override
+    public Status[] getStatus(String worldName){
+        final boolean isSpawnSet = ConfigManager.getInstance().isWorldSpawnSet(worldName);
+        final DecimalFormat df = new DecimalFormat("0.0#");
+        final String worldSpawn = ConfigManager.getInstance().getString(worldName + ".spawn.world", worldName);
+        final double x = ConfigManager.getInstance().getDouble(worldName + ".spawn.x", 0);
+        final double y = ConfigManager.getInstance().getDouble(worldName + ".spawn.y", 0);
+        final double z = ConfigManager.getInstance().getDouble(worldName + ".spawn.z", 0);
+
+        final String coords = String.format("x: %s, y: %s, z: %s", df.format(x), df.format(y), df.format(z));
+        final String location = worldSpawn.equalsIgnoreCase(worldName) ? coords : String.format("world: %s, %s", worldSpawn, coords);
+
+        return new Status[]{
+            new Status(
+                isSpawnSet ? StatusType.COMPLETE : StatusType.INCOMPLETE,
+                String.format(
+                    "Spawn point set (%s)",
+                    isSpawnSet ? location : "/vs set")
+            ),
+        };
+    }
+
+    @Override
+    public boolean isEnabled(){
         return true;
     }
 

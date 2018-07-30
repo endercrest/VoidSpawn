@@ -20,6 +20,8 @@ public class ModesCommand implements SubCommand {
         p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
         for(String s : ModeManager.getInstance().getModes().keySet()){
             SubMode mode = ModeManager.getInstance().getSubMode(s);
+            if(!mode.isEnabled())
+                continue;
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));
         }
         return true;

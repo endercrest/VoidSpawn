@@ -43,7 +43,6 @@ public class ConfigManager {
 
         if(!isCreated){
             config.set("version", CURRENT_VERSION);
-            config.set("color-logs", true);
         }
 
         //Run Migration

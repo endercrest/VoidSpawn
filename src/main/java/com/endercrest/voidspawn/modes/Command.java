@@ -6,7 +6,15 @@ import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class Command implements SubMode {
+
+    private VoidSpawn plugin;
+
+    public Command(VoidSpawn plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onActivate(Player player, String worldName){
@@ -31,8 +39,10 @@ public class Command implements SubMode {
                 status = player.performCommand(command.trim());
             }
 
-            if(!status)
+            if(!status){
+                plugin.log(String.format("&cCommand Failed for %s! (%s)", worldName, command));
                 success = false;
+            }
         }
         if(!success){
             player.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cContact Admin. One of the commands failed."));
@@ -43,6 +53,20 @@ public class Command implements SubMode {
     @Override
     public boolean onSet(String[] args, String worldName, Player p){
         ConfigManager.getInstance().setMode(worldName, args[1]);
+        return true;
+    }
+
+    @Override
+    public Status[] getStatus(String worldName){
+        final String command = ConfigManager.getInstance().getString(worldName + ".command", null);
+        return new Status[]{
+            new Status(command == null ? StatusType.INCOMPLETE : StatusType.COMPLETE,
+                String.format("Command Set %s", command == null ? "" : String.format("(%s)", command)))
+        };
+    }
+
+    @Override
+    public boolean isEnabled(){
         return true;
     }
 

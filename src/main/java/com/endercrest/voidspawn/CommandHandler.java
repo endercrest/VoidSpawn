@@ -40,6 +40,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("toggle", new ToggleCommand());
         commands.put("detector", new DetectorCommand());
         commands.put("sound", new SoundCommand());
+        commands.put("info", new InfoCommand());
     }
 
     public Set<Map.Entry<String, SubCommand>> getCommands() {
