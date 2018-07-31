@@ -2,6 +2,7 @@ package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
+import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.NumberUtil;
 import org.bukkit.entity.Player;
 
@@ -10,11 +11,11 @@ public class Sound implements SubCommand {
     @Override
     public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
-            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
+            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
             return true;
         }
         if(args.length == 1){
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix +
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix +
                     "All sounds available are listed here: https://goo.gl/jGcL8B or use 'clear' to remove the sound."));
             return true;
         }
@@ -24,7 +25,7 @@ public class Sound implements SubCommand {
 
             if(soundName.equalsIgnoreCase("clear")){
                 ConfigManager.getInstance().removeSound(p.getWorld().getName());
-                p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("Cleared sound from %s.", p.getWorld().getName())));
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Cleared sound from %s.", p.getWorld().getName())));
                 return true;
             }
 
@@ -32,7 +33,7 @@ public class Sound implements SubCommand {
             try{
                 sound = org.bukkit.Sound.valueOf(soundName.toUpperCase());
             }catch(IllegalArgumentException e){
-                p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid sound!", soundName)));
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid sound!", soundName)));
                 return false;
             }
 
@@ -40,7 +41,7 @@ public class Sound implements SubCommand {
                 String volume = args[2];
 
                 if(!NumberUtil.isFloat(volume)){
-                    p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", volume)));
+                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", volume)));
                     return false;
                 }
 
@@ -48,7 +49,7 @@ public class Sound implements SubCommand {
                     String pitch = args[3];
 
                     if(!NumberUtil.isFloat(pitch)){
-                        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", pitch)));
+                        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", pitch)));
                         return false;
                     }
 
@@ -60,11 +61,11 @@ public class Sound implements SubCommand {
         }
 
         if(args.length >= 2){
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("Sound successfully set for %s.", p.getWorld().getName())));
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Sound successfully set for %s.", p.getWorld().getName())));
         }else if(args.length >= 3){
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("Sound, and volume successfully set for %s.", p.getWorld().getName())));
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Sound, and volume successfully set for %s.", p.getWorld().getName())));
         }else if(args.length >= 4){
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + String.format("Sound, volume, and pitch successfully set for %s.", p.getWorld().getName())));
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Sound, volume, and pitch successfully set for %s.", p.getWorld().getName())));
         }
         return true;
     }

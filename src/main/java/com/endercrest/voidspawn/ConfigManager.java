@@ -1,11 +1,10 @@
 package com.endercrest.voidspawn;
 
-import com.endercrest.voidspawn.utils.WorldName;
+import com.endercrest.voidspawn.utils.WorldUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,6 +43,7 @@ public class ConfigManager {
 
         if(!isCreated){
             config.set("version", CURRENT_VERSION);
+            config.set("color-logs", true);
         }
 
         //Run Migration
@@ -73,8 +73,8 @@ public class ConfigManager {
             if(section != null){
                 for(String key : section.getKeys(false)){
                     //Convert world names into safe world names.
-                    if((!key.equalsIgnoreCase("version")) && (!key.equals(WorldName.configSafe(key)))){
-                        config.set(WorldName.configSafe(key), config.get(key));
+                    if((!key.equalsIgnoreCase("version")) && (!key.equals(WorldUtil.configSafe(key)))){
+                        config.set(WorldUtil.configSafe(key), config.get(key));
                         config.set(key, null);
                     }
                 }
@@ -91,7 +91,7 @@ public class ConfigManager {
      * @return boolean whether the world is set in the config.
      */
     public boolean isWorldSpawnSet(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return (isSet(world)) && (isSet(world + ".spawn.x")) && (isSet(world + ".spawn.y"))
                 && (isSet(world + ".spawn.z")) && (isSet(world + ".spawn.pitch"))
@@ -116,7 +116,7 @@ public class ConfigManager {
      * @param mode  The mode for teleporting.
      */
     public void setMode(String world, String mode){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         if(mode.equalsIgnoreCase("none")){
             set(world + ".mode", null);
@@ -136,7 +136,7 @@ public class ConfigManager {
      * @return String name of the mode or empty string if nothing is found.
      */
     public String getMode(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getString(world + ".mode", "");
     }
@@ -148,7 +148,7 @@ public class ConfigManager {
      * @return true if world has a mode set. Does not verify whether mode is valid.
      */
     public boolean isModeSet(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return isSet(world + ".mode");
     }
@@ -160,7 +160,7 @@ public class ConfigManager {
      * @return true if a world has a sound set. Does not verify that the sound is valid.
      */
     public boolean isSoundSet(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return isSet(world + ".sound.name");
     }
@@ -171,7 +171,7 @@ public class ConfigManager {
      * @param sound The sound, does not require to be a valid world.
      */
     public void setSound(String world, String sound){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world+".sound.name", sound);
     }
@@ -182,7 +182,7 @@ public class ConfigManager {
      * @return A string with the name of the sound. Does not validate and returns null if no sound is set.
      */
     public String getSound(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getString(world+".sound.name", null);
     }
@@ -192,7 +192,7 @@ public class ConfigManager {
      * @param world The world to remove the sound from.
      */
     public void removeSound(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world+".sound", null);
     }
@@ -203,7 +203,7 @@ public class ConfigManager {
      * @param value THe value, does not validate, but should be between 0 - 1
      */
     public void setVolume(String world, float value){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world+".sound.volume", value);
     }
@@ -214,7 +214,7 @@ public class ConfigManager {
      * @param value The value, does not validate, but should be between 0 - 2
      */
     public void setPitch(String world, float value){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world+".sound.pitch", value);
     }
@@ -225,7 +225,7 @@ public class ConfigManager {
      * @return Returns the volume set or defaults to 1.0
      */
     public float getVolume(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getFloat(world+".sound.volume", 1f);
     }
@@ -236,7 +236,7 @@ public class ConfigManager {
      * @return Returns the pitch set or defaults to 1.0
      */
     public float getPitch(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getFloat(world+"sound.pitch", 1f);
     }
@@ -248,7 +248,7 @@ public class ConfigManager {
      * @param world  THe world in which the spawn is being set for.
      */
     public void setSpawn(Player player, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         Location loc = player.getLocation();
         set(world + ".spawn.x", loc.getX());
@@ -266,7 +266,7 @@ public class ConfigManager {
      * @param player The player.
      */
     public void removeSpawn(Player player){
-        String world = WorldName.configSafe(player.getWorld().getName());
+        String world = WorldUtil.configSafe(player.getWorld().getName());
         set(world + ".spawn", null);
         saveConfig();
     }
@@ -277,7 +277,7 @@ public class ConfigManager {
      * @param world The world name.
      */
     public void removeSpawn(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
         set(world + ".spawn", null);
         saveConfig();
     }
@@ -309,7 +309,7 @@ public class ConfigManager {
      * @param world The world.
      */
     public void setKeepInventory(boolean bool, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".keep_inventory", bool);
         saveConfig();
@@ -322,7 +322,7 @@ public class ConfigManager {
      * @return defaults to true if setting is not found.
      */
     public boolean getKeepInventory(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getBoolean(world + ".keep_inventory", true);
     }
@@ -334,7 +334,7 @@ public class ConfigManager {
      * @param world The world.
      */
     public void setHybrid(boolean bool, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".hybrid", bool);
         saveConfig();
@@ -347,7 +347,7 @@ public class ConfigManager {
      * @return defaults to false if setting is not found.
      */
     public boolean isHybrid(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getBoolean(world + ".hybrid", false);
     }
@@ -359,7 +359,7 @@ public class ConfigManager {
      * @param world   The world being set for.
      */
     public void setMessage(String message, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".message", message);
         saveConfig();
@@ -371,7 +371,7 @@ public class ConfigManager {
      * @param world The world that the message will be removed from.
      */
     public void removeMessage(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".message", null);
         saveConfig();
@@ -384,7 +384,7 @@ public class ConfigManager {
      * @return The message.
      */
     public String getMessage(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getString(world + ".message", "");
     }
@@ -398,7 +398,7 @@ public class ConfigManager {
      * @param world  The world that the offset is being sent for.
      */
     public void setOffset(int offset, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".offset", offset);
         saveConfig();
@@ -411,7 +411,7 @@ public class ConfigManager {
      * @return the offset, will return -1 if it is not set.
      */
     public int getOffSet(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         return getInt(world + ".offset", -1);
     }
@@ -423,7 +423,7 @@ public class ConfigManager {
      * @param world   The world.
      */
     public void setCommand(String command, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".command", command);
         saveConfig();
@@ -435,7 +435,7 @@ public class ConfigManager {
      * @param world The world.
      */
     public void setDetector(String detector, String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         set(world + ".detector", detector);
         saveConfig();
@@ -448,7 +448,7 @@ public class ConfigManager {
      * @return The string name of the detector or defaults to default value set in DetectorManager.
      */
     public String getDetector(String world){
-        world = WorldName.configSafe(world);
+        world = WorldUtil.configSafe(world);
 
         String detector = getString(world+".detector", "");
         return !detector.isEmpty() ? detector : DetectorManager.getInstance().getDefaultDetectorName();

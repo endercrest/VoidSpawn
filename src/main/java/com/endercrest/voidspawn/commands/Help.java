@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.VoidSpawn;
 
 import java.util.HashMap;
 
+import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
 public class Help implements SubCommand {
@@ -19,9 +20,9 @@ public class Help implements SubCommand {
         if(!p.hasPermission(permission())){
             return true;
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
         for(String command : commands.keySet()){
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));
         }
         return true;
     }

@@ -2,7 +2,9 @@ package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
+import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.NumberUtil;
+import com.endercrest.voidspawn.utils.WorldUtil;
 import org.bukkit.entity.Player;
 
 public class Offset implements SubCommand {
@@ -10,11 +12,11 @@ public class Offset implements SubCommand {
     @Override
     public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
-            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
+            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
             return true;
         }
         if(args.length == 1){
-            p.sendMessage(VoidSpawn.colorize("&cAn offset is required."));
+            p.sendMessage(MessageUtil.colorize("&cAn offset is required."));
             return true;
         }else if(args.length > 1){
             if(NumberUtil.isInteger(args[1])){
@@ -24,8 +26,8 @@ public class Offset implements SubCommand {
                         worldName += args[i] + " ";
                     }
                     worldName = worldName.trim();
-                    if(!VoidSpawn.isValidWorld(worldName)){
-                        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
+                    if(!WorldUtil.isValidWorld(worldName)){
+                        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
                         return false;
                     }
                     ConfigManager.getInstance().setOffset(Integer.parseInt(args[1]), worldName);
@@ -33,11 +35,11 @@ public class Offset implements SubCommand {
                     ConfigManager.getInstance().setOffset(Integer.parseInt(args[1]), p.getWorld().getName());
                 }
             }else{
-                p.sendMessage(VoidSpawn.colorize("&cOffset must be a number."));
+                p.sendMessage(MessageUtil.colorize("&cOffset must be a number."));
                 return true;
             }
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Offset Set"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Offset Set"));
         return true;
     }
 

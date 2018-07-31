@@ -1,6 +1,7 @@
 package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.TeleportManager;
+import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
 import com.endercrest.voidspawn.VoidSpawn;
@@ -12,13 +13,13 @@ public class Toggle implements SubCommand {
         if(p.hasPermission(permission())){
             boolean status = TeleportManager.getInstance().togglePlayer(p.getUniqueId());
             if(status){
-                p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Toggled teleport to: Off"));
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Toggled teleport to: Off"));
             }else{
-                p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Toggled teleport to: On"));
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Toggled teleport to: On"));
             }
             return true;
         }else{
-            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
+            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
             return false;
         }
     }

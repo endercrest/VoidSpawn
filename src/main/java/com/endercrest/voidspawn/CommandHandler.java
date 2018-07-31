@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.commands.*;
 
 import java.util.HashMap;
 
+import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,31 +45,31 @@ public class CommandHandler implements CommandExecutor {
         if(!(cs instanceof Player)){
             if((args.length >= 1) && (args[0].equalsIgnoreCase("reload"))){
                 ConfigManager.getInstance().reloadConfig();
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
                 return true;
             }
 
-            cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
+            cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
             return false;
         }
         if(cmd.getName().equalsIgnoreCase("voidspawn")){
             if((args == null) || (args.length < 1)){
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Version &6" + plugin.getDescription().getVersion() + "&f by &6EnderCrest"));
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Version &6" + plugin.getDescription().getVersion() + "&f by &6EnderCrest"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
                 return true;
             }
             String sub = args[0].toLowerCase();
             if(!commands.containsKey(sub)){
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat command does not exist"));
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat command does not exist"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
                 return true;
             }
             try{
                 commands.get(sub).onCommand((Player) cs, args);
             }catch(Exception e){
                 e.printStackTrace();
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThere was an error"));
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThere was an error"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
             }
         }
         return false;

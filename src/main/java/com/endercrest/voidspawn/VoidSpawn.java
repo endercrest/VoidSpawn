@@ -2,6 +2,7 @@ package com.endercrest.voidspawn;
 
 import java.util.logging.Level;
 
+import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ public class VoidSpawn extends JavaPlugin {
         ModeManager.getInstance().setUp();
         DetectorManager.getInstance().setUp();
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
+        getServer().getPluginManager().registerEvents(new VoidListener(), this);
         getCommand("voidspawn").setExecutor(new CommandHandler(this));
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
     }
@@ -64,35 +66,16 @@ public class VoidSpawn extends JavaPlugin {
     }
 
     /**
-     * Add Color to Messages
-     *
-     * @param str The String
-     * @return Coloured String
-     */
-    public static String colorize(String str){
-        return str.replaceAll("(?i)&([a-f0-9k-or])", "\u00a7$1");
-    }
-
-    /**
      * Sends Messages to Console
      *
      * @param obj The Obj(Message)
      */
     public void log(Object obj){
         if(getConfig().getBoolean("color-logs", true)){
-            getServer().getConsoleSender().sendMessage(colorize("&3[&d" + getName() + "&3] &r" + obj));
+            getServer().getConsoleSender().sendMessage(MessageUtil.colorize("&3[&d" + getName() + "&3] &r" + obj));
         }else{
-            Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + colorize((String) obj).replaceAll("(?)\u00a7([a-f0-9k-or])", ""));
+            Bukkit.getLogger().log(Level.INFO, "[" + getName() + "] " + MessageUtil.colorize((String) obj).replaceAll("(?)\u00a7([a-f0-9k-or])", ""));
         }
     }
 
-    /**
-     * Checks if the selected world is a valid world.
-     *
-     * @param worldName The world name that will be checked.
-     * @return True if the world does not return null.
-     */
-    public static boolean isValidWorld(String worldName){
-        return Bukkit.getWorld(worldName) != null;
-    }
 }

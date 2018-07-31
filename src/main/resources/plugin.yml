@@ -62,8 +62,12 @@ permissions:
             vs.admin.keepinventory: true
             vs.admin.hybrid: true
             vs.admin.detector: true
+    vs.enable:
+      default: true
+      description: Enables teleportation for the player
     vs.*:
         description: Gives all permissions
         default: false
         children:
             vs.admin.*: true
+            vs.enable: true

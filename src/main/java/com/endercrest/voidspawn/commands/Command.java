@@ -2,6 +2,7 @@ package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
+import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
 public class Command implements SubCommand {
@@ -9,7 +10,7 @@ public class Command implements SubCommand {
     @Override
     public boolean onCommand(Player p, String[] args){
         if(!p.hasPermission(permission())){
-            p.sendMessage(VoidSpawn.colorize("&cYou do not have permission."));
+            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
             return true;
         }
         if(args.length > 1){
@@ -20,10 +21,10 @@ public class Command implements SubCommand {
             ConfigManager.getInstance().setCommand(command, p.getWorld().getName());
         }else{
             ConfigManager.getInstance().setCommand(null, p.getWorld().getName());
-            p.sendMessage(VoidSpawn.colorize("Removed Command(s)"));
+            p.sendMessage(MessageUtil.colorize("Removed Command(s)"));
             return true;
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Command(s) Set"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Command(s) Set"));
         return true;
     }
 
