@@ -3,6 +3,8 @@ package com.endercrest.voidspawn;
 import com.endercrest.voidspawn.commands.*;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.command.Command;
@@ -16,7 +18,7 @@ public class CommandHandler implements CommandExecutor {
 
     public CommandHandler(VoidSpawn plugin){
         this.plugin = plugin;
-        commands = new HashMap<String, SubCommand>();
+        commands = new HashMap<>();
         loadCommands();
     }
 
@@ -24,20 +26,28 @@ public class CommandHandler implements CommandExecutor {
      * Load the commands into the HashMap that makes it accessible to players.
      */
     private void loadCommands(){
-        commands.put("set", new Set());
-        commands.put("remove", new Remove());
-        commands.put("reload", new Reload());
-        commands.put("modes", new Modes());
-        commands.put("mode", new Mode());
-        commands.put("help", new Help(commands));
-        commands.put("message", new Message());
-        commands.put("offset", new Offset());
-        commands.put("command", new com.endercrest.voidspawn.commands.Command());
-        commands.put("keepinventory", new KeepInventory());
-        commands.put("hybrid", new Hybrid());
-        commands.put("toggle", new Toggle());
-        commands.put("detector", new Detector());
-        commands.put("sound", new Sound());
+        commands.put("set", new SetCommand());
+        commands.put("remove", new RemoveCommand());
+        commands.put("reload", new ReloadCommand());
+        commands.put("modes", new ModesCommand());
+        commands.put("mode", new ModeCommand());
+        commands.put("help", new HelpCommand(commands));
+        commands.put("message", new MessageCommand());
+        commands.put("offset", new OffsetCommand());
+        commands.put("command", new CommandCommand());
+        commands.put("keepinventory", new KeepInventoryCommand());
+        commands.put("hybrid", new HybridCommand());
+        commands.put("toggle", new ToggleCommand());
+        commands.put("detector", new DetectorCommand());
+        commands.put("sound", new SoundCommand());
+    }
+
+    public Set<Map.Entry<String, SubCommand>> getCommands() {
+        return commands.entrySet();
+    }
+
+    public SubCommand getSubCommand(String cmd) {
+        return commands.get(cmd);
     }
 
     @Override

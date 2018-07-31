@@ -2,13 +2,19 @@ package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.DetectorManager;
+import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.detectors.SubDetector;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
 import org.bukkit.entity.Player;
 
-public class Detector implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class DetectorCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -57,5 +63,20 @@ public class Detector implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.detector";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        switch(args.length) {
+            case 1:
+                Set<String> detectors = DetectorManager.getInstance().getDetectors().keySet();
+                return detectors.stream()
+                        .filter(detector -> detector.toLowerCase().startsWith(args[0].toLowerCase()))
+                        .collect(Collectors.toList());
+            case 2:
+                return WorldUtil.getMatchingWorlds(args[1]);
+            default:
+                return new ArrayList<>();
+        }
     }
 }

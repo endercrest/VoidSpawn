@@ -1,6 +1,10 @@
 package com.endercrest.voidspawn.commands;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public interface SubCommand {
 
@@ -27,4 +31,12 @@ public interface SubCommand {
      * @return The permission node.
      */
     String permission();
+
+    /**
+     * Get the last arg completion for sub command
+     * @param player The player currently trying to get the tab completion.
+     * @param args The args for the sub command. This does not include the original command nor the sub command.
+     * @return A list of possible completions.
+     */
+    List<String> getTabCompletion(Player player, String[] args);
 }

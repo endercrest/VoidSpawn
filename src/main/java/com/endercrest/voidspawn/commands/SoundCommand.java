@@ -4,9 +4,15 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.NumberUtil;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-public class Sound implements SubCommand {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class SoundCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -60,9 +66,9 @@ public class Sound implements SubCommand {
             ConfigManager.getInstance().setSound(p.getWorld().getName(), sound.name());
         }
 
-        if(args.length >= 2){
+        if(args.length == 2){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Sound successfully set for %s.", p.getWorld().getName())));
-        }else if(args.length >= 3){
+        }else if(args.length == 3){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Sound, and volume successfully set for %s.", p.getWorld().getName())));
         }else if(args.length >= 4){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("Sound, volume, and pitch successfully set for %s.", p.getWorld().getName())));
@@ -78,5 +84,29 @@ public class Sound implements SubCommand {
     @Override
     public String permission(){
         return "cc.admin.sound";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        switch(args.length) {
+            case 1:
+                List<String> sounds = Arrays.stream(Sound.values()).map(Enum::name).collect(Collectors.toList());
+                sounds.add("none");
+                return sounds
+                        .stream()
+                        .filter(sound -> sound.toLowerCase().startsWith(args[0].toLowerCase()))
+                        .collect(Collectors.toList());
+            case 2:
+            case 3:
+                return new ArrayList<String>() {{
+                    add("0");
+                    add("0.25");
+                    add("0.5");
+                    add("0.75");
+                    add("1");
+                }};
+            default:
+                return new ArrayList<>();
+        }
     }
 }

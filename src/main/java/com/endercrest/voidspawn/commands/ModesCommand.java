@@ -6,7 +6,10 @@ import com.endercrest.voidspawn.modes.SubMode;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
-public class Modes implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ModesCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -30,5 +33,10 @@ public class Modes implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.modes";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        return new ArrayList<>();
     }
 }

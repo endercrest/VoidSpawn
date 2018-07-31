@@ -5,9 +5,18 @@ import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.modes.SubMode;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
-public class Mode implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class ModeCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -63,5 +72,20 @@ public class Mode implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.mode";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        switch(args.length) {
+            case 1:
+                Set<String> modes = ModeManager.getInstance().getModes().keySet();
+                return modes.stream()
+                        .filter(mode -> mode.toLowerCase().startsWith(args[0].toLowerCase()))
+                        .collect(Collectors.toList());
+            case 2:
+                return WorldUtil.getMatchingWorlds(args[1]);
+            default:
+                return new ArrayList<>();
+        }
     }
 }

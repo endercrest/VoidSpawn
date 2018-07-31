@@ -7,7 +7,10 @@ import com.endercrest.voidspawn.utils.NumberUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
 import org.bukkit.entity.Player;
 
-public class Offset implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class OffsetCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -39,7 +42,7 @@ public class Offset implements SubCommand {
                 return true;
             }
         }
-        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Offset Set"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Offset SetCommand"));
         return true;
     }
 
@@ -51,5 +54,22 @@ public class Offset implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.offset";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        switch (args.length) {
+            case 1:
+                return new ArrayList<String>() {{
+                    add("-10");
+                    add("-5");
+                    add("0");
+                    add("5");
+                    add("10");
+                }};
+            case 2:
+                return WorldUtil.getMatchingWorlds(args[1]);
+        }
+        return null;
     }
 }

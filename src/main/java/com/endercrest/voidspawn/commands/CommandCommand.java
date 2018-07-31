@@ -5,7 +5,10 @@ import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
-public class Command implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CommandCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -24,17 +27,24 @@ public class Command implements SubCommand {
             p.sendMessage(MessageUtil.colorize("Removed Command(s)"));
             return true;
         }
-        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Command(s) Set"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Command(s) SetCommand"));
         return true;
     }
 
     @Override
     public String helpInfo(){
-        return "/vs command [commands] - Set command(s) for the command mode, separate commands with semicolon.";
+        return "/vs command [commands] - SetCommand command(s) for the command mode, separate commands with semicolon.";
     }
 
     @Override
     public String permission(){
         return "vs.admin.command";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        // TODO Make this smart
+        // Could try to call other command tab completions.
+        return new ArrayList<>();
     }
 }

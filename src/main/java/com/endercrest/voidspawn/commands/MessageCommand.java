@@ -5,7 +5,10 @@ import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
-public class Message implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MessageCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -35,5 +38,10 @@ public class Message implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.message";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        return new ArrayList<>();
     }
 }

@@ -6,7 +6,10 @@ import org.bukkit.entity.Player;
 
 import com.endercrest.voidspawn.VoidSpawn;
 
-public class Toggle implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ToggleCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -32,5 +35,10 @@ public class Toggle implements SubCommand {
     @Override
     public String permission(){
         return "vs.player.toggle";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        return new ArrayList<>();
     }
 }

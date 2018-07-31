@@ -2,8 +2,10 @@ package com.endercrest.voidspawn;
 
 import java.util.logging.Level;
 
+import com.endercrest.voidspawn.commands.VoidSpawnTabCompleter;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,7 +24,12 @@ public class VoidSpawn extends JavaPlugin {
         DetectorManager.getInstance().setUp();
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new VoidListener(), this);
-        getCommand("voidspawn").setExecutor(new CommandHandler(this));
+
+        PluginCommand command = getCommand("voidspawn");
+        CommandHandler commandHandler = new CommandHandler(this);
+        command.setExecutor(commandHandler);
+        command.setTabCompleter(new VoidSpawnTabCompleter(commandHandler));
+
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
     }
 

@@ -5,7 +5,10 @@ import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
-public class Reload implements SubCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReloadCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -26,5 +29,10 @@ public class Reload implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.reload";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        return new ArrayList<>();
     }
 }

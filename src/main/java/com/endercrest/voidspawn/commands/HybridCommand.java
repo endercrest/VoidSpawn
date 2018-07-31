@@ -6,7 +6,9 @@ import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
 import org.bukkit.entity.Player;
 
-public class KeepInventory implements SubCommand {
+import java.util.List;
+
+public class HybridCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
@@ -36,21 +38,26 @@ public class KeepInventory implements SubCommand {
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
                 return false;
             }
-            ConfigManager.getInstance().setKeepInventory(Boolean.parseBoolean(args[1]), worldName);
+            ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]), worldName);
         }else{
-            ConfigManager.getInstance().setKeepInventory(Boolean.parseBoolean(args[1]), p.getWorld().getName());
+            ConfigManager.getInstance().setHybrid(Boolean.parseBoolean(args[1]), p.getWorld().getName());
         }
-        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Updated keep inventory flag!"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Updated hybrid mode!"));
         return false;
     }
 
     @Override
     public String helpInfo(){
-        return "/vs keepinventory (true/false) [name] - Sets the keep inventory flag.";
+        return "/vs hybrid (true/false) [name] - Sets hybrid mode.";
     }
 
     @Override
     public String permission(){
-        return "vs.admin.keepinventory";
+        return "vs.admin.hybrid";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        return VoidSpawnTabCompleter.getBooleanWorldCompletion(args);
     }
 }
