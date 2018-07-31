@@ -2,15 +2,19 @@ package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.VoidSpawn;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import com.endercrest.voidspawn.utils.MessageUtil;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
-public class Help implements SubCommand {
+public class HelpCommand implements SubCommand {
 
     HashMap<String, SubCommand> commands;
 
-    public Help(HashMap<String, SubCommand> commands){
+    public HelpCommand(HashMap<String, SubCommand> commands){
         this.commands = commands;
     }
 
@@ -19,9 +23,9 @@ public class Help implements SubCommand {
         if(!p.hasPermission(permission())){
             return true;
         }
-        p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
         for(String command : commands.keySet()){
-            p.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));
         }
         return true;
     }
@@ -34,5 +38,10 @@ public class Help implements SubCommand {
     @Override
     public String permission(){
         return "vs.admin.help";
+    }
+
+    @Override
+    public List<String> getTabCompletion(Player player, String[] args) {
+        return new ArrayList<>();
     }
 }

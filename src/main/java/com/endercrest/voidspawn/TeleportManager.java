@@ -30,8 +30,8 @@ public class TeleportManager {
 
     public void setUp(VoidSpawn plugin){
         this.plugin = plugin;
-        playerLocation = new HashMap<UUID, Location>();
-        playerToggle = new ArrayList<UUID>();
+        playerLocation = new HashMap<>();
+        playerToggle = new ArrayList<>();
     }
 
     /**
@@ -206,5 +206,14 @@ public class TeleportManager {
      */
     public void enableToggle(UUID uuid){
         playerToggle.add(uuid);
+    }
+
+    /**
+     * Remove the player from maps to clean up resources.
+     * @param uuid Player UUID
+     */
+    public void removePlayer(UUID uuid) {
+        playerToggle.remove(uuid);
+        playerLocation.remove(uuid);
     }
 }

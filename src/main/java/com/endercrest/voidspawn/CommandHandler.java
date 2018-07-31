@@ -3,7 +3,10 @@ package com.endercrest.voidspawn;
 import com.endercrest.voidspawn.commands.*;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
+import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +18,7 @@ public class CommandHandler implements CommandExecutor {
 
     public CommandHandler(VoidSpawn plugin){
         this.plugin = plugin;
-        commands = new HashMap<String, SubCommand>();
+        commands = new HashMap<>();
         loadCommands();
     }
 
@@ -23,20 +26,28 @@ public class CommandHandler implements CommandExecutor {
      * Load the commands into the HashMap that makes it accessible to players.
      */
     private void loadCommands(){
-        commands.put("set", new Set());
-        commands.put("remove", new Remove());
-        commands.put("reload", new Reload());
-        commands.put("modes", new Modes());
-        commands.put("mode", new Mode());
-        commands.put("help", new Help(commands));
-        commands.put("message", new Message());
-        commands.put("offset", new Offset());
-        commands.put("command", new com.endercrest.voidspawn.commands.Command());
-        commands.put("keepinventory", new KeepInventory());
-        commands.put("hybrid", new Hybrid());
-        commands.put("toggle", new Toggle());
-        commands.put("detector", new Detector());
-        commands.put("sound", new Sound());
+        commands.put("set", new SetCommand());
+        commands.put("remove", new RemoveCommand());
+        commands.put("reload", new ReloadCommand());
+        commands.put("modes", new ModesCommand());
+        commands.put("mode", new ModeCommand());
+        commands.put("help", new HelpCommand(commands));
+        commands.put("message", new MessageCommand());
+        commands.put("offset", new OffsetCommand());
+        commands.put("command", new CommandCommand());
+        commands.put("keepinventory", new KeepInventoryCommand());
+        commands.put("hybrid", new HybridCommand());
+        commands.put("toggle", new ToggleCommand());
+        commands.put("detector", new DetectorCommand());
+        commands.put("sound", new SoundCommand());
+    }
+
+    public Set<Map.Entry<String, SubCommand>> getCommands() {
+        return commands.entrySet();
+    }
+
+    public SubCommand getSubCommand(String cmd) {
+        return commands.get(cmd);
     }
 
     @Override
@@ -44,31 +55,31 @@ public class CommandHandler implements CommandExecutor {
         if(!(cs instanceof Player)){
             if((args.length >= 1) && (args[0].equalsIgnoreCase("reload"))){
                 ConfigManager.getInstance().reloadConfig();
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
                 return true;
             }
 
-            cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
+            cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cOnly Players can use these commands"));
             return false;
         }
         if(cmd.getName().equalsIgnoreCase("voidspawn")){
             if((args == null) || (args.length < 1)){
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Version &6" + plugin.getDescription().getVersion() + "&f by &6EnderCrest"));
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Version &6" + plugin.getDescription().getVersion() + "&f by &6EnderCrest"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
                 return true;
             }
             String sub = args[0].toLowerCase();
             if(!commands.containsKey(sub)){
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThat command does not exist"));
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat command does not exist"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
                 return true;
             }
             try{
                 commands.get(sub).onCommand((Player) cs, args);
             }catch(Exception e){
                 e.printStackTrace();
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "&cThere was an error"));
-                cs.sendMessage(VoidSpawn.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThere was an error"));
+                cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
             }
         }
         return false;
