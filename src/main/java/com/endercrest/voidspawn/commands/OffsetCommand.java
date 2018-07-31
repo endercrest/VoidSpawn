@@ -42,7 +42,7 @@ public class OffsetCommand implements SubCommand {
                 return true;
             }
         }
-        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Offset SetCommand"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Offset Set"));
         return true;
     }
 

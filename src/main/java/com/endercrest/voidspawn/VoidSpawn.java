@@ -24,6 +24,7 @@ public class VoidSpawn extends JavaPlugin {
         DetectorManager.getInstance().setUp();
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new VoidListener(), this);
+        getServer().getPluginManager().registerEvents(new QuitListener(), this);
 
         PluginCommand command = getCommand("voidspawn");
         CommandHandler commandHandler = new CommandHandler(this);

@@ -27,13 +27,13 @@ public class CommandCommand implements SubCommand {
             p.sendMessage(MessageUtil.colorize("Removed Command(s)"));
             return true;
         }
-        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Command(s) SetCommand"));
+        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Command(s) Set"));
         return true;
     }
 
     @Override
     public String helpInfo(){
-        return "/vs command [commands] - SetCommand command(s) for the command mode, separate commands with semicolon.";
+        return "/vs command [commands] - Set command(s) for the command mode, separate commands with semicolon.";
     }
 
     @Override
