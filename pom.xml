@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.endercrest.voidspawn</groupId>
     <artifactId>VoidSpawn</artifactId>
-    <version>1.17.0</version>
+    <version>1.18.0${snapshot}</version>
     <name>VoidSpawn</name>
     <developers>
         <developer>
@@ -39,6 +39,12 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/uSkyBlock.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.4</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -50,11 +56,59 @@
             <name>bintray</name>
             <url>http://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
+        <repository>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
     </repositories>
+    <profiles>
+        <profile>
+            <id>Development</id>
+            <activation>
+                <property>
+                    <name>!env.prod</name>
+                </property>
+            </activation>
+            <properties>
+                <profile.env>DEV</profile.env>
+                <snapshot>-SNAPSHOT</snapshot>
+            </properties>
+        </profile>
+        <profile>
+            <id>Production</id>
+            <activation>
+                <property>
+                    <name>env.prod</name>
+                </property>
+            </activation>
+            <properties>
+                <profile.env>PROD</profile.env>
+                <snapshot />
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>${project.name}</finalName>
         <defaultGoal>clean package install</defaultGoal>
         <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>munge-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>munge</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>munge</goal>
+                        </goals>
+                        <configuration>
+                            <symbols>${profile.env}</symbols>
+                            <mungedDirectory>${project.build.directory}</mungedDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -63,6 +117,32 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>com.endercrest.voidspawn</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <artifactSet>
+                        <includes>
+                            <include>org.bstats:bstats-bukkit</include>
+                        </includes>
+                    </artifactSet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>

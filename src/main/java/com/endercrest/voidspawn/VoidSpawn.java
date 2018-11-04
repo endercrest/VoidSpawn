@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import com.endercrest.voidspawn.commands.VoidSpawnTabCompleter;
 import com.endercrest.voidspawn.utils.MessageUtil;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
@@ -16,6 +17,10 @@ public class VoidSpawn extends JavaPlugin {
     static boolean USkyBlock = false;
 
     public void onEnable(){
+        /* if[PROD] */
+        Metrics metrics = new Metrics(this);
+        /* end[PROD] */
+
         loadDependencies();
         loadConfiguration();
         ConfigManager.getInstance().setUp(this);
