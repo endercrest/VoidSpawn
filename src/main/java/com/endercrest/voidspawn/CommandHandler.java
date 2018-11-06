@@ -75,9 +75,17 @@ public class CommandHandler implements CommandExecutor {
                 cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));
                 return true;
             }
-            try{
-                commands.get(sub).onCommand((Player) cs, args);
-            }catch(Exception e){
+            SubCommand command = commands.get(sub);
+            Player player = (Player)cs;
+            if(command.permission() != null && !player.hasPermission(command.permission())) {
+                player.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
+                return true;
+            }
+
+
+            try {
+                command.onCommand(player, args);
+            } catch (Exception e) {
                 e.printStackTrace();
                 cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThere was an error"));
                 cs.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Type &6/vs help &ffor command information"));

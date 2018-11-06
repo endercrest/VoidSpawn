@@ -260,17 +260,6 @@ public class ConfigManager {
     }
 
     /**
-     * Removes the spawn of a world based on the player.
-     *
-     * @param player The player.
-     */
-    public void removeSpawn(Player player){
-        String world = WorldUtil.configSafe(player.getWorld().getName());
-        set(world + ".spawn", null);
-        saveConfig();
-    }
-
-    /**
      * Removes the spawn of a world based on the world name.
      *
      * @param world The world name.

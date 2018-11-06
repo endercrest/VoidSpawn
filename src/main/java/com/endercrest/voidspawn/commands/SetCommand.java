@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.modes.SubMode;
+import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
 import org.bukkit.Bukkit;
@@ -18,28 +19,16 @@ public class SetCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
-        String world = p.getWorld().getName();
-        if(args.length > 1){
-            String worldName = "";
-            for(int i = 1; i < args.length; i++){
-                worldName += args[i] + " ";
-            }
-            worldName = worldName.trim();
-            if(!WorldUtil.isValidWorld(worldName)){
-                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
-                return false;
-            }
-            world = worldName;
+        String world = CommandUtil.constructWorldFromArgs(args, 1, p.getWorld().getName());
+        if(world == null) {
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
+            return false;
         }
 
         ConfigManager.getInstance().setSpawn(p, world);
         SubMode mode = ModeManager.getInstance().getWorldSubMode(world);
         if (mode == null || (!mode.getName().equalsIgnoreCase("spawn") && !mode.getName().equalsIgnoreCase("island"))) {
-            ModeManager.getInstance().getSubMode("spawn").onSet(new String[]{}, p.getWorld().getName(), p);
+            ModeManager.getInstance().getSubMode("spawn").onSet(new String[]{}, world, p);
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Spawn Set & Mode set to Spawn"));
         } else {
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Spawn Set"));

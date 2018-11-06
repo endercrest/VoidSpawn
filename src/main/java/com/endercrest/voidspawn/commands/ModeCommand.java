@@ -3,6 +3,7 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.modes.SubMode;
+import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
 import org.bukkit.Bukkit;
@@ -20,47 +21,26 @@ public class ModeCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
         if(args.length == 1){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
             for(String s : ModeManager.getInstance().getModes().keySet()){
                 SubMode mode = ModeManager.getInstance().getSubMode(s);
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));
             }
-        }else if(args.length == 2){
-            if(ModeManager.getInstance().getModes().containsKey(args[1].toLowerCase())){
-                SubMode mode = ModeManager.getInstance().getSubMode(args[1].toLowerCase());
-                if(!mode.isEnabled()){
-                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
-                    return false;
-                } else if(mode.onSet(args, p.getWorld().getName(), p)){
-                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Set mode for '&6" + p.getWorld().getName() + "&f'"));
-                    return true;
-                }
-            }else{
-                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
-            }
-        }else if(args.length >= 3){
-            String worldName = "";
-            for(int i = 2; i < args.length; i++){
-                worldName += args[i] + " ";
-            }
-            worldName = worldName.trim();
-
-            if(!WorldUtil.isValidWorld(worldName)){
+        } else if(args.length >= 2) {
+            String world = CommandUtil.constructWorldFromArgs(args, 2, p.getWorld().getName());
+            if(world == null) {
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThat is not a valid world!"));
                 return false;
             }
+
             if(ModeManager.getInstance().getModes().containsKey(args[1].toLowerCase())){
                 SubMode mode = ModeManager.getInstance().getSubMode(args[1].toLowerCase());
                 if(!mode.isEnabled()){
                     p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
                     return false;
-                } else if(mode.onSet(args, worldName, p)){
-                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Set mode for '&6" + worldName + "&f'"));
+                } else if(mode.onSet(args, world, p)){
+                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Set mode for '&6" + world + "&f'"));
                     return true;
                 }
             }else{

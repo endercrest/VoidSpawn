@@ -12,11 +12,6 @@ public class HybridCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
-
         if(args.length == 1){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cMust include true or false!"));
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&c" + helpInfo()));

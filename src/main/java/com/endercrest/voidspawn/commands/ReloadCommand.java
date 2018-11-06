@@ -12,10 +12,6 @@ public class ReloadCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
         ConfigManager.getInstance().reloadConfig();
         p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&6Plugin Reloaded"));
         return true;
