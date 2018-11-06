@@ -18,6 +18,16 @@ public class Touch implements SubMode {
     }
 
     @Override
+    public Status[] getStatus(String worldName){
+        return new Status[0];
+    }
+
+    @Override
+    public boolean isEnabled(){
+        return true;
+    }
+
+    @Override
     public String getHelp(){
         return "&6Touch &f- Will teleport player to place they last touched the ground.";
     }

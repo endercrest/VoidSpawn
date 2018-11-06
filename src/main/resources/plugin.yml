@@ -4,7 +4,7 @@ version: ${project.version}
 website: ${project.url}
 description: Teleports player on contact with the void.
 authors: [tcvs]
-softdepend: [IslandWorld, ASkyBlock, uSkyBlock]
+softdepend: [IslandWorld, ASkyblock, BentoBox, uSkyBlock]
 api-version: 1.13
 commands:
     voidspawn:
@@ -47,6 +47,9 @@ permissions:
     vs.admin.sound:
         description: Grants you the /void sound command
         default: op
+    vs.admin.status:
+        description: Grants you the /void status command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
@@ -62,6 +65,7 @@ permissions:
             vs.admin.keepinventory: true
             vs.admin.hybrid: true
             vs.admin.detector: true
+            vs.admin.status: true
     vs.enable:
       default: true
       description: Enables teleportation for the player

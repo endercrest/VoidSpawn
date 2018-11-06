@@ -43,7 +43,6 @@ public class ConfigManager {
 
         if(!isCreated){
             config.set("version", CURRENT_VERSION);
-            config.set("color-logs", true);
         }
 
         //Run Migration
@@ -257,17 +256,6 @@ public class ConfigManager {
         set(world + ".spawn.pitch", loc.getPitch());
         set(world + ".spawn.yaw", loc.getYaw());
         set(world + ".spawn.world", loc.getWorld().getName());
-        saveConfig();
-    }
-
-    /**
-     * Removes the spawn of a world based on the player.
-     *
-     * @param player The player.
-     */
-    public void removeSpawn(Player player){
-        String world = WorldUtil.configSafe(player.getWorld().getName());
-        set(world + ".spawn", null);
         saveConfig();
     }
 

@@ -13,18 +13,13 @@ public class ToggleCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(p.hasPermission(permission())){
-            boolean status = TeleportManager.getInstance().togglePlayer(p.getUniqueId());
-            if(status){
-                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Toggled teleport to: Off"));
-            }else{
-                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Toggled teleport to: On"));
-            }
-            return true;
+        boolean status = TeleportManager.getInstance().togglePlayer(p.getUniqueId());
+        if(status){
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Toggled teleport to: Off"));
         }else{
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return false;
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Toggled teleport to: On"));
         }
+        return true;
     }
 
     @Override

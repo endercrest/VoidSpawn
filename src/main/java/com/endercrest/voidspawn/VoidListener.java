@@ -24,16 +24,16 @@ public class VoidListener implements Listener {
         Player player = event.getPlayer();
         String worldName = player.getWorld().getName();
 
-        if(!player.hasPermission("vs.enable")) {
-            return;
-        }
-
         if(!ConfigManager.getInstance().isModeSet(worldName)) {
             return;
         }
 
         SubDetector detector = DetectorManager.getInstance().getWorldDetector(worldName);
         if(!detector.isDetected(player, worldName)) {
+            return;
+        }
+
+        if(!player.hasPermission("vs.enable")) {
             return;
         }
 

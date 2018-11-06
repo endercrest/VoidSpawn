@@ -17,6 +17,16 @@ public class None implements SubMode {
     }
 
     @Override
+    public Status[] getStatus(String worldName){
+        return new Status[0];
+    }
+
+    @Override
+    public boolean isEnabled(){
+        return true;
+    }
+
+    @Override
     public String getHelp(){
         return "&6None &f- Sets the world to have no mode";
     }

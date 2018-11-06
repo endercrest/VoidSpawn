@@ -17,6 +17,8 @@ import pl.islandworld.api.IslandWorldApi;
 import pl.islandworld.entity.SimpleIsland;
 import us.talabrek.ultimateskyblock.api.IslandInfo;
 import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
+import world.bentobox.bentobox.BentoBox;
+import world.bentobox.bentobox.database.objects.Island;
 
 public class TeleportManager {
     private VoidSpawn plugin;
@@ -113,7 +115,7 @@ public class TeleportManager {
      * @param p The player that will be teleported.
      * @return Whether the teleport was successful.
      */
-    public boolean teleportIsland(Player p){
+    public boolean teleportIsland(Player p, String worldName){
         if(VoidSpawn.IslandWorld){
             if(IslandWorldApi.haveIsland(p.getName()) || IslandWorldApi.isHelpingIsland(p.getName())){
                 SimpleIsland island = IslandWorld.getInstance().getPlayerIsland(p);
@@ -143,7 +145,26 @@ public class TeleportManager {
                 }
                 return true;
             }
-        }else if(VoidSpawn.USkyBlock){
+        } else if(VoidSpawn.BentoBox) {
+            BentoBox bentoBox = (BentoBox) Bukkit.getPluginManager().getPlugin("BentoBox");
+            // First checks if current world is an island world. If not, iterate through worlds until we find one.
+            World world = p.getWorld();
+            Island island = bentoBox.getIslands().getIsland(world, p.getUniqueId());
+            if(island != null) {
+                p.setFallDistance(0);
+                p.teleport(island.getSpawnPoint(World.Environment.NORMAL));
+                return true;
+            }
+
+            for(World w: Bukkit.getWorlds()) {
+                island = bentoBox.getIslands().getIsland(w, p.getUniqueId());
+                if(island != null) {
+                    p.setFallDistance(0);
+                    p.teleport(island.getSpawnPoint(World.Environment.NORMAL));
+                    return true;
+                }
+            }
+        } else if(VoidSpawn.USkyBlock){
             uSkyBlockAPI usb = (uSkyBlockAPI) Bukkit.getPluginManager().getPlugin("uSkyBlock");
             IslandInfo info = usb.getIslandInfo(p);
             if(info.getWarpLocation() != null){
@@ -156,6 +177,10 @@ public class TeleportManager {
                 p.teleport(info.getIslandLocation());
                 return true;
             }
+        }
+
+        if(ConfigManager.getInstance().isWorldSpawnSet(worldName)){
+            return teleportSpawn(p, worldName);
         }
         return false;
     }
