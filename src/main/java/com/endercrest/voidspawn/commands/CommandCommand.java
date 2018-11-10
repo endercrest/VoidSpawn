@@ -12,10 +12,6 @@ public class CommandCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
         if(args.length > 1){
             String command = "";
             for(int i = 1; i < args.length; i++){

@@ -20,9 +20,6 @@ public class HelpCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            return true;
-        }
         p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Help Menu&f ---"));
         for(String command : commands.keySet()){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + commands.get(command).helpInfo()));

@@ -12,9 +12,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoidSpawn extends JavaPlugin {
     public static String prefix = "[&6VS&f] ";
-    static boolean IslandWorld = false;
-    static boolean ASkyBlock = false;
-    static boolean USkyBlock = false;
+    public static boolean IslandWorld = false;
+    public static boolean ASkyBlock = false;
+    public static boolean BentoBox = false;
+    public static boolean USkyBlock = false;
 
     public void onEnable(){
         /* if[PROD] */
@@ -25,7 +26,7 @@ public class VoidSpawn extends JavaPlugin {
         loadConfiguration();
         ConfigManager.getInstance().setUp(this);
         TeleportManager.getInstance().setUp(this);
-        ModeManager.getInstance().setUp();
+        ModeManager.getInstance().setUp(this);
         DetectorManager.getInstance().setUp();
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new VoidListener(), this);
@@ -49,8 +50,15 @@ public class VoidSpawn extends JavaPlugin {
 
         if(pm.isPluginEnabled("ASkyBlock")){
             log("&eASkyBlock found, initializing support.");
+            log("&cASkyBlock has been deprecated, ASkyBlock has been discontinued and it is recommended to switch to BentoBox");
             ASkyBlock = true;
             log("&eASkyBlock support initialized.");
+        }
+
+        if(pm.isPluginEnabled("BentoBox")){
+            log("&eBentoBox found, initializing support.");
+            BentoBox = true;
+            log("&eBentoBox support initialized.");
         }
 
         if(pm.isPluginEnabled("uSkyBlock")){
@@ -59,7 +67,7 @@ public class VoidSpawn extends JavaPlugin {
             log("&eUSkyBlock support initialized.");
         }
 
-        if(!IslandWorld && !ASkyBlock && !USkyBlock){
+        if(!IslandWorld && !ASkyBlock && !BentoBox && !USkyBlock){
             log("&eNo SkyBlock plugins found, disabling island mode support.");
         }
     }

@@ -16,10 +16,6 @@ public class SoundCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
         if(args.length == 1){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix +
                     "All sounds available are listed here: https://goo.gl/jGcL8B or use 'clear' to remove the sound."));
@@ -42,28 +38,27 @@ public class SoundCommand implements SubCommand {
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid sound!", soundName)));
                 return false;
             }
-
-            if(args.length >= 3){
-                String volume = args[2];
-
-                if(!NumberUtil.isFloat(volume)){
-                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", volume)));
-                    return false;
-                }
-
-                if(args.length >= 4){
-                    String pitch = args[3];
-
-                    if(!NumberUtil.isFloat(pitch)){
-                        p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", pitch)));
-                        return false;
-                    }
-
-                    ConfigManager.getInstance().setPitch(p.getWorld().getName(), Float.parseFloat(pitch));
-                }
-                ConfigManager.getInstance().setVolume(p.getWorld().getName(), Float.parseFloat(volume));
-            }
             ConfigManager.getInstance().setSound(p.getWorld().getName(), sound.name());
+        }
+
+        if(args.length >= 3){
+            String volume = args[2];
+
+            if(!NumberUtil.isFloat(volume)){
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", volume)));
+                return false;
+            }
+            ConfigManager.getInstance().setVolume(p.getWorld().getName(), Float.parseFloat(volume));
+        }
+
+        if(args.length >= 4){
+            String pitch = args[3];
+
+            if(!NumberUtil.isFloat(pitch)){
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + String.format("&c%s is not a valid number.", pitch)));
+                return false;
+            }
+            ConfigManager.getInstance().setPitch(p.getWorld().getName(), Float.parseFloat(pitch));
         }
 
         if(args.length == 2){

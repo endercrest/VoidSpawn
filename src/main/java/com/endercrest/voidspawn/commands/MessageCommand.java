@@ -12,10 +12,6 @@ public class MessageCommand implements SubCommand {
 
     @Override
     public boolean onCommand(Player p, String[] args){
-        if(!p.hasPermission(permission())){
-            p.sendMessage(MessageUtil.colorize("&cYou do not have permission."));
-            return true;
-        }
         if(args.length == 1){
             ConfigManager.getInstance().removeMessage(p.getWorld().getName());
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Message has been cleared."));

@@ -2,6 +2,8 @@ package com.endercrest.voidspawn.modes;
 
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public interface SubMode {
 
     /**
@@ -25,6 +27,15 @@ public interface SubMode {
     boolean onSet(String[] args, String worldName, Player p);
 
     /**
+     *
+     * @param worldName
+     * @return
+     */
+    Status[] getStatus(String worldName);
+
+    boolean isEnabled();
+
+    /**
      * Add deals about the mode and is displayed when the player asks for the list of mods.
      * ex. "&6Spawn &f- Will teleport player to set spot."
      *
@@ -37,4 +48,28 @@ public interface SubMode {
      * @return The string version of the mode.
      */
     String getName();
+
+    enum StatusType {
+        COMPLETE,
+        INCOMPLETE,
+        INFO,
+    }
+
+    class Status {
+        private StatusType type;
+        private String message;
+
+        public Status(StatusType type, String message) {
+            this.type = type;
+            this.message = message;
+        }
+
+        public StatusType getType(){
+            return type;
+        }
+
+        public String getMessage(){
+            return message;
+        }
+    }
 }
