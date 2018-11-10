@@ -58,6 +58,10 @@ public class ConfigManager {
         saveConfig();
     }
 
+    public File getWorldFile() {
+        return worldFile;
+    }
+
     /**
      * Migrate the config to version 1 from 0.
      * <p>

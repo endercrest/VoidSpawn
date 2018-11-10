@@ -37,7 +37,7 @@ public class InfoCommand implements SubCommand {
             messages.add("Configurations:");
             messages.add(format(toType(ConfigManager.getInstance().isHybrid(world)),"Hybrid Mode"));
             messages.add(format(toType(ConfigManager.getInstance().getKeepInventory(world)),"Keep Inventory"));
-            messages.add(format(toType(ConfigManager.getInstance().getMessage(world).isEmpty()), "Message Set"));
+            messages.add(format(toType(!ConfigManager.getInstance().getMessage(world).isEmpty()), "Message Set"));
             messages.add(format(toType(ConfigManager.getInstance().isSoundSet(world)),"Sound Set"));
         }
 

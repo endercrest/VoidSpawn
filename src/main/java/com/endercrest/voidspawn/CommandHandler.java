@@ -41,6 +41,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("detector", new DetectorCommand());
         commands.put("sound", new SoundCommand());
         commands.put("info", new InfoCommand());
+        commands.put("support", new SupportCommand(plugin));
     }
 
     public Set<Map.Entry<String, SubCommand>> getCommands() {

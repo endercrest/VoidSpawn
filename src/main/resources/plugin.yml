@@ -50,6 +50,9 @@ permissions:
     vs.admin.status:
         description: Grants you the /void status command
         default: op
+    vs.admin.support:
+        description: Grants you the /void support command
+        default: op
     vs.admin.*:
         description: Grants you the /void command
         default: op
@@ -66,6 +69,7 @@ permissions:
             vs.admin.hybrid: true
             vs.admin.detector: true
             vs.admin.status: true
+            vs.admin.support: true
     vs.enable:
       default: true
       description: Enables teleportation for the player
