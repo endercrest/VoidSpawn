@@ -2,7 +2,7 @@
 
 VoidSpawn [![CircleCI](https://circleci.com/gh/endercrest/VoidSpawn.svg?style=svg)](https://circleci.com/gh/endercrest/VoidSpawn)
 =========
-VoidSpawn is a easy-to-use plugin built for Bukkit & Spigot where the player is teleported to a spawn upon entering the void.  
+VoidSpawn is an easy-to-use plugin built for Bukkit & Spigot where the player is teleported to a spawn upon entering the void.  
 
 * Teleports players upon entering the void.
 * Supports multiple types of teleportation types.
