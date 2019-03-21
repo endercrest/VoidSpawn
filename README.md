@@ -41,7 +41,7 @@ mvn install
 Contributing
 ------
 Feel free to make contributions to the repository. When making
-pull-requests, I ask that aim at the develop branch where all 
+pull-requests, I ask that you aim at the develop branch where all 
 pre-release development goes. 
 
 Installation/Setup
