@@ -4,36 +4,36 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import org.bukkit.entity.Player;
 
-public class Touch implements SubMode {
+public class TouchMode implements IMode {
 
     @Override
-    public boolean onActivate(Player player, String worldName){
+    public boolean onActivate(Player player, String worldName) {
         return TeleportManager.getInstance().teleportTouch(player);
     }
 
     @Override
-    public boolean onSet(String[] args, String worldName, Player p){
+    public boolean onSet(String[] args, String worldName, Player p) {
         ConfigManager.getInstance().setMode(worldName, args[1]);
         return true;
     }
 
     @Override
-    public Status[] getStatus(String worldName){
+    public Status[] getStatus(String worldName) {
         return new Status[0];
     }
 
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return true;
     }
 
     @Override
-    public String getHelp(){
+    public String getHelp() {
         return "&6Touch &f- Will teleport player to place they last touched the ground.";
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return "Touch";
     }
 }

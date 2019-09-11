@@ -13,7 +13,7 @@ jobs:
       - restore_cache:
           key: voidspawn-{{ checksum "pom.xml" }}
       - run: mvn dependency:go-offline
-      - run: mvn package -DskipTests
+      - run: mvn package -DskipTests -PProduction
       - save_cache:
           paths:
             - ~/.m2
@@ -30,7 +30,7 @@ jobs:
       - restore_cache:
           key: voidspawn-{{ checksum "pom.xml" }}
       - run: mvn dependency:go-offline
-      - run: mvn test
+      - run: mvn test -PProduction
       - store_test_results:
           path: target/surefire-reports
 

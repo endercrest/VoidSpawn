@@ -3,17 +3,14 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
-import com.endercrest.voidspawn.modes.SubMode;
+import com.endercrest.voidspawn.modes.IMode;
 import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SetCommand implements SubCommand {
 
@@ -26,7 +23,7 @@ public class SetCommand implements SubCommand {
         }
 
         ConfigManager.getInstance().setSpawn(p, world);
-        SubMode mode = ModeManager.getInstance().getWorldSubMode(world);
+        IMode mode = ModeManager.getInstance().getWorldSubMode(world);
         if (mode == null || (!mode.getName().equalsIgnoreCase("spawn") && !mode.getName().equalsIgnoreCase("island"))) {
             ModeManager.getInstance().getSubMode("spawn").onSet(new String[]{}, world, p);
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Spawn Set & Mode set to Spawn"));

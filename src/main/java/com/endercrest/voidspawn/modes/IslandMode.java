@@ -7,22 +7,22 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 
-public class Island implements SubMode {
+public class IslandMode implements IMode {
 
     @Override
-    public boolean onActivate(Player player, String worldName){
+    public boolean onActivate(Player player, String worldName) {
         return TeleportManager.getInstance().teleportIsland(player, worldName);
     }
 
     @Override
-    public boolean onSet(String[] args, String worldName, Player p){
+    public boolean onSet(String[] args, String worldName, Player p) {
         ConfigManager.getInstance().setMode(worldName, args[1]);
 
         return true;
     }
 
     @Override
-    public Status[] getStatus(String worldName){
+    public Status[] getStatus(String worldName) {
         final boolean isSpawnSet = ConfigManager.getInstance().isWorldSpawnSet(worldName);
         final DecimalFormat df = new DecimalFormat("0.0#");
         final String worldSpawn = ConfigManager.getInstance().getString(worldName + ".spawn.world", worldName);
@@ -34,28 +34,28 @@ public class Island implements SubMode {
         final String location = worldSpawn.equalsIgnoreCase(worldName) ? coords : String.format("world: %s, %s", worldSpawn, coords);
 
         return new Status[]{
-            new Status(isEnabled() ? StatusType.COMPLETE : StatusType.INCOMPLETE, "Mode Enabled"),
-            new Status(
-                isSpawnSet ? StatusType.COMPLETE : StatusType.INCOMPLETE,
-                String.format(
-                    "Fallback Spawn Set (%s)",
-                    isSpawnSet ? location : "/vs set")
+                new Status(isEnabled() ? StatusType.COMPLETE : StatusType.INCOMPLETE, "Mode Enabled"),
+                new Status(
+                        isSpawnSet ? StatusType.COMPLETE : StatusType.INCOMPLETE,
+                        String.format(
+                                "Fallback Spawn Set (%s)",
+                                isSpawnSet ? location : "/vs set")
                 ),
         };
     }
 
     @Override
-    public boolean isEnabled(){
+    public boolean isEnabled() {
         return VoidSpawn.IslandWorld || VoidSpawn.ASkyBlock || VoidSpawn.BentoBox || VoidSpawn.USkyBlock;
     }
 
     @Override
-    public String getHelp(){
+    public String getHelp() {
         return "&6Island &f- Will teleport player back to IslandWorld island";
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return "Island";
     }
 }

@@ -1,6 +1,6 @@
 package com.endercrest.voidspawn;
 
-import com.endercrest.voidspawn.modes.SubMode;
+import com.endercrest.voidspawn.modes.IMode;
 import com.endercrest.voidspawn.modes.*;
 
 import javax.naming.NameAlreadyBoundException;
@@ -9,28 +9,28 @@ import java.util.HashMap;
 public class ModeManager {
     private static ModeManager instance = new ModeManager();
 
-    private HashMap<String, SubMode> modes = new HashMap<String, SubMode>();
+    private HashMap<String, IMode> modes = new HashMap<>();
 
     /**
      * Get the running instance of the ModeManager.
      *
      * @return The ModeManager
      */
-    public static ModeManager getInstance(){
+    public static ModeManager getInstance() {
         return instance;
     }
 
     /**
      * Setup the ModeManager instance. Should only be called on startup.
      */
-    public void setUp(VoidSpawn plugin){
-        try{
-            addMode("spawn", new Spawn());
-            addMode("touch", new Touch());
+    public void setUp(VoidSpawn plugin) {
+        try {
+            addMode("spawn", new SpawnMode());
+            addMode("touch", new TouchMode());
             addMode("none", new None());
-            addMode("command", new Command(plugin));
-            addMode("island", new Island());
-        }catch(NameAlreadyBoundException e){
+            addMode("command", new CommandMode(plugin));
+            addMode("island", new IslandMode());
+        } catch (NameAlreadyBoundException e) {
             e.printStackTrace();
         }
     }
@@ -40,13 +40,12 @@ public class ModeManager {
      *
      * @param modeName The name of the mode which is used throughout settings and selection via commands.
      * @param mode     Class that implements SubMode with the functionality of the mode.
-     *
      * @throws NameAlreadyBoundException Thrown when a mode with the name specified already exists.
      */
-    public void addMode(String modeName, SubMode mode) throws NameAlreadyBoundException{
+    public void addMode(String modeName, IMode mode) throws NameAlreadyBoundException {
         modeName = modeName.toLowerCase();
 
-        if(modes.containsKey(modeName))
+        if (modes.containsKey(modeName))
             throw new NameAlreadyBoundException(String.format("A mode with the name %s has already been set.", modeName));
         modes.put(modeName, mode);
     }
@@ -56,7 +55,7 @@ public class ModeManager {
      *
      * @param modeName The mode name.
      */
-    public void removeMode(String modeName){
+    public void removeMode(String modeName) {
         modes.remove(modeName.toLowerCase());
     }
 
@@ -66,7 +65,7 @@ public class ModeManager {
      * @param modeName The mode name.
      * @return Returns the SubMode containing the logic behind the mode.
      */
-    public SubMode getSubMode(String modeName){
+    public IMode getSubMode(String modeName) {
         return modes.get(modeName.toLowerCase());
     }
 
@@ -76,7 +75,7 @@ public class ModeManager {
      * @param world The world name.
      * @return Class of mode or null if can't find it.
      */
-    public SubMode getWorldSubMode(String world){
+    public IMode getWorldSubMode(String world) {
         String mode = ConfigManager.getInstance().getMode(world);
         return getSubMode(mode.toLowerCase());
     }
@@ -86,7 +85,7 @@ public class ModeManager {
      *
      * @return HashMap clone containing to the mode names and SubMode class.
      */
-    public HashMap<String, SubMode> getModes(){
+    public HashMap<String, IMode> getModes() {
         return new HashMap<>(modes);
     }
 }

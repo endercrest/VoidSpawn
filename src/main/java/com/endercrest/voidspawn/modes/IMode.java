@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public interface SubMode {
+public interface IMode {
 
     /**
      * Called when the player enters the void.
@@ -27,9 +27,11 @@ public interface SubMode {
     boolean onSet(String[] args, String worldName, Player p);
 
     /**
+     * The statuses of the current mode. Used for providing information on whether this mode is configured correctly or
+     * providing any other information to the user.
      *
-     * @param worldName
-     * @return
+     * @param worldName The name of world to get the status of.
+     * @return Must always return a non-null array.
      */
     Status[] getStatus(String worldName);
 
@@ -45,6 +47,7 @@ public interface SubMode {
 
     /**
      * Get the name of the mode.
+     *
      * @return The string version of the mode.
      */
     String getName();
@@ -59,16 +62,16 @@ public interface SubMode {
         private StatusType type;
         private String message;
 
-        public Status(StatusType type, String message) {
+        Status(StatusType type, String message) {
             this.type = type;
             this.message = message;
         }
 
-        public StatusType getType(){
+        public StatusType getType() {
             return type;
         }
 
-        public String getMessage(){
+        public String getMessage() {
             return message;
         }
     }

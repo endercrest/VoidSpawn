@@ -1,8 +1,8 @@
 package com.endercrest.voidspawn;
 
-import com.endercrest.voidspawn.detectors.SubDetector;
-import com.endercrest.voidspawn.modes.Command;
-import com.endercrest.voidspawn.modes.SubMode;
+import com.endercrest.voidspawn.detectors.IDetector;
+import com.endercrest.voidspawn.modes.CommandMode;
+import com.endercrest.voidspawn.modes.IMode;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -24,42 +24,42 @@ public class VoidListener implements Listener {
         Player player = event.getPlayer();
         String worldName = player.getWorld().getName();
 
-        if(!ConfigManager.getInstance().isModeSet(worldName)) {
+        if (!ConfigManager.getInstance().isModeSet(worldName)) {
             return;
         }
 
-        SubDetector detector = DetectorManager.getInstance().getWorldDetector(worldName);
-        if(!detector.isDetected(player, worldName)) {
+        IDetector detector = DetectorManager.getInstance().getWorldDetector(worldName);
+        if (!detector.isDetected(player, worldName)) {
             return;
         }
 
-        if(!player.hasPermission("vs.enable")) {
+        if (!player.hasPermission("vs.enable")) {
             return;
         }
 
-        if(TeleportManager.getInstance().isPlayerToggled(player.getUniqueId())) {
+        if (TeleportManager.getInstance().isPlayerToggled(player.getUniqueId())) {
             return;
         }
 
         handleMessage(player, worldName);
         handleInventory(player, worldName);
 
-        SubMode mode = ModeManager.getInstance().getWorldSubMode(worldName);
-        if(mode != null)
+        IMode mode = ModeManager.getInstance().getWorldSubMode(worldName);
+        if (mode != null)
             success = mode.onActivate(player, worldName);
 
         handleHybridMode(mode, player, worldName);
         handleSound(player, worldName);
 
-        if(!success){
+        if (!success) {
             player.sendMessage(MessageUtil.colorize("&cAn error occurred, notify an administrator."));
-            if(mode != null)
+            if (mode != null)
                 player.sendMessage(MessageUtil.colorize(String.format("&cDetails, World: %s, Mode: %s", worldName, mode.getName())));
         }
     }
 
-    private void handleInventory(Player player, String world){
-        if(!ConfigManager.getInstance().getKeepInventory(world)){
+    private void handleInventory(Player player, String world) {
+        if (!ConfigManager.getInstance().getKeepInventory(world)) {
             player.getInventory().clear();
             player.getInventory().setHelmet(new ItemStack(Material.AIR));
             player.getInventory().setBoots(new ItemStack(Material.AIR));
@@ -68,27 +68,28 @@ public class VoidListener implements Listener {
         }
     }
 
-    private void handleMessage(Player player, String world){
+    private void handleMessage(Player player, String world) {
         String message = ConfigManager.getInstance().getMessage(world);
-        if(!message.isEmpty())
+        if (!message.isEmpty())
             player.sendMessage(MessageUtil.colorize(message));
     }
 
-    private void handleSound(Player player, String world){
+    private void handleSound(Player player, String world) {
         String soundName = ConfigManager.getInstance().getSound(world);
         float volume = ConfigManager.getInstance().getVolume(world);
         float pitch = ConfigManager.getInstance().getPitch(world);
 
-        try{
+        try {
             Sound sound = Sound.valueOf(soundName.toUpperCase());
             player.playSound(player.getLocation(), sound, volume, pitch);
-        }catch(Exception ignored){}
+        } catch (Exception ignored) {
+        }
     }
 
-    private void handleHybridMode(SubMode mode, Player player, String world){
-        if((!(mode instanceof Command)) && ConfigManager.getInstance().isHybrid(world)){
-            SubMode cmdMode = ModeManager.getInstance().getSubMode("command");
-            if(cmdMode != null)
+    private void handleHybridMode(IMode mode, Player player, String world) {
+        if ((!(mode instanceof CommandMode)) && ConfigManager.getInstance().isHybrid(world)) {
+            IMode cmdMode = ModeManager.getInstance().getSubMode("command");
+            if (cmdMode != null)
                 cmdMode.onActivate(player, world);
         }
     }
