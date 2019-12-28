@@ -1,6 +1,7 @@
 package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
+import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ public class CommandMode implements IMode {
     }
 
     @Override
-    public boolean onActivate(Player player, String worldName) {
+    public TeleportResult onActivate(Player player, String worldName) {
         player.setFallDistance(0);
         String commandString = ConfigManager.getInstance().getString(worldName + ".command", "")
                 .replace("${player.name}", player.getName())
@@ -25,7 +26,7 @@ public class CommandMode implements IMode {
                 .replace("${player.coord.z}", player.getLocation().getBlockZ() + "")
                 .replace("${player.coord.world}", player.getLocation().getWorld().getName());
         String[] commands = commandString.split(";");
-        boolean success = true;
+        TeleportResult result = TeleportResult.SUCCESS;
         for (String command: commands) {
             boolean status;
             String[] perms = command.split(":", 2);
@@ -39,13 +40,13 @@ public class CommandMode implements IMode {
 
             if (!status) {
                 plugin.log(String.format("&cCommand Failed for %s! (%s)", worldName, command));
-                success = false;
+                result = TeleportResult.FAILED_COMMAND;
             }
         }
-        if (!success) {
+        if (result != TeleportResult.SUCCESS) {
             player.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cContact Admin. One of the commands failed."));
         }
-        return success;
+        return result;
     }
 
     @Override

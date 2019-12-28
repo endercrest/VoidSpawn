@@ -1,8 +1,7 @@
 package com.endercrest.voidspawn.modes;
 
+import com.endercrest.voidspawn.TeleportResult;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 public interface IMode {
 
@@ -13,7 +12,7 @@ public interface IMode {
      * @param worldName The world name in which the player resides.
      * @return Returns whether the action successfully occurred.
      */
-    boolean onActivate(Player player, String worldName);
+    TeleportResult onActivate(Player player, String worldName);
 
     /**
      * This method is called when this mode is set in a world. This is meant to give any additional instructions should a mode require it.

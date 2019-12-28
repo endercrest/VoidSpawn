@@ -2,6 +2,7 @@ package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
+import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
@@ -11,12 +12,12 @@ import java.text.DecimalFormat;
 public class SpawnMode implements IMode {
 
     @Override
-    public boolean onActivate(Player player, String worldName) {
+    public TeleportResult onActivate(Player player, String worldName) {
         if (ConfigManager.getInstance().isWorldSpawnSet(worldName)) {
             return TeleportManager.getInstance().teleportSpawn(player, worldName);
         }
         player.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cContact Admin. Mode has been set but spawn has not been."));
-        return false;
+        return TeleportResult.INCOMPLETE_MODE;
     }
 
     @Override

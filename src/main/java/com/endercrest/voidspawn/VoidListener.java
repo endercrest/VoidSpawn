@@ -17,10 +17,15 @@ import org.bukkit.inventory.ItemStack;
  * all the necessary executors.
  */
 public class VoidListener implements Listener {
+    private VoidSpawn plugin;
+
+    public VoidListener(VoidSpawn plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onMoveEvent(PlayerMoveEvent event) {
-        boolean success = false;
+        TeleportResult result = TeleportResult.INCOMPLETE_MODE;
         Player player = event.getPlayer();
         String worldName = player.getWorld().getName();
 
@@ -46,15 +51,19 @@ public class VoidListener implements Listener {
 
         IMode mode = ModeManager.getInstance().getWorldSubMode(worldName);
         if (mode != null)
-            success = mode.onActivate(player, worldName);
+            result = mode.onActivate(player, worldName);
 
         handleHybridMode(mode, player, worldName);
         handleSound(player, worldName);
 
-        if (!success) {
+        if (result != TeleportResult.SUCCESS) {
             player.sendMessage(MessageUtil.colorize("&cAn error occurred, notify an administrator."));
-            if (mode != null)
+            plugin.log("Error while teleporting player: " + result.getMessage());
+            if (mode != null) {
                 player.sendMessage(MessageUtil.colorize(String.format("&cDetails, World: %s, Mode: %s", worldName, mode.getName())));
+                plugin.log(String.format("Details, World: %s, Mode: %s", worldName, mode.getName()));
+
+            }
         }
     }
 
