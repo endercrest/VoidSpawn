@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 
-public class SpawnMode implements IMode {
+public class SpawnMode implements Mode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {

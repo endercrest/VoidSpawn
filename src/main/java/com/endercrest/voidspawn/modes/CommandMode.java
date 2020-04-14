@@ -7,7 +7,7 @@ import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class CommandMode implements IMode {
+public class CommandMode implements Mode {
 
     private VoidSpawn plugin;
 

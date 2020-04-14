@@ -4,7 +4,7 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportResult;
 import org.bukkit.entity.Player;
 
-public class None implements IMode {
+public class None implements Mode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {

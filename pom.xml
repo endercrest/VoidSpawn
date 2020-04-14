@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15.1-R0.1-SNAPSHOT</version>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -25,13 +25,6 @@
             <version>8.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/IslandWorld.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.wasteofplastic</groupId>
-            <artifactId>askyblock</artifactId>
-            <version>3.0.9.3</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/askyblock.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.rlf</groupId>
@@ -49,8 +42,16 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>1.12.0</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- Deprecated, but keeping for legacy purposes -->
+        <dependency>
+            <groupId>com.wasteofplastic</groupId>
+            <artifactId>askyblock</artifactId>
+            <version>3.0.9.3</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/askyblock.jar</systemPath>
         </dependency>
 
         <dependency>

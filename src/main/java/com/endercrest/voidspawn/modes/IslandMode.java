@@ -8,18 +8,11 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 
-public class IslandMode implements IMode {
+public class IslandMode implements Mode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {
         return TeleportManager.getInstance().teleportIsland(player, worldName);
-    }
-
-    @Override
-    public boolean onSet(String[] args, String worldName, Player p) {
-        ConfigManager.getInstance().setMode(worldName, args[1]);
-
-        return true;
     }
 
     @Override

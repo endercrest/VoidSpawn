@@ -5,17 +5,11 @@ import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import org.bukkit.entity.Player;
 
-public class TouchMode implements IMode {
+public class TouchMode implements Mode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {
         return TeleportManager.getInstance().teleportTouch(player);
-    }
-
-    @Override
-    public boolean onSet(String[] args, String worldName, Player p) {
-        ConfigManager.getInstance().setMode(worldName, args[1]);
-        return true;
     }
 
     @Override

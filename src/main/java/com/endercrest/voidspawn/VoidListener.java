@@ -2,7 +2,7 @@ package com.endercrest.voidspawn;
 
 import com.endercrest.voidspawn.detectors.IDetector;
 import com.endercrest.voidspawn.modes.CommandMode;
-import com.endercrest.voidspawn.modes.IMode;
+import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -49,7 +49,7 @@ public class VoidListener implements Listener {
         handleMessage(player, worldName);
         handleInventory(player, worldName);
 
-        IMode mode = ModeManager.getInstance().getWorldSubMode(worldName);
+        Mode mode = ModeManager.getInstance().getWorldSubMode(worldName);
         if (mode != null)
             result = mode.onActivate(player, worldName);
 
@@ -95,9 +95,9 @@ public class VoidListener implements Listener {
         }
     }
 
-    private void handleHybridMode(IMode mode, Player player, String world) {
+    private void handleHybridMode(Mode mode, Player player, String world) {
         if ((!(mode instanceof CommandMode)) && ConfigManager.getInstance().isHybrid(world)) {
-            IMode cmdMode = ModeManager.getInstance().getSubMode("command");
+            Mode cmdMode = ModeManager.getInstance().getSubMode("command");
             if (cmdMode != null)
                 cmdMode.onActivate(player, world);
         }

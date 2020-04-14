@@ -2,7 +2,7 @@ package com.endercrest.voidspawn.commands;
 
 import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
-import com.endercrest.voidspawn.modes.IMode;
+import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
@@ -15,7 +15,7 @@ public class ModesCommand implements SubCommand {
     public boolean onCommand(Player p, String[] args) {
         p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
         for (String s: ModeManager.getInstance().getModes().keySet()) {
-            IMode mode = ModeManager.getInstance().getSubMode(s);
+            Mode mode = ModeManager.getInstance().getSubMode(s);
             if (!mode.isEnabled())
                 continue;
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));

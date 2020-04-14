@@ -4,6 +4,7 @@ public enum TeleportResult {
     SUCCESS(""),
     INVALID_WORLD("Invalid world"),
     MISSING_ISLAND_DEPEND("Missing skyblock plugin dependency"),
+    MISSING_ISLAND("No island found"),
     INCOMPLETE_MODE("Mode has not been setup completely"),
     FAILED_COMMAND("Command failed");
 

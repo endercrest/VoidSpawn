@@ -5,7 +5,7 @@ import com.endercrest.voidspawn.DetectorManager;
 import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.detectors.IDetector;
-import com.endercrest.voidspawn.modes.IMode;
+import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
@@ -23,7 +23,7 @@ public class InfoCommand implements SubCommand {
             return false;
         }
 
-        IMode mode = ModeManager.getInstance().getWorldSubMode(world);
+        Mode mode = ModeManager.getInstance().getWorldSubMode(world);
 
         List<String> messages = new ArrayList<>();
         messages.add(String.format("--- &6%s Info &f---", world));
@@ -32,7 +32,7 @@ public class InfoCommand implements SubCommand {
         ));
 
         if (mode != null) {
-            for (IMode.Status status: mode.getStatus(world)) {
+            for (Mode.Status status: mode.getStatus(world)) {
                 messages.add(format(status.getType(), status.getMessage()));
             }
 
@@ -43,7 +43,7 @@ public class InfoCommand implements SubCommand {
             messages.add(format(toType(ConfigManager.getInstance().getKeepInventory(world)), "Keep Inventory"));
             messages.add(format(toType(!ConfigManager.getInstance().getMessage(world).isEmpty()), "Message Set"));
             messages.add(format(toType(ConfigManager.getInstance().isSoundSet(world)), "Sound Set"));
-            messages.add(format(IMode.StatusType.INFO, String.format("Void Detector: %s", detector.getName())));
+            messages.add(format(Mode.StatusType.INFO, String.format("Void Detector: %s", detector.getName())));
         }
 
         for (String message: messages) {
@@ -52,21 +52,21 @@ public class InfoCommand implements SubCommand {
         return false;
     }
 
-    private String getStatusText(IMode.StatusType type) {
-        if (type == IMode.StatusType.COMPLETE) {
+    private String getStatusText(Mode.StatusType type) {
+        if (type == Mode.StatusType.COMPLETE) {
             return "[&a+&f]";
-        } else if (type == IMode.StatusType.INCOMPLETE) {
+        } else if (type == Mode.StatusType.INCOMPLETE) {
             return "[&c-&f]";
         } else {
             return "[&b!&f]";
         }
     }
 
-    private IMode.StatusType toType(boolean status) {
-        return status ? IMode.StatusType.COMPLETE : IMode.StatusType.INCOMPLETE;
+    private Mode.StatusType toType(boolean status) {
+        return status ? Mode.StatusType.COMPLETE : Mode.StatusType.INCOMPLETE;
     }
 
-    private String format(IMode.StatusType type, String message) {
+    private String format(Mode.StatusType type, String message) {
         return String.format("  %s %s", getStatusText(type), message);
     }
 
