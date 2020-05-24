@@ -1,13 +1,10 @@
 package com.endercrest.voidspawn;
 
 import com.wasteofplastic.askyblock.ASkyBlockAPI;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import pl.islandworld.IslandWorld;
 import pl.islandworld.api.IslandWorldApi;
@@ -15,11 +12,16 @@ import pl.islandworld.entity.SimpleIsland;
 import us.talabrek.ultimateskyblock.api.IslandInfo;
 import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
 import world.bentobox.bentobox.BentoBox;
-import world.bentobox.bentobox.database.objects.Island;
+import world.bentobox.bentobox.api.user.User;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class TeleportManager {
-    private VoidSpawn plugin;
     private static TeleportManager instance = new TeleportManager();
+    private VoidSpawn plugin;
     private HashMap<UUID, Location> playerLocation;
     private List<UUID> playerToggle;
 
@@ -236,27 +238,26 @@ public class TeleportManager {
 
     private TeleportResult teleportBentoBox(Player p) {
         BentoBox bentoBox = (BentoBox) Bukkit.getPluginManager().getPlugin("BentoBox");
-        // First checks if current world is an island world. If not, iterate through worlds until we find one.
+
         World world = p.getWorld();
-        Island island = bentoBox.getIslands().getIsland(world, p.getUniqueId());
-        if (island == null) {
+
+        // Check if world is an island world (this check is for a bug in before v1.13)
+        if (bentoBox.getIWM().inWorld(world))
+            return TeleportResult.MISSING_ISLAND;
+
+        // First checks if spawn can be found in current world. If not, iterate through worlds until we find one.
+        Location location = bentoBox.getIslands().getSafeHomeLocation(world, User.getInstance(p), 1);
+        if (location == null) {
             for (World w: Bukkit.getWorlds()) {
-                island = bentoBox.getIslands().getIsland(w, p.getUniqueId());
-                break;
+                location = bentoBox.getIslands().getSafeHomeLocation(w, User.getInstance(p), 1);
+                if (location != null) break;
             }
         }
 
-        if (island != null) {
-            Location spawn = island.getSpawnPoint(world.getEnvironment());
-            if (spawn == null && island.getSpawnPoint().size() > 0) {
-                spawn = island.getSpawnPoint().values().stream().findFirst().orElse(null);
-            }
-
-            if (spawn != null) {
-                p.setFallDistance(0);
-                p.teleport(spawn);
-                return TeleportResult.SUCCESS;
-            }
+        if (location != null) {
+            p.setFallDistance(0);
+            p.teleport(location);
+            return TeleportResult.SUCCESS;
         }
         return TeleportResult.MISSING_ISLAND;
     }
