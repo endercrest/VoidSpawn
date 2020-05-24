@@ -17,7 +17,6 @@ public class CommandMode implements Mode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {
-        player.setFallDistance(0);
         String commandString = ConfigManager.getInstance().getString(worldName + ".command", "")
                 .replace("${player.name}", player.getName())
                 .replace("${player.uuid}", player.getUniqueId().toString())

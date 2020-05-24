@@ -53,7 +53,6 @@ public class TeleportManager {
             return TeleportResult.INVALID_WORLD;
         }
         Location location = new Location(world, x, y, z, yaw, pitch);
-        player.setFallDistance(0);
         player.teleport(location);
         return TeleportResult.SUCCESS;
     }
@@ -88,7 +87,6 @@ public class TeleportManager {
                 Location newLoc = new Location(loc.getWorld(), loc.getX() + i, loc.getWorld().getHighestBlockYAt(loc.getBlockX() + i, loc.getBlockZ()), loc.getZ());
                 Location newLocBelow = new Location(loc.getWorld(), loc.getX() + i, loc.getWorld().getHighestBlockYAt(loc.getBlockX() + i, loc.getBlockZ()) - 1, loc.getZ());
                 if (!newLocBelow.getBlock().getType().equals(Material.AIR)) {
-                    p.setFallDistance(0);
                     p.teleport(newLoc);
                     return TeleportResult.SUCCESS;
                 }
@@ -97,16 +95,13 @@ public class TeleportManager {
                 Location newLoc = new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ() + i), loc.getZ() + i);
                 Location newLocBelow = new Location(loc.getWorld(), loc.getX(), loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()) - 1, loc.getZ() + i);
                 if (!newLocBelow.getBlock().getType().equals(Material.AIR)) {
-                    p.setFallDistance(0);
                     p.teleport(newLoc);
                     return TeleportResult.SUCCESS;
                 }
             }
-            p.setFallDistance(0);
             p.teleport(loc.getWorld().getSpawnLocation());
             return TeleportResult.SUCCESS;
         }
-        p.setFallDistance(0);
         p.teleport(loc);
         return TeleportResult.SUCCESS;
     }
@@ -203,7 +198,6 @@ public class TeleportManager {
                 island = IslandWorld.getInstance().getHelpingIsland(p);
             }
             if (island != null) {
-                p.setFallDistance(0);
                 Location loc = island.getLocation().toLocation();
                 loc.setWorld(IslandWorldApi.getIslandWorld());
                 p.teleport(loc);
@@ -217,12 +211,10 @@ public class TeleportManager {
         if (ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId()) || ASkyBlockAPI.getInstance().inTeam(p.getUniqueId())) {
             Location location = ASkyBlockAPI.getInstance().getHomeLocation(p.getUniqueId());
             if (location != null) {
-                p.setFallDistance(0);
                 p.teleport(location);
                 return TeleportResult.SUCCESS;
             }
             Location loc = ASkyBlockAPI.getInstance().getIslandLocation(p.getUniqueId());
-            p.setFallDistance(0);
             if (loc != null) {
                 loc.setY(loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()));
                 p.teleport(loc);
@@ -242,7 +234,7 @@ public class TeleportManager {
         World world = p.getWorld();
 
         // Check if world is an island world (this check is for a bug in before v1.13)
-        if (bentoBox.getIWM().inWorld(world))
+        if (!bentoBox.getIWM().inWorld(world))
             return TeleportResult.MISSING_ISLAND;
 
         // First checks if spawn can be found in current world. If not, iterate through worlds until we find one.
@@ -255,7 +247,6 @@ public class TeleportManager {
         }
 
         if (location != null) {
-            p.setFallDistance(0);
             p.teleport(location);
             return TeleportResult.SUCCESS;
         }
@@ -266,12 +257,10 @@ public class TeleportManager {
         uSkyBlockAPI usb = (uSkyBlockAPI) Bukkit.getPluginManager().getPlugin("uSkyBlock");
         IslandInfo info = usb.getIslandInfo(p);
         if (info.getWarpLocation() != null) {
-            p.setFallDistance(0);
             p.teleport(info.getWarpLocation());
             return TeleportResult.SUCCESS;
         }
         if (info.getIslandLocation() != null) {
-            p.setFallDistance(0);
             p.teleport(info.getIslandLocation());
             return TeleportResult.SUCCESS;
         }

@@ -4,20 +4,32 @@ import com.endercrest.voidspawn.detectors.IDetector;
 import com.endercrest.voidspawn.modes.CommandMode;
 import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.utils.MessageUtil;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Handles detecting if a player has entered the void & calls
  * all the necessary executors.
  */
 public class VoidListener implements Listener {
-    private VoidSpawn plugin;
+    private final VoidSpawn plugin;
+    private final Cache<UUID, Instant> activationTracker = CacheBuilder.newBuilder()
+            .expireAfterWrite(30, TimeUnit.SECONDS)
+            .build();
 
     public VoidListener(VoidSpawn plugin) {
         this.plugin = plugin;
@@ -50,13 +62,19 @@ public class VoidListener implements Listener {
         handleInventory(player, worldName);
 
         Mode mode = ModeManager.getInstance().getWorldSubMode(worldName);
-        if (mode != null)
+
+        Instant instant = activationTracker.getIfPresent(player.getUniqueId());
+        if (mode != null) {
             result = mode.onActivate(player, worldName);
+            if (result == TeleportResult.SUCCESS) {
+                activationTracker.put(player.getUniqueId(), Instant.now());
+            }
+        }
 
         handleHybridMode(mode, player, worldName);
         handleSound(player, worldName);
 
-        if (result != TeleportResult.SUCCESS) {
+        if (result != TeleportResult.SUCCESS && instant == null) {
             player.sendMessage(MessageUtil.colorize("&cAn error occurred, notify an administrator."));
             plugin.log("Error while teleporting player: " + result.getMessage());
             if (mode != null) {
@@ -65,6 +83,23 @@ public class VoidListener implements Listener {
 
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL) || !(event.getEntity() instanceof Player))
+            return;
+
+        Player player = (Player) event.getEntity();
+        Instant instant = activationTracker.getIfPresent(player.getUniqueId());
+        if (instant == null)
+            return;
+
+        Instant future = instant.plus(500, ChronoUnit.MILLIS);
+        if (Instant.now().isAfter(future))
+            return;
+
+        event.setCancelled(true);
     }
 
     private void handleInventory(Player player, String world) {

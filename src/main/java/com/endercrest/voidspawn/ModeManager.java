@@ -7,9 +7,8 @@ import javax.naming.NameAlreadyBoundException;
 import java.util.HashMap;
 
 public class ModeManager {
-    private static ModeManager instance = new ModeManager();
-
-    private HashMap<String, Mode> modes = new HashMap<>();
+    private static final ModeManager instance = new ModeManager();
+    private final HashMap<String, Mode> modes = new HashMap<>();
 
     /**
      * Get the running instance of the ModeManager.
