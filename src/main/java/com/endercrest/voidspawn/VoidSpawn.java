@@ -31,7 +31,6 @@ public class VoidSpawn extends JavaPlugin {
         TeleportManager.getInstance().setUp(this);
         ModeManager.getInstance().setUp(this);
         DetectorManager.getInstance().setUp();
-        getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new VoidListener(this), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
 
@@ -39,6 +38,8 @@ public class VoidSpawn extends JavaPlugin {
         CommandHandler commandHandler = new CommandHandler(this);
         command.setExecutor(commandHandler);
         command.setTabCompleter(new VoidSpawnTabCompleter(commandHandler));
+
+        Bukkit.getScheduler().runTaskTimer(this, new TouchTracker(), 5, 5);
 
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
     }

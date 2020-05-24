@@ -67,6 +67,10 @@ public class TeleportManager {
         playerLocation.put(uuid, loc);
     }
 
+    public Location getPlayerLocation(UUID uuid) {
+        return playerLocation.get(uuid);
+    }
+
     /**
      * Teleports the player to their last touched location.
      *

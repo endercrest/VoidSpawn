@@ -1,10 +1,12 @@
 package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
+import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class CommandMode implements Mode {
@@ -17,13 +19,19 @@ public class CommandMode implements Mode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {
+        Location touch = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId());
+
         String commandString = ConfigManager.getInstance().getString(worldName + ".command", "")
                 .replace("${player.name}", player.getName())
                 .replace("${player.uuid}", player.getUniqueId().toString())
                 .replace("${player.coord.x}", player.getLocation().getBlockX() + "")
                 .replace("${player.coord.y}", player.getLocation().getBlockY() + "")
                 .replace("${player.coord.z}", player.getLocation().getBlockZ() + "")
-                .replace("${player.coord.world}", player.getLocation().getWorld().getName());
+                .replace("${player.coord.world}", player.getLocation().getWorld().getName())
+                .replace("${player.touch.x}", touch.getBlockX() + "")
+                .replace("${player.touch.y}", touch.getBlockY() + "")
+                .replace("${player.touch.z}", touch.getBlockZ() + "")
+                .replace("${player.touch.world}", touch.getWorld().getName());
         String[] commands = commandString.split(";");
         TeleportResult result = TeleportResult.SUCCESS;
         for (String command: commands) {
