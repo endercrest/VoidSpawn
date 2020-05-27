@@ -38,9 +38,9 @@ public class CommandMode implements Mode {
             boolean status;
             String[] perms = command.split(":", 2);
             //Check if cmd needs to be ran as OP/Console
-            if (perms.length > 1 && perms[0].equalsIgnoreCase("op")) {
-                String cmd = perms[1];
-                status = Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd.trim());
+            if (perms.length > 1 && perms[0].trim().equalsIgnoreCase("op")) {
+                String cmd = perms[1].trim();
+                status = Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
             } else {
                 status = player.performCommand(command.trim());
             }
