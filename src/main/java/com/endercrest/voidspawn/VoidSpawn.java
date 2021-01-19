@@ -22,7 +22,7 @@ public class VoidSpawn extends JavaPlugin {
 
     public void onEnable(){
         /* if[PROD] */
-        Metrics metrics = new Metrics(this);
+        Metrics metrics = new Metrics(this, 3514);
         /* end[PROD] */
 
         loadDependencies();
