@@ -28,12 +28,21 @@ public class BentoBoxIslandMode extends BaseIslandMode {
             return TeleportResult.MISSING_ISLAND;
 
         // First checks if spawn can be found in current world. If not, iterate through worlds until we find one.
-        Location location = bentoBox.getIslands().getSafeHomeLocation(world, user, 1);
-        if (location == null) {
-            for (World w: Bukkit.getWorlds()) {
-                location = bentoBox.getIslands().getSafeHomeLocation(w, user, 1);
-                if (location != null) break;
+        Location location;
+        try {
+            location = bentoBox.getIslands().getSafeHomeLocation(world, user, 1);
+            if (location == null) {
+                for (World w: Bukkit.getWorlds()) {
+                    location = bentoBox.getIslands().getSafeHomeLocation(w, user, 1);
+                    if (location != null) break;
+                }
             }
+        } catch (NullPointerException e) {
+            // This is a temporary safe guard due to BentoBox getSafeHomeLocation
+            // not respecting it's API definition. An issue has been created
+            // https://github.com/BentoBoxWorld/BentoBox/issues/1650 in order to track
+            // this issue.
+            return TeleportResult.MISSING_ISLAND;
         }
 
         if (location != null) {
