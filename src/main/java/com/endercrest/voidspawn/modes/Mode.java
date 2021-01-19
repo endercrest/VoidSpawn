@@ -2,7 +2,13 @@ package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportResult;
+import com.endercrest.voidspawn.modes.flags.Flag;
+import com.endercrest.voidspawn.modes.flags.FlagIdentifier;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
 
 public interface Mode {
 
@@ -54,6 +60,32 @@ public interface Mode {
      * @return The string version of the mode.
      */
     String getName();
+
+    /**
+     * Attempt to retrieve a flag of the given name.
+     *
+     * @param <T>        The type the flag will be casted to.
+     * @param identifier The identifier for the flag.
+     * @return The flag if it exists, returns empty if no existing flag or
+     * if the flag identifier type does not match flag type.
+     */
+    @NotNull <T> Flag<T> getFlag(FlagIdentifier<T> identifier);
+
+    /**
+     * Attempt to retrieve a flag of the given name by the name. If possible, use {@link #getFlag(FlagIdentifier)} as
+     * that guarantees a type.
+     *
+     * @param name The name of the flag to retrieve.
+     * @return The flag or null if doesn't exist.
+     */
+    @Nullable Flag<?> getFlag(String name);
+
+    /**
+     * Get a list of all flags for this mode.
+     *
+     * @return non-null list of flags
+     */
+    Collection<Flag<?>> getFlags();
 
     enum StatusType {
         COMPLETE,

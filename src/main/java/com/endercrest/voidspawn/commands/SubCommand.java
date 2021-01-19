@@ -1,7 +1,5 @@
 package com.endercrest.voidspawn.commands;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;

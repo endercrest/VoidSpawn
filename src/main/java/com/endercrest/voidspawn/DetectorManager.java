@@ -1,7 +1,7 @@
 package com.endercrest.voidspawn;
 
 import com.endercrest.voidspawn.detectors.NetherDetector;
-import com.endercrest.voidspawn.detectors.IDetector;
+import com.endercrest.voidspawn.detectors.Detector;
 import com.endercrest.voidspawn.detectors.VoidDetector;
 
 import javax.naming.NameAlreadyBoundException;
@@ -15,8 +15,8 @@ public class DetectorManager {
         return instance;
     }
 
-    private IDetector defaultDetector;
-    private HashMap<String, IDetector> detectors;
+    private Detector defaultDetector;
+    private HashMap<String, Detector> detectors;
 
     /**
      * Setup the DetectorManager, should only be called once.
@@ -24,7 +24,7 @@ public class DetectorManager {
     public void setUp() {
         defaultDetector = new VoidDetector();
 
-        detectors = new HashMap<String, IDetector>() {{
+        detectors = new HashMap<String, Detector>() {{
             put("void", defaultDetector);
             put("nether", new NetherDetector());
         }};
@@ -35,7 +35,7 @@ public class DetectorManager {
      *
      * @return A clone of the detectors HashMap where string is the key of the detector and SubDetector is detector class.
      */
-    public HashMap<String, IDetector> getDetectors() {
+    public HashMap<String, Detector> getDetectors() {
         return new HashMap<>(detectors);
     }
 
@@ -46,7 +46,7 @@ public class DetectorManager {
      * @param detector The class definition.
      * @throws NameAlreadyBoundException Thrown when the detector has already been set with that name.
      */
-    public void addDetector(String name, IDetector detector) throws NameAlreadyBoundException {
+    public void addDetector(String name, Detector detector) throws NameAlreadyBoundException {
         name = name.toLowerCase();
 
         if (detectors.containsKey(name))
@@ -70,7 +70,7 @@ public class DetectorManager {
      * @param worldName The world name.
      * @return Detector if set or defaults to VoidDetector.
      */
-    public IDetector getWorldDetector(String worldName) {
+    public Detector getWorldDetector(String worldName) {
         String detector = ConfigManager.getInstance().getDetector(worldName);
         return getDetector(detector.toLowerCase());
     }
@@ -81,8 +81,8 @@ public class DetectorManager {
      * @param detector The detector name/id.
      * @return Detector or default if not exists.
      */
-    public IDetector getDetector(String detector) {
-        IDetector sd = detectors.get(detector.toLowerCase());
+    public Detector getDetector(String detector) {
+        Detector sd = detectors.get(detector.toLowerCase());
         return sd == null ? defaultDetector : sd;
     }
 
@@ -100,7 +100,7 @@ public class DetectorManager {
      *
      * @return Detector's class.
      */
-    public IDetector getDefaultDetector() {
+    public Detector getDefaultDetector() {
         return defaultDetector;
     }
 
@@ -111,7 +111,7 @@ public class DetectorManager {
      * @return Returns true if the default detector has successfully been set.
      */
     public boolean setDefaultDetector(String name) {
-        IDetector newDetector = getDetector(name);
+        Detector newDetector = getDetector(name);
 
         if (newDetector != null)
             defaultDetector = newDetector;

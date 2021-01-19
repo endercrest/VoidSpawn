@@ -9,11 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-public class CommandMode implements Mode {
-
-    private VoidSpawn plugin;
+public class CommandMode extends BaseMode {
+    private final VoidSpawn plugin;
 
     public CommandMode(VoidSpawn plugin) {
+        detachFlag(BaseMode.FLAG_HYBRID); // Command mode can't be hybrid.
         this.plugin = plugin;
     }
 

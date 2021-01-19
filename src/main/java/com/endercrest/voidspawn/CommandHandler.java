@@ -32,15 +32,11 @@ public class CommandHandler implements CommandExecutor {
         commands.put("modes", new ModesCommand());
         commands.put("mode", new ModeCommand());
         commands.put("help", new HelpCommand(commands));
-        commands.put("message", new MessageCommand());
-        commands.put("offset", new OffsetCommand());
         commands.put("command", new CommandCommand());
-        commands.put("keepinventory", new KeepInventoryCommand());
-        commands.put("hybrid", new HybridCommand());
         commands.put("toggle", new ToggleCommand());
         commands.put("detector", new DetectorCommand());
-        commands.put("sound", new SoundCommand());
         commands.put("info", new InfoCommand());
+        commands.put("flag", new FlagCommand());
     }
 
     public Set<Map.Entry<String, SubCommand>> getCommands() {

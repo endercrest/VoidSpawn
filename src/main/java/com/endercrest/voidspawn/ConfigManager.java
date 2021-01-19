@@ -1,9 +1,13 @@
 package com.endercrest.voidspawn;
 
+import com.endercrest.voidspawn.modes.BaseMode;
+import com.endercrest.voidspawn.modes.flags.FlagIdentifier;
 import com.endercrest.voidspawn.utils.WorldUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -13,10 +17,10 @@ import org.bukkit.entity.Player;
 
 public class ConfigManager {
     private VoidSpawn plugin;
-    private static ConfigManager instance = new ConfigManager();
+    private static final ConfigManager instance = new ConfigManager();
     private File worldFile;
     private FileConfiguration config;
-    private final int CURRENT_VERSION = 1;
+    private final int CURRENT_VERSION = 2;
 
     /**
      * Get the running instance of the ConfigManager
@@ -54,6 +58,7 @@ public class ConfigManager {
      */
     private void migrate() {
         migrateV1();
+        migrateV2();
 
         saveConfig();
     }
@@ -65,7 +70,7 @@ public class ConfigManager {
      */
     private void migrateV1() {
         if (!config.isSet("version")) {
-            plugin.log("Converting world.yml to version 1");
+            plugin.log("Converting worlds.yml to version 1");
             config.set("version", 1);
 
             ConfigurationSection section = config.getRoot();
@@ -81,6 +86,53 @@ public class ConfigManager {
 
             plugin.log("Version 1 conversion complete.");
         }
+    }
+
+    private void migrateV2() {
+        if (config.getInt("version", 0) >= CURRENT_VERSION)
+            return;
+
+        long time = Instant.now().toEpochMilli();
+
+        String newName = String.format("worlds.%s.yml", time);
+        File file = new File(plugin.getDataFolder(), newName);
+        plugin.log(String.format("Backing up worlds.yml to %s", newName));
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            plugin.log("Failed to backup worlds.yml");
+            e.printStackTrace();
+            return;
+        }
+
+        plugin.log("Converting world.yml to version 2");
+        config.set("version", 2);
+
+        for (String key: config.getKeys(false)) {
+            if (!config.isConfigurationSection(key))
+                continue;
+            ConfigurationSection section = config.getConfigurationSection(key);
+            if (section == null)
+                continue;
+
+            section.set("flags." + BaseMode.FLAG_OFFSET.getName(), section.get("offset"));
+            section.set("flags." + BaseMode.FLAG_MESSAGE.getName(), section.get("message"));
+            section.set("flags." + BaseMode.FLAG_HYBRID.getName(), section.get("hybrid"));
+            section.set("flags." + BaseMode.FLAG_SOUND.getName(), section.get("sound.name"));
+            section.set("flags." + BaseMode.FLAG_SOUND_VOLUME.getName(), section.get("sound.volume"));
+            section.set("flags." + BaseMode.FLAG_SOUND_PITCH.getName(), section.get("sound.pitch"));
+            section.set("flags." + BaseMode.FLAG_KEEP_INVENTORY.getName(), section.get("keep_inventory"));
+
+            section.set("offset", null);
+            section.set("message", null);
+            section.set("hybrid", null);
+            section.set("sound.name", null);
+            section.set("sound.volume", null);
+            section.set("sound.pitch", null);
+            section.set("keep_inventory", null);
+        }
+
+        plugin.log("Version 2 conversion complete.");
     }
 
     /**
@@ -153,102 +205,6 @@ public class ConfigManager {
     }
 
     /**
-     * Checks if the specified world has a sound set. This just requires the name of a sound to be set.
-     * This also doesn't check if it is a valid sound either.
-     *
-     * @param world The world to be checked.
-     * @return true if a world has a sound set. Does not verify that the sound is valid.
-     */
-    public boolean isSoundSet(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return isSet(world + ".sound.name");
-    }
-
-    /**
-     * Sets the sound for the specific world.
-     *
-     * @param world The world
-     * @param sound The sound, does not require to be a valid world.
-     */
-    public void setSound(String world, String sound) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".sound.name", sound);
-    }
-
-    /**
-     * Get the sound for a world.
-     *
-     * @param world The world to retrieve the value from.
-     * @return A string with the name of the sound. Does not validate and returns null if no sound is set.
-     */
-    public String getSound(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return getString(world + ".sound.name", null);
-    }
-
-    /**
-     * Removes the sounds from the world's config. As well as removing the value and pitch values.
-     *
-     * @param world The world to remove the sound from.
-     */
-    public void removeSound(String world) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".sound", null);
-    }
-
-    /**
-     * Set the volume of a sound.
-     *
-     * @param world The world
-     * @param value THe value, does not validate, but should be between 0 - 1
-     */
-    public void setVolume(String world, float value) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".sound.volume", value);
-    }
-
-    /**
-     * Set the pitch of the sound.
-     *
-     * @param world The world
-     * @param value The value, does not validate, but should be between 0 - 2
-     */
-    public void setPitch(String world, float value) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".sound.pitch", value);
-    }
-
-    /**
-     * Get the volume of the sound for the world.
-     *
-     * @param world The world.
-     * @return Returns the volume set or defaults to 1.0
-     */
-    public float getVolume(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return getFloat(world + ".sound.volume", 1f);
-    }
-
-    /**
-     * Get the pitch of the sound for the world.
-     *
-     * @param world The world
-     * @return Returns the pitch set or defaults to 1.0
-     */
-    public float getPitch(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return getFloat(world + "sound.pitch", 1f);
-    }
-
-    /**
      * Set spawn for a specific world at the location of the specified player.
      *
      * @param player The player who is setting the location.
@@ -298,118 +254,20 @@ public class ConfigManager {
         }
     }
 
-    /**
-     * Update the keep inventory setting.
-     *
-     * @param bool  The updated boolean
-     * @param world The world.
-     */
-    public void setKeepInventory(boolean bool, String world) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".keep_inventory", bool);
-        saveConfig();
+    public String getFlag(String world, FlagIdentifier<?> identifier) {
+        return getFlag(world, identifier.getName());
     }
 
-    /**
-     * Get the value of keep inventory.
-     *
-     * @param world The world.
-     * @return defaults to true if setting is not found.
-     */
-    public boolean getKeepInventory(String world) {
+    public String getFlag(String world, String flag) {
         world = WorldUtil.configSafe(world);
 
-        return getBoolean(world + ".keep_inventory", true);
+        return getString(world + ".flags." + flag, null);
     }
 
-    /**
-     * Update the hybrid setting.
-     *
-     * @param bool  The update boolean
-     * @param world The world.
-     */
-    public void setHybrid(boolean bool, String world) {
+    public void setFlag(String world, String flag, String value) {
         world = WorldUtil.configSafe(world);
 
-        set(world + ".hybrid", bool);
-        saveConfig();
-    }
-
-    /**
-     * Get the value of the hybrid mode.
-     *
-     * @param world The world
-     * @return defaults to false if setting is not found.
-     */
-    public boolean isHybrid(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return getBoolean(world + ".hybrid", false);
-    }
-
-    /**
-     * Set the teleport message for the specified world.
-     *
-     * @param message The message that will be set.
-     * @param world   The world being set for.
-     */
-    public void setMessage(String message, String world) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".message", message);
-        saveConfig();
-    }
-
-    /**
-     * Removes the teleport message for the specified world.
-     *
-     * @param world The world that the message will be removed from.
-     */
-    public void removeMessage(String world) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".message", null);
-        saveConfig();
-    }
-
-    /**
-     * Get the message for the specified world.
-     *
-     * @param world The world to retrieve the message from.
-     * @return The message.
-     */
-    public String getMessage(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return getString(world + ".message", "");
-    }
-
-    /**
-     * Set the offset for a world, this will move the teleportation zone downward.
-     * <p>
-     * ie, offset of 2 will move the teleportation zone 2 blocks below the start of the void.
-     *
-     * @param offset The offset
-     * @param world  The world that the offset is being sent for.
-     */
-    public void setOffset(int offset, String world) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".offset", offset);
-        saveConfig();
-    }
-
-    /**
-     * Return the offset for a specific world.
-     *
-     * @param world The world.
-     * @return the offset, will return -1 if it is not set.
-     */
-    public int getOffSet(String world) {
-        world = WorldUtil.configSafe(world);
-
-        return getInt(world + ".offset", 0);
+        set(world + ".flags." + flag, value);
     }
 
     /**
