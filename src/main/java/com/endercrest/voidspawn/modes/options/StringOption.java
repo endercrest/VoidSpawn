@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.flags;
+package com.endercrest.voidspawn.modes.options;
 
 import com.endercrest.voidspawn.ConfigManager;
 import org.bukkit.World;
@@ -7,14 +7,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public class StringFlag extends BaseFlag<String> {
-    public StringFlag(@NotNull FlagIdentifier<String> identifier) {
+public class StringOption extends BaseOption<String> {
+    public StringOption(@NotNull OptionIdentifier<String> identifier) {
         super(identifier);
     }
 
     @Override
     public Optional<String> getValue(World world) {
-        return Optional.ofNullable(ConfigManager.getInstance().getFlag(world.getName(), getIdentifier()));
+        return Optional.ofNullable(ConfigManager.getInstance().getOption(world.getName(), getIdentifier()));
     }
 
     @Override

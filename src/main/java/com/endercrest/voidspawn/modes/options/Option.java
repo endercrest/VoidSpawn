@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.flags;
+package com.endercrest.voidspawn.modes.options;
 
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
@@ -6,43 +6,35 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public interface Flag<T> {
-
+public interface Option<T> {
     /**
-     * Constant that signifies that this flag accepts an open value.
-     */
-    String OPEN_VALUE_CONSTANT = "__OpenValue__";
-
-    /**
-     *
-     * @return
+     * Get the option identifer for this object.
      */
     @NotNull
-    FlagIdentifier<T> getIdentifier();
+    OptionIdentifier<T> getIdentifier();
 
     /**
-     *
-     * @return
+     * Get the type that this option contains.
      */
     @NotNull
     Class<T> getType();
 
     /**
-     *
-     * @param world
-     * @return
+     * Get the value of the option for the given world.
+     * @param world The value to retrieve the value for
+     * @return Empty if value is not set.
      */
     Optional<T> getValue(World world);
 
     /**
-     * Set the value of this flag
+     * Set the value of this option
      * @param world The world the value is being set for.
      * @param value String value will be contained with the the {@link #getOptions()}
      */
     void setValue(@NotNull World world, String value) throws IllegalArgumentException;
 
     /**
-     * Set the value of this flag
+     * Set the value of this option
      * @param world The world the value is being set for.
      * @param args The arguments
      */

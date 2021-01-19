@@ -13,7 +13,7 @@ public class CommandMode extends BaseMode {
     private final VoidSpawn plugin;
 
     public CommandMode(VoidSpawn plugin) {
-        detachFlag(BaseMode.FLAG_HYBRID); // Command mode can't be hybrid.
+        detachOption(BaseMode.OPTION_HYBRID); // Command mode can't be hybrid.
         this.plugin = plugin;
     }
 

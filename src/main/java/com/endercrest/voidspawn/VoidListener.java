@@ -3,7 +3,7 @@ package com.endercrest.voidspawn;
 import com.endercrest.voidspawn.detectors.Detector;
 import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
-import com.endercrest.voidspawn.modes.flags.Flag;
+import com.endercrest.voidspawn.modes.options.Option;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -108,8 +108,8 @@ public class VoidListener implements Listener {
     }
 
     private void activateHybrid(Mode mode, Player player, World world) {
-        Flag<Boolean> hybridFlag = mode.getFlag(BaseMode.FLAG_HYBRID);
-        if (hybridFlag.getValue(world).orElse(false)) {
+        Option<Boolean> hybridOption = mode.getOption(BaseMode.OPTION_HYBRID);
+        if (hybridOption.getValue(world).orElse(false)) {
             Mode cmdMode = ModeManager.getInstance().getMode("command");
             if (cmdMode != null)
                 cmdMode.onActivate(player, world.getName());
@@ -117,22 +117,22 @@ public class VoidListener implements Listener {
     }
 
     private void activateSound(Mode mode, Player player, World world) {
-        Flag<Sound> soundFlag = mode.getFlag(BaseMode.FLAG_SOUND);
+        Option<Sound> soundOption = mode.getOption(BaseMode.OPTION_SOUND);
 
-        Optional<Sound> sound = soundFlag.getValue(world);
+        Optional<Sound> sound = soundOption.getValue(world);
         if (sound.isPresent()) {
-            Flag<Float> volumeFlag = mode.getFlag(BaseMode.FLAG_SOUND_VOLUME);
-            Flag<Float> pitchFlag = mode.getFlag(BaseMode.FLAG_SOUND_PITCH);
+            Option<Float> volumeOption = mode.getOption(BaseMode.OPTION_SOUND_VOLUME);
+            Option<Float> pitchOption = mode.getOption(BaseMode.OPTION_SOUND_PITCH);
 
-            Float volume = volumeFlag.getValue(world).orElse(1.0f);
-            Float pitch = pitchFlag.getValue(world).orElse(1.0f);
+            Float volume = volumeOption.getValue(world).orElse(1.0f);
+            Float pitch = pitchOption.getValue(world).orElse(1.0f);
             player.playSound(player.getLocation(), sound.get(), volume, pitch);
         }
     }
 
     private void activateInventoryClear(Mode mode, Player player, World world) {
-        Flag<Boolean> keepInvFlag = mode.getFlag(BaseMode.FLAG_KEEP_INVENTORY);
-        if (!keepInvFlag.getValue(world).orElse(true)) {
+        Option<Boolean> keepInvOption = mode.getOption(BaseMode.OPTION_KEEP_INVENTORY);
+        if (!keepInvOption.getValue(world).orElse(true)) {
             player.getInventory().clear();
             player.getInventory().setHelmet(new ItemStack(Material.AIR));
             player.getInventory().setBoots(new ItemStack(Material.AIR));
@@ -142,8 +142,8 @@ public class VoidListener implements Listener {
     }
 
     private void activateMessage(Mode mode, Player player, World world) {
-        Flag<String> messageFlag = mode.getFlag(BaseMode.FLAG_MESSAGE);
-        messageFlag.getValue(world)
+        Option<String> messageOption = mode.getOption(BaseMode.OPTION_MESSAGE);
+        messageOption.getValue(world)
                 .ifPresent(msg -> player.sendMessage(MessageUtil.colorize(msg)));
     }
 }

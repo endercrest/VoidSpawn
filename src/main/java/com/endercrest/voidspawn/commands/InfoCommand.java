@@ -41,11 +41,11 @@ public class InfoCommand implements SubCommand {
 
             Detector detector = DetectorManager.getInstance().getWorldDetector(worldName);
 
-            messages.add("Configurations:");
-            messages.add(format(toType(mode.getFlag(BaseMode.FLAG_HYBRID).getValue(world).orElse(false)), "Hybrid Mode"));
-            messages.add(format(toType(mode.getFlag(BaseMode.FLAG_KEEP_INVENTORY).getValue(world).orElse(false)), "Keep Inventory"));
-            messages.add(format(toType(!mode.getFlag(BaseMode.FLAG_MESSAGE).getValue(world).orElse("").isEmpty()), "Message Set"));
-            messages.add(format(toType(mode.getFlag(BaseMode.FLAG_SOUND).getValue(world).isPresent()), "Sound Set"));
+            messages.add("Options:");
+            messages.add(format(toType(mode.getOption(BaseMode.OPTION_HYBRID).getValue(world).orElse(false)), "Hybrid Mode"));
+            messages.add(format(toType(mode.getOption(BaseMode.OPTION_KEEP_INVENTORY).getValue(world).orElse(false)), "Keep Inventory"));
+            messages.add(format(toType(!mode.getOption(BaseMode.OPTION_MESSAGE).getValue(world).orElse("").isEmpty()), "Message Set"));
+            messages.add(format(toType(mode.getOption(BaseMode.OPTION_SOUND).getValue(world).isPresent()), "Sound Set"));
             messages.add(format(Mode.StatusType.INFO, String.format("Void Detector: %s", detector.getName())));
         }
 

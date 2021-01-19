@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.flags;
+package com.endercrest.voidspawn.modes.options;
 
 import com.endercrest.voidspawn.ConfigManager;
 import org.bukkit.World;
@@ -6,23 +6,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class BooleanFlag extends BaseFlag<Boolean> {
+public class BooleanOption extends BaseOption<Boolean> {
     private static final List<String> options = Collections.unmodifiableList(new ArrayList<String>() {{
         add("true");
         add("false");
     }});
 
-    public BooleanFlag(FlagIdentifier<Boolean> identifier) {
+    public BooleanOption(OptionIdentifier<Boolean> identifier) {
         super(identifier);
     }
 
-    public BooleanFlag(FlagIdentifier<Boolean> identifier, Boolean defaultValue) {
+    public BooleanOption(OptionIdentifier<Boolean> identifier, Boolean defaultValue) {
         super(identifier, defaultValue);
     }
 
     @Override
     public Optional<Boolean> getValue(World world) {
-        String value = ConfigManager.getInstance().getFlag(world.getName(), getIdentifier());
+        String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
         if (value == null)
             return getDefaultValue();
 

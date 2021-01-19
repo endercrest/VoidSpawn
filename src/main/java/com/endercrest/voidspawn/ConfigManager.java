@@ -1,13 +1,12 @@
 package com.endercrest.voidspawn;
 
 import com.endercrest.voidspawn.modes.BaseMode;
-import com.endercrest.voidspawn.modes.flags.FlagIdentifier;
+import com.endercrest.voidspawn.modes.options.OptionIdentifier;
 import com.endercrest.voidspawn.utils.WorldUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -115,13 +114,13 @@ public class ConfigManager {
             if (section == null)
                 continue;
 
-            section.set("flags." + BaseMode.FLAG_OFFSET.getName(), section.get("offset"));
-            section.set("flags." + BaseMode.FLAG_MESSAGE.getName(), section.get("message"));
-            section.set("flags." + BaseMode.FLAG_HYBRID.getName(), section.get("hybrid"));
-            section.set("flags." + BaseMode.FLAG_SOUND.getName(), section.get("sound.name"));
-            section.set("flags." + BaseMode.FLAG_SOUND_VOLUME.getName(), section.get("sound.volume"));
-            section.set("flags." + BaseMode.FLAG_SOUND_PITCH.getName(), section.get("sound.pitch"));
-            section.set("flags." + BaseMode.FLAG_KEEP_INVENTORY.getName(), section.get("keep_inventory"));
+            section.set("options." + BaseMode.OPTION_OFFSET.getName(), section.get("offset"));
+            section.set("options." + BaseMode.OPTION_MESSAGE.getName(), section.get("message"));
+            section.set("options." + BaseMode.OPTION_HYBRID.getName(), section.get("hybrid"));
+            section.set("options." + BaseMode.OPTION_SOUND.getName(), section.get("sound.name"));
+            section.set("options." + BaseMode.OPTION_SOUND_VOLUME.getName(), section.get("sound.volume"));
+            section.set("options." + BaseMode.OPTION_SOUND_PITCH.getName(), section.get("sound.pitch"));
+            section.set("options." + BaseMode.OPTION_KEEP_INVENTORY.getName(), section.get("keep_inventory"));
 
             section.set("offset", null);
             section.set("message", null);
@@ -254,20 +253,20 @@ public class ConfigManager {
         }
     }
 
-    public String getFlag(String world, FlagIdentifier<?> identifier) {
-        return getFlag(world, identifier.getName());
+    public String getOption(String world, OptionIdentifier<?> identifier) {
+        return getOption(world, identifier.getName());
     }
 
-    public String getFlag(String world, String flag) {
+    public String getOption(String world, String option) {
         world = WorldUtil.configSafe(world);
 
-        return getString(world + ".flags." + flag, null);
+        return getString(world + ".options." + option, null);
     }
 
-    public void setFlag(String world, String flag, String value) {
+    public void setOption(String world, String options, String value) {
         world = WorldUtil.configSafe(world);
 
-        set(world + ".flags." + flag, value);
+        set(world + ".options." + options, value);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.flags;
+package com.endercrest.voidspawn.modes.options;
 
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public final class EmptyFlag<T> extends BaseFlag<T> {
-    public EmptyFlag(@NotNull FlagIdentifier<T> identifier) {
+public final class EmptyOption<T> extends BaseOption<T> {
+    public EmptyOption(@NotNull OptionIdentifier<T> identifier) {
         super(identifier);
     }
 

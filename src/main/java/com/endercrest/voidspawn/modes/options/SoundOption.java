@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.flags;
+package com.endercrest.voidspawn.modes.options;
 
 import com.endercrest.voidspawn.ConfigManager;
 import org.bukkit.Sound;
@@ -8,16 +8,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SoundFlag extends BaseFlag<Sound> {
+public class SoundOption extends BaseOption<Sound> {
     private static final List<String> sounds = Collections.unmodifiableList(Arrays.stream(Sound.values()).map(Sound::name).collect(Collectors.toList()));
 
-    public SoundFlag(FlagIdentifier<Sound> identifier) {
+    public SoundOption(OptionIdentifier<Sound> identifier) {
         super(identifier);
     }
 
     @Override
     public Optional<Sound> getValue(World world) {
-        String value = ConfigManager.getInstance().getFlag(world.getName(), getIdentifier());
+        String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
         if (value == null)
             return Optional.empty();
 

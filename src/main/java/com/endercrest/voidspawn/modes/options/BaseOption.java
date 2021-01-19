@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.flags;
+package com.endercrest.voidspawn.modes.options;
 
 import com.endercrest.voidspawn.ConfigManager;
 import org.bukkit.World;
@@ -7,15 +7,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseFlag<T> implements Flag<T> {
-    private final FlagIdentifier<T> identifier;
+public abstract class BaseOption<T> implements Option<T> {
+    private final OptionIdentifier<T> identifier;
     private final T defaultValue;
 
-    public BaseFlag(@NotNull FlagIdentifier<T> identifier) {
+    public BaseOption(@NotNull OptionIdentifier<T> identifier) {
         this(identifier, null);
     }
 
-    public BaseFlag(@NotNull FlagIdentifier<T> identifier, T defaultValue) {
+    public BaseOption(@NotNull OptionIdentifier<T> identifier, T defaultValue) {
         this.identifier = identifier;
         this.defaultValue = defaultValue;
     }
@@ -25,7 +25,7 @@ public abstract class BaseFlag<T> implements Flag<T> {
     }
 
     @Override
-    public @NotNull FlagIdentifier<T> getIdentifier() {
+    public @NotNull OptionIdentifier<T> getIdentifier() {
         return identifier;
     }
 
@@ -36,7 +36,7 @@ public abstract class BaseFlag<T> implements Flag<T> {
             throw new IllegalArgumentException("Invalid value!");
         }
 
-        ConfigManager.getInstance().setFlag(world.getName(), getIdentifier().getName(), value);
+        ConfigManager.getInstance().setOption(world.getName(), getIdentifier().getName(), value);
     }
 
     protected Optional<T> getDefaultValue() {

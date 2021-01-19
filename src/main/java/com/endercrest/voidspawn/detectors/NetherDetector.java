@@ -1,9 +1,8 @@
 package com.endercrest.voidspawn.detectors;
 
-import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
-import com.endercrest.voidspawn.modes.flags.Flag;
+import com.endercrest.voidspawn.modes.options.Option;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -15,8 +14,8 @@ import org.bukkit.entity.Player;
 public class NetherDetector implements Detector {
     @Override
     public boolean isDetected(Mode mode, Player player, World world) {
-        Flag<Integer> offsetFlag = mode.getFlag(BaseMode.FLAG_OFFSET);
-        int offset = offsetFlag.getValue(world).orElse(0);
+        Option<Integer> offsetOption = mode.getOption(BaseMode.OPTION_OFFSET);
+        int offset = offsetOption.getValue(world).orElse(0);
 
         return player.getLocation().getBlockY() < -offset || player.getLocation().getBlockY() >= 128 - offset;
     }

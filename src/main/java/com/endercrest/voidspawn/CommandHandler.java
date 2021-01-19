@@ -36,7 +36,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("toggle", new ToggleCommand());
         commands.put("detector", new DetectorCommand());
         commands.put("info", new InfoCommand());
-        commands.put("flag", new FlagCommand());
+        commands.put("option", new OptionCommand());
     }
 
     public Set<Map.Entry<String, SubCommand>> getCommands() {
