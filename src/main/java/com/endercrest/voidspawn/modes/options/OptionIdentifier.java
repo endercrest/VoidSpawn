@@ -3,10 +3,12 @@ package com.endercrest.voidspawn.modes.options;
 public class OptionIdentifier<T> {
     private final Class<T> type;
     private final String name;
+    private final String description;
 
-    public OptionIdentifier(Class<T> type, String name) {
+    public OptionIdentifier(Class<T> type, String name, String description) {
         this.type = type;
         this.name = name;
+        this.description = description;
     }
 
     public Class<T> getType() {
@@ -15,5 +17,9 @@ public class OptionIdentifier<T> {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

@@ -45,4 +45,9 @@ public interface Option<T> {
      * @return A non-null set of accepted values or null if any value is accepted.
      */
     List<String> getOptions();
+
+    /**
+     * Get description of the option.
+     */
+    String getDescription();
 }

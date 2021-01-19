@@ -26,29 +26,14 @@ permissions:
     vs.admin.help:
         description: Grants you the /void help command
         default: op
-    vs.admin.message:
-        description: Grants you the /void message command
-        default: op
-    vs.admin.offset:
-        description: Grants you the /void offset command
-        default: op
-    vs.admin.command:
-        description: Grants you the /void command command
-        default: op
-    vs.admin.keepinventory:
-        description: Grants you the /void keepinventory command
-        default: op
-    vs.admin.hybrid:
-        description: Grants you the /void hybrid command
-        default: op
     vs.admin.detector:
         description: Grants you the /void detector command
         default: op
-    vs.admin.sound:
-        description: Grants you the /void sound command
-        default: op
     vs.admin.status:
         description: Grants you the /void status command
+        default: op
+    vs.admin.option:
+        description: Grants you the /void option command
         default: op
     vs.admin.*:
         description: Grants you the /void command
@@ -59,13 +44,9 @@ permissions:
             vs.admin.remove: true
             vs.admin.mode: true
             vs.admin.help: true
-            vs.admin.message: true
-            vs.admin.offset: true
-            vs.admin.command: true
-            vs.admin.keepinventory: true
-            vs.admin.hybrid: true
             vs.admin.detector: true
             vs.admin.status: true
+            vs.admin.option: true
     vs.enable:
       default: true
       description: Enables teleportation for the player

@@ -42,4 +42,9 @@ public abstract class BaseOption<T> implements Option<T> {
     protected Optional<T> getDefaultValue() {
         return Optional.ofNullable(defaultValue);
     }
+
+    @Override
+    public String getDescription() {
+        return identifier.getDescription();
+    }
 }

@@ -43,7 +43,7 @@ public class OptionCommand implements SubCommand {
                 return true;
             case "set":
                 if (args.length == 3) {
-                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cMissing a option value!"));
+                    p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + option.getDescription()));
                     return true;
                 }
 

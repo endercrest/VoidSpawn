@@ -11,14 +11,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class CommandHandler implements CommandExecutor {
-    private VoidSpawn plugin;
-    private HashMap<String, SubCommand> commands;
+    private final VoidSpawn plugin;
+    private final HashMap<String, SubCommand> commands = new HashMap<>();
 
     public CommandHandler(VoidSpawn plugin){
         this.plugin = plugin;
-        commands = new HashMap<>();
         loadCommands();
     }
 
@@ -32,7 +32,6 @@ public class CommandHandler implements CommandExecutor {
         commands.put("modes", new ModesCommand());
         commands.put("mode", new ModeCommand());
         commands.put("help", new HelpCommand(commands));
-        commands.put("command", new CommandCommand());
         commands.put("toggle", new ToggleCommand());
         commands.put("detector", new DetectorCommand());
         commands.put("info", new InfoCommand());
@@ -48,7 +47,7 @@ public class CommandHandler implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender cs, Command cmd, String s, String[] args){
+    public boolean onCommand(@NotNull CommandSender cs, @NotNull Command cmd, @NotNull String s, String[] args){
         if(!(cs instanceof Player)){
             if((args.length >= 1) && (args[0].equalsIgnoreCase("reload"))){
                 ConfigManager.getInstance().reloadConfig();

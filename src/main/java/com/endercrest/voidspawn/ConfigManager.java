@@ -121,6 +121,7 @@ public class ConfigManager {
             section.set("options." + BaseMode.OPTION_SOUND_VOLUME.getName(), section.get("sound.volume"));
             section.set("options." + BaseMode.OPTION_SOUND_PITCH.getName(), section.get("sound.pitch"));
             section.set("options." + BaseMode.OPTION_KEEP_INVENTORY.getName(), section.get("keep_inventory"));
+            section.set("options." + BaseMode.OPTION_COMMAND.getName(), section.get("command"));
 
             section.set("offset", null);
             section.set("message", null);
@@ -129,6 +130,7 @@ public class ConfigManager {
             section.set("sound.volume", null);
             section.set("sound.pitch", null);
             section.set("keep_inventory", null);
+            section.set("command", null);
         }
 
         plugin.log("Version 2 conversion complete.");
@@ -267,19 +269,6 @@ public class ConfigManager {
         world = WorldUtil.configSafe(world);
 
         set(world + ".options." + options, value);
-    }
-
-    /**
-     * Set the command for a specific world.
-     *
-     * @param command The command(s) to be set for the world. Each command should be separated by ';'
-     * @param world   The world.
-     */
-    public void setCommand(String command, String world) {
-        world = WorldUtil.configSafe(world);
-
-        set(world + ".command", command);
-        saveConfig();
     }
 
     /**
