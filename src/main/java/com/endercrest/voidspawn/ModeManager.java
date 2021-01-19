@@ -2,6 +2,7 @@ package com.endercrest.voidspawn;
 
 import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.modes.*;
+import com.endercrest.voidspawn.modes.island.*;
 
 import javax.naming.NameAlreadyBoundException;
 import java.util.HashMap;
@@ -28,7 +29,30 @@ public class ModeManager {
             addMode("touch", new TouchMode());
             addMode("none", new None());
             addMode("command", new CommandMode(plugin));
-            addMode("island", new IslandMode());
+
+            // Load the correct island mode.
+            if (ASkyblockIslandMode.isModeEnabled()) {
+                plugin.log("&eASkyBlock found, initializing support.");
+                plugin.log("&cASkyBlock has been deprecated, ASkyBlock has been discontinued and it is recommended to switch to BentoBox");
+
+                addMode("island", new ASkyblockIslandMode());
+                plugin.log("&eASkyBlock support initialized.");
+            } else if (BentoBoxIslandMode.isModeEnabled()) {
+                plugin.log("&eBentoBox found, initializing support.");
+                addMode("island", new BentoBoxIslandMode());
+                plugin.log("&eBentoBox support initialized.");
+            } else if (IslandWorldIslandMode.isModeEnabled()) {
+                plugin.log("&eIslandWorld found, initializing support.");
+                addMode("island", new IslandWorldIslandMode());
+                plugin.log("&eIslandWorld support initialized.");
+            } else if (USkyBlockIslandMode.isModeEnabled()) {
+                plugin.log("&eUSkyBlock found, initializing support.");
+                addMode("island", new USkyBlockIslandMode());
+                plugin.log("&eUSkyBlock support initialized.");
+            } else {
+                plugin.log("&eNo SkyBlock plugins found, disabling island mode support.");
+                addMode("island", new DisabledIslandMode());
+            }
         } catch (NameAlreadyBoundException e) {
             e.printStackTrace();
         }

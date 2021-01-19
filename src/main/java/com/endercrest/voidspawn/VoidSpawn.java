@@ -12,17 +12,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoidSpawn extends JavaPlugin {
     public static String prefix = "[&6VS&f] ";
-    public static boolean IslandWorld = false;
-    public static boolean ASkyBlock = false;
-    public static boolean BentoBox = false;
-    public static boolean USkyBlock = false;
 
     public void onEnable(){
         /* if[PROD] */
         Metrics metrics = new Metrics(this, 3514);
         /* end[PROD] */
 
-        loadDependencies();
         loadConfiguration();
         ConfigManager.getInstance().setUp(this);
         TeleportManager.getInstance().setUp(this);
@@ -39,38 +34,6 @@ public class VoidSpawn extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new TouchTracker(), 5, 5);
 
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
-    }
-
-    private void loadDependencies(){
-        PluginManager pm = Bukkit.getPluginManager();
-        if(pm.isPluginEnabled("IslandWorld")){
-            log("&eIslandWorld found, initializing support.");
-            IslandWorld = true;
-            log("&eIslandWorld support initialized.");
-        }
-
-        if(pm.isPluginEnabled("ASkyBlock")){
-            log("&eASkyBlock found, initializing support.");
-            log("&cASkyBlock has been deprecated, ASkyBlock has been discontinued and it is recommended to switch to BentoBox");
-            ASkyBlock = true;
-            log("&eASkyBlock support initialized.");
-        }
-
-        if(pm.isPluginEnabled("BentoBox")){
-            log("&eBentoBox found, initializing support.");
-            BentoBox = true;
-            log("&eBentoBox support initialized.");
-        }
-
-        if(pm.isPluginEnabled("uSkyBlock")){
-            log("&eUSkyBlock found, initializing support.");
-            USkyBlock = true;
-            log("&eUSkyBlock support initialized.");
-        }
-
-        if(!IslandWorld && !ASkyBlock && !BentoBox && !USkyBlock){
-            log("&eNo SkyBlock plugins found, disabling island mode support.");
-        }
     }
 
     public void onDisable(){

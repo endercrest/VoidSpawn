@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -224,6 +225,21 @@ public class ConfigManager {
         saveConfig();
     }
 
+    public Location getSpawn(String world) {
+        if(!isWorldSpawnSet(world))
+            return null;
+
+        world = WorldUtil.configSafe(world);
+
+
+        return new Location(Bukkit.getWorld(getString(world + ".spawn.x", null)),
+                getDouble(world + ".spawn.x", 0.0),
+                getDouble(world + ".spawn.y", 0.0),
+                getDouble(world + ".spawn.z", 0.0),
+                getFloat(world + ".spawn.pitch", 0.0f),
+                getFloat(world + ".spawn.yaw", 0.0f));
+    }
+
     /**
      * Removes the spawn of a world based on the world name.
      *
@@ -269,6 +285,7 @@ public class ConfigManager {
         world = WorldUtil.configSafe(world);
 
         set(world + ".options." + options, value);
+        saveConfig();
     }
 
     /**
