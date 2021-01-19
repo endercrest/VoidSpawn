@@ -9,6 +9,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,6 +77,7 @@ public class VoidListener implements Listener {
 
             activateSound(mode, player, world);
             activateHybrid(mode, player, world);
+            activateDeathIncrement(mode, player, world);
         }
 
 
@@ -145,5 +147,11 @@ public class VoidListener implements Listener {
         Option<String> messageOption = mode.getOption(BaseMode.OPTION_MESSAGE);
         messageOption.getValue(world)
                 .ifPresent(msg -> player.sendMessage(MessageUtil.colorize(msg)));
+    }
+
+    private void activateDeathIncrement(Mode mode, Player player, World world) {
+        if (mode.getOption(BaseMode.OPTION_INC_DEATH_STAT).getValue(world).orElse(false)) {
+            player.incrementStatistic(Statistic.DEATHS, 1);
+        }
     }
 }
