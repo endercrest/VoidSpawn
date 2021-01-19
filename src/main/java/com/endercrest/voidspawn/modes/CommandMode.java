@@ -25,6 +25,18 @@ public class CommandMode extends BaseMode {
     public TeleportResult onActivate(Player player, String worldName) {
         Location touch = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId());
         World world = Bukkit.getWorld(worldName);
+        if (world == null) {
+            return TeleportResult.INVALID_WORLD;
+        }
+
+        // If the player hasn't touch the ground, fallback to the spawn.
+        if (touch == null) {
+            touch = ConfigManager.getInstance().getSpawn(worldName);
+        }
+        // If fallback spawn not set, fall back to the spawn point.
+        if (touch == null) {
+            touch = world.getSpawnLocation();
+        }
 
         Option<String> commandOption = getOption(BaseMode.OPTION_COMMAND);
 
@@ -39,6 +51,7 @@ public class CommandMode extends BaseMode {
                 .replace("${player.touch.y}", touch.getBlockY() + "")
                 .replace("${player.touch.z}", touch.getBlockZ() + "")
                 .replace("${player.touch.world}", touch.getWorld().getName());
+
         String[] commands = commandString.split(";");
         TeleportResult result = TeleportResult.SUCCESS;
         for (String command: commands) {

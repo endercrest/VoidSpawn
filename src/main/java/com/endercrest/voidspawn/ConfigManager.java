@@ -14,6 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class ConfigManager {
     private VoidSpawn plugin;
@@ -225,6 +226,7 @@ public class ConfigManager {
         saveConfig();
     }
 
+    @Nullable
     public Location getSpawn(String world) {
         if(!isWorldSpawnSet(world))
             return null;

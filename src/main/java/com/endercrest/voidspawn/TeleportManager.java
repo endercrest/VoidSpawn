@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +59,7 @@ public class TeleportManager {
         playerLocation.put(uuid, loc);
     }
 
+    @Nullable
     public Location getPlayerLocation(UUID uuid) {
         return playerLocation.get(uuid);
     }
