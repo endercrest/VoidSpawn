@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.endercrest.voidspawn.utils.MessageUtil;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 public class HelpCommand implements SubCommand {

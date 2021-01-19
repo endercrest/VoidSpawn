@@ -4,24 +4,31 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
+import com.endercrest.voidspawn.modes.options.Option;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class CommandMode implements Mode {
+import java.util.Optional;
 
-    private VoidSpawn plugin;
+public class CommandMode extends BaseMode {
+    private final VoidSpawn plugin;
 
     public CommandMode(VoidSpawn plugin) {
+        detachOption(BaseMode.OPTION_HYBRID); // Command mode can't be hybrid.
         this.plugin = plugin;
     }
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {
         Location touch = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId());
+        World world = Bukkit.getWorld(worldName);
 
-        String commandString = ConfigManager.getInstance().getString(worldName + ".command", "")
+        Option<String> commandOption = getOption(BaseMode.OPTION_COMMAND);
+
+        String commandString = commandOption.getValue(world).orElse("")
                 .replace("${player.name}", player.getName())
                 .replace("${player.uuid}", player.getUniqueId().toString())
                 .replace("${player.coord.x}", player.getLocation().getBlockX() + "")
@@ -64,10 +71,13 @@ public class CommandMode implements Mode {
 
     @Override
     public Status[] getStatus(String worldName) {
-        final String command = ConfigManager.getInstance().getString(worldName + ".command", null);
+        World world = Bukkit.getWorld(worldName);
+        Option<String> commandOption = getOption(BaseMode.OPTION_COMMAND);
+
+        Optional<String> command = commandOption.getValue(world);
         return new Status[]{
-                new Status(command == null ? StatusType.INCOMPLETE : StatusType.COMPLETE,
-                        String.format("Command Set %s", command == null ? "" : String.format("(%s)", command)))
+                new Status(!command.isPresent() ? StatusType.INCOMPLETE : StatusType.COMPLETE,
+                        String.format("Command Set %s", !command.isPresent() ? "" : String.format("(%s)", command.get())))
         };
     }
 

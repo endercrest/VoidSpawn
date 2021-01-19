@@ -2,7 +2,13 @@ package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportResult;
+import com.endercrest.voidspawn.modes.options.Option;
+import com.endercrest.voidspawn.modes.options.OptionIdentifier;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
 
 public interface Mode {
 
@@ -54,6 +60,32 @@ public interface Mode {
      * @return The string version of the mode.
      */
     String getName();
+
+    /**
+     * Attempt to retrieve a option of the given name.
+     *
+     * @param <T>        The type the option will be casted to.
+     * @param identifier The identifier for the option.
+     * @return The option if it exists, returns empty if no existing option or
+     * if the option identifier type does not match option type.
+     */
+    @NotNull <T> Option<T> getOption(OptionIdentifier<T> identifier);
+
+    /**
+     * Attempt to retrieve a option of the given name by the name. If possible, use {@link #getOption(OptionIdentifier)} as
+     * that guarantees a type.
+     *
+     * @param name The name of the option to retrieve.
+     * @return The option or null if doesn't exist.
+     */
+    @Nullable Option<?> getOption(String name);
+
+    /**
+     * Get a list of all options for this mode.
+     *
+     * @return non-null list of options
+     */
+    Collection<Option<?>> getOptions();
 
     enum StatusType {
         COMPLETE,

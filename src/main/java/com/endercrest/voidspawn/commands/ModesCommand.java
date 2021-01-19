@@ -15,7 +15,7 @@ public class ModesCommand implements SubCommand {
     public boolean onCommand(Player p, String[] args) {
         p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
         for (String s: ModeManager.getInstance().getModes().keySet()) {
-            Mode mode = ModeManager.getInstance().getSubMode(s);
+            Mode mode = ModeManager.getInstance().getMode(s);
             if (!mode.isEnabled())
                 continue;
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));

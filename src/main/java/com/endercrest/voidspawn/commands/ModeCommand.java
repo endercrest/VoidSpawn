@@ -20,7 +20,7 @@ public class ModeCommand implements SubCommand {
         if (args.length == 1) {
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
             for (String s: ModeManager.getInstance().getModes().keySet()) {
-                Mode mode = ModeManager.getInstance().getSubMode(s);
+                Mode mode = ModeManager.getInstance().getMode(s);
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));
             }
         } else if (args.length >= 2) {
@@ -31,7 +31,7 @@ public class ModeCommand implements SubCommand {
             }
 
             if (ModeManager.getInstance().getModes().containsKey(args[1].toLowerCase())) {
-                Mode mode = ModeManager.getInstance().getSubMode(args[1].toLowerCase());
+                Mode mode = ModeManager.getInstance().getMode(args[1].toLowerCase());
                 if (!mode.isEnabled()) {
                     p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "&cThis is not a valid mode!"));
                     return false;

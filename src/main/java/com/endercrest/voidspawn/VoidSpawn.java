@@ -1,8 +1,5 @@
 package com.endercrest.voidspawn;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import com.endercrest.voidspawn.commands.VoidSpawnTabCompleter;

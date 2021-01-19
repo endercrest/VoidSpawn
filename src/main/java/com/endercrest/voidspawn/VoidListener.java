@@ -1,13 +1,15 @@
 package com.endercrest.voidspawn;
 
-import com.endercrest.voidspawn.detectors.IDetector;
-import com.endercrest.voidspawn.modes.CommandMode;
+import com.endercrest.voidspawn.detectors.Detector;
+import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
+import com.endercrest.voidspawn.modes.options.Option;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -39,14 +41,17 @@ public class VoidListener implements Listener {
     public void onMoveEvent(PlayerMoveEvent event) {
         TeleportResult result = TeleportResult.INCOMPLETE_MODE;
         Player player = event.getPlayer();
-        String worldName = player.getWorld().getName();
+        World world = player.getWorld();
+        String worldName = world.getName();
 
         if (!ConfigManager.getInstance().isModeSet(worldName)) {
             return;
         }
 
-        IDetector detector = DetectorManager.getInstance().getWorldDetector(worldName);
-        if (!detector.isDetected(player, worldName)) {
+        Mode mode = ModeManager.getInstance().getWorldMode(worldName);
+
+        Detector detector = DetectorManager.getInstance().getWorldDetector(worldName);
+        if (!detector.isDetected(mode, player, world)) {
             return;
         }
 
@@ -58,21 +63,21 @@ public class VoidListener implements Listener {
             return;
         }
 
-        handleMessage(player, worldName);
-        handleInventory(player, worldName);
-
-        Mode mode = ModeManager.getInstance().getWorldSubMode(worldName);
 
         Instant instant = activationTracker.getIfPresent(player.getUniqueId());
         if (mode != null) {
+            activateMessage(mode, player, world);
+            activateInventoryClear(mode, player, world);
+
             result = mode.onActivate(player, worldName);
             if (result == TeleportResult.SUCCESS) {
                 activationTracker.put(player.getUniqueId(), Instant.now());
             }
+
+            activateSound(mode, player, world);
+            activateHybrid(mode, player, world);
         }
 
-        handleHybridMode(mode, player, worldName);
-        handleSound(player, worldName);
 
         if (result != TeleportResult.SUCCESS && instant == null) {
             player.sendMessage(MessageUtil.colorize("&cAn error occurred, notify an administrator."));
@@ -102,8 +107,32 @@ public class VoidListener implements Listener {
         event.setCancelled(true);
     }
 
-    private void handleInventory(Player player, String world) {
-        if (!ConfigManager.getInstance().getKeepInventory(world)) {
+    private void activateHybrid(Mode mode, Player player, World world) {
+        Option<Boolean> hybridOption = mode.getOption(BaseMode.OPTION_HYBRID);
+        if (hybridOption.getValue(world).orElse(false)) {
+            Mode cmdMode = ModeManager.getInstance().getMode("command");
+            if (cmdMode != null)
+                cmdMode.onActivate(player, world.getName());
+        }
+    }
+
+    private void activateSound(Mode mode, Player player, World world) {
+        Option<Sound> soundOption = mode.getOption(BaseMode.OPTION_SOUND);
+
+        Optional<Sound> sound = soundOption.getValue(world);
+        if (sound.isPresent()) {
+            Option<Float> volumeOption = mode.getOption(BaseMode.OPTION_SOUND_VOLUME);
+            Option<Float> pitchOption = mode.getOption(BaseMode.OPTION_SOUND_PITCH);
+
+            Float volume = volumeOption.getValue(world).orElse(1.0f);
+            Float pitch = pitchOption.getValue(world).orElse(1.0f);
+            player.playSound(player.getLocation(), sound.get(), volume, pitch);
+        }
+    }
+
+    private void activateInventoryClear(Mode mode, Player player, World world) {
+        Option<Boolean> keepInvOption = mode.getOption(BaseMode.OPTION_KEEP_INVENTORY);
+        if (!keepInvOption.getValue(world).orElse(true)) {
             player.getInventory().clear();
             player.getInventory().setHelmet(new ItemStack(Material.AIR));
             player.getInventory().setBoots(new ItemStack(Material.AIR));
@@ -112,29 +141,9 @@ public class VoidListener implements Listener {
         }
     }
 
-    private void handleMessage(Player player, String world) {
-        String message = ConfigManager.getInstance().getMessage(world);
-        if (!message.isEmpty())
-            player.sendMessage(MessageUtil.colorize(message));
-    }
-
-    private void handleSound(Player player, String world) {
-        String soundName = ConfigManager.getInstance().getSound(world);
-        float volume = ConfigManager.getInstance().getVolume(world);
-        float pitch = ConfigManager.getInstance().getPitch(world);
-
-        try {
-            Sound sound = Sound.valueOf(soundName.toUpperCase());
-            player.playSound(player.getLocation(), sound, volume, pitch);
-        } catch (Exception ignored) {
-        }
-    }
-
-    private void handleHybridMode(Mode mode, Player player, String world) {
-        if ((!(mode instanceof CommandMode)) && ConfigManager.getInstance().isHybrid(world)) {
-            Mode cmdMode = ModeManager.getInstance().getSubMode("command");
-            if (cmdMode != null)
-                cmdMode.onActivate(player, world);
-        }
+    private void activateMessage(Mode mode, Player player, World world) {
+        Option<String> messageOption = mode.getOption(BaseMode.OPTION_MESSAGE);
+        messageOption.getValue(world)
+                .ifPresent(msg -> player.sendMessage(MessageUtil.colorize(msg)));
     }
 }

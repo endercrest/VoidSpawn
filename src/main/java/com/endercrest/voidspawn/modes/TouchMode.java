@@ -5,7 +5,7 @@ import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import org.bukkit.entity.Player;
 
-public class TouchMode implements Mode {
+public class TouchMode extends BaseMode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {

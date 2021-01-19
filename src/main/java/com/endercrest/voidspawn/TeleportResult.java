@@ -8,7 +8,7 @@ public enum TeleportResult {
     INCOMPLETE_MODE("Mode has not been setup completely"),
     FAILED_COMMAND("Command failed");
 
-    private String message;
+    private final String message;
 
     TeleportResult(String message) {
         this.message = message;

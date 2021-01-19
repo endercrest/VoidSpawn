@@ -23,9 +23,9 @@ public class SetCommand implements SubCommand {
         }
 
         ConfigManager.getInstance().setSpawn(p, world);
-        Mode mode = ModeManager.getInstance().getWorldSubMode(world);
+        Mode mode = ModeManager.getInstance().getWorldMode(world);
         if (mode == null || (!mode.getName().equalsIgnoreCase("spawn") && !mode.getName().equalsIgnoreCase("island"))) {
-            ModeManager.getInstance().getSubMode("spawn").onSet(new String[]{}, world, p);
+            ModeManager.getInstance().getMode("spawn").onSet(new String[]{}, world, p);
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Spawn Set & Mode set to Spawn"));
         } else {
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Spawn Set"));

@@ -3,7 +3,7 @@ package com.endercrest.voidspawn.commands;
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.DetectorManager;
 import com.endercrest.voidspawn.VoidSpawn;
-import com.endercrest.voidspawn.detectors.IDetector;
+import com.endercrest.voidspawn.detectors.Detector;
 import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
@@ -20,7 +20,7 @@ public class DetectorCommand implements SubCommand {
     public boolean onCommand(Player p, String[] args){
         if(args.length == 1){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Detectors&f ---"));
-            for(IDetector detector : DetectorManager.getInstance().getDetectors().values()){
+            for(Detector detector : DetectorManager.getInstance().getDetectors().values()){
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + detector.getInfo()));
             }
         }else if(args.length >= 2) {
@@ -31,7 +31,7 @@ public class DetectorCommand implements SubCommand {
             }
 
             if(DetectorManager.getInstance().getDetectors().containsKey(args[1].toLowerCase())){
-                IDetector detector = DetectorManager.getInstance().getDetector(args[1].toLowerCase());
+                Detector detector = DetectorManager.getInstance().getDetector(args[1].toLowerCase());
                 ConfigManager.getInstance().setDetector(detector.getName().toLowerCase(), world);
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "Updated detector!"));
             }else{

@@ -64,7 +64,7 @@ public class ModeManager {
      * @param modeName The mode name.
      * @return Returns the SubMode containing the logic behind the mode.
      */
-    public Mode getSubMode(String modeName) {
+    public Mode getMode(String modeName) {
         return modes.get(modeName.toLowerCase());
     }
 
@@ -74,9 +74,9 @@ public class ModeManager {
      * @param world The world name.
      * @return Class of mode or null if can't find it.
      */
-    public Mode getWorldSubMode(String world) {
+    public Mode getWorldMode(String world) {
         String mode = ConfigManager.getInstance().getMode(world);
-        return getSubMode(mode.toLowerCase());
+        return getMode(mode.toLowerCase());
     }
 
     /**
