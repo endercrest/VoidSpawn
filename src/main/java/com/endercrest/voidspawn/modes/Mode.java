@@ -94,10 +94,10 @@ public interface Mode {
     }
 
     class Status {
-        private StatusType type;
-        private String message;
+        private final StatusType type;
+        private final String message;
 
-        Status(StatusType type, String message) {
+        public Status(StatusType type, String message) {
             this.type = type;
             this.message = message;
         }

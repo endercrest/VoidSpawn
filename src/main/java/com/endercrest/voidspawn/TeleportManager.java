@@ -1,18 +1,9 @@
 package com.endercrest.voidspawn;
 
-import com.wasteofplastic.askyblock.ASkyBlockAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import pl.islandworld.IslandWorld;
-import pl.islandworld.api.IslandWorldApi;
-import pl.islandworld.entity.SimpleIsland;
-import us.talabrek.ultimateskyblock.api.IslandInfo;
-import us.talabrek.ultimateskyblock.api.uSkyBlockAPI;
-import world.bentobox.bentobox.BentoBox;
-import world.bentobox.bentobox.api.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,37 +102,6 @@ public class TeleportManager {
     }
 
     /**
-     * Teleports the player to their sky block island. (Only Available if IslandWorld or ASkyBlock or uSkyBlock is installed).
-     *
-     * @param p The player that will be teleported.
-     * @return Whether the teleport was successful.
-     */
-    public TeleportResult teleportIsland(Player p, String worldName) {
-        TeleportResult result;
-        if (VoidSpawn.IslandWorld) {
-            result = teleportIslandWorld(p);
-        } else if (VoidSpawn.ASkyBlock) {
-            result = teleportASkyBlock(p);
-        } else if (VoidSpawn.BentoBox) {
-            result = teleportBentoBox(p);
-        } else if (VoidSpawn.USkyBlock) {
-            result = teleportUSkyBlock(p);
-        } else {
-            return TeleportResult.MISSING_ISLAND_DEPEND;
-        }
-
-        if (result == TeleportResult.SUCCESS) {
-            return result;
-        }
-
-        if (ConfigManager.getInstance().isWorldSpawnSet(worldName)) {
-            return teleportSpawn(p, worldName);
-        }
-
-        return result;
-    }
-
-    /**
      * Checks whether the player is toggled disabled.
      *
      * @param uuid The players UUID.
@@ -195,80 +155,4 @@ public class TeleportManager {
         playerLocation.remove(uuid);
     }
 
-    private TeleportResult teleportIslandWorld(Player p) {
-        if (IslandWorldApi.haveIsland(p.getName()) || IslandWorldApi.isHelpingIsland(p.getName())) {
-            SimpleIsland island = IslandWorld.getInstance().getPlayerIsland(p);
-            if (island == null) {
-                island = IslandWorld.getInstance().getHelpingIsland(p);
-            }
-            if (island != null) {
-                Location loc = island.getLocation().toLocation();
-                loc.setWorld(IslandWorldApi.getIslandWorld());
-                p.teleport(loc);
-                return TeleportResult.SUCCESS;
-            }
-        }
-        return TeleportResult.MISSING_ISLAND;
-    }
-
-    private TeleportResult teleportASkyBlock(Player p) {
-        if (ASkyBlockAPI.getInstance().hasIsland(p.getUniqueId()) || ASkyBlockAPI.getInstance().inTeam(p.getUniqueId())) {
-            Location location = ASkyBlockAPI.getInstance().getHomeLocation(p.getUniqueId());
-            if (location != null) {
-                p.teleport(location);
-                return TeleportResult.SUCCESS;
-            }
-            Location loc = ASkyBlockAPI.getInstance().getIslandLocation(p.getUniqueId());
-            if (loc != null) {
-                loc.setY(loc.getWorld().getHighestBlockYAt(loc.getBlockX(), loc.getBlockZ()));
-                p.teleport(loc);
-            } else {
-                p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
-            }
-            return TeleportResult.SUCCESS;
-        }
-
-        p.teleport(ASkyBlockAPI.getInstance().getSpawnLocation());
-        return TeleportResult.SUCCESS;
-    }
-
-    private TeleportResult teleportBentoBox(Player p) {
-        BentoBox bentoBox = (BentoBox) Bukkit.getPluginManager().getPlugin("BentoBox");
-
-        World world = p.getWorld();
-
-        // Check if world is an island world (this check is for a bug in before v1.13)
-        if (!bentoBox.getIWM().inWorld(world))
-            return TeleportResult.MISSING_ISLAND;
-
-        // First checks if spawn can be found in current world. If not, iterate through worlds until we find one.
-        Location location = bentoBox.getIslands().getSafeHomeLocation(world, User.getInstance(p), 1);
-        if (location == null) {
-            for (World w: Bukkit.getWorlds()) {
-                location = bentoBox.getIslands().getSafeHomeLocation(w, User.getInstance(p), 1);
-                if (location != null) break;
-            }
-        }
-
-        if (location != null) {
-            p.teleport(location);
-            return TeleportResult.SUCCESS;
-        }
-        return TeleportResult.MISSING_ISLAND;
-    }
-
-    private TeleportResult teleportUSkyBlock(Player p) {
-        uSkyBlockAPI usb = (uSkyBlockAPI) Bukkit.getPluginManager().getPlugin("uSkyBlock");
-        IslandInfo info = usb.getIslandInfo(p);
-        if (info.getWarpLocation() != null) {
-            p.teleport(info.getWarpLocation());
-            return TeleportResult.SUCCESS;
-        }
-        if (info.getIslandLocation() != null) {
-            p.teleport(info.getIslandLocation());
-            return TeleportResult.SUCCESS;
-        }
-
-        return TeleportResult.MISSING_ISLAND;
-    }
 }
