@@ -31,7 +31,22 @@ public class VoidSpawn extends JavaPlugin {
         command.setExecutor(commandHandler);
         command.setTabCompleter(new VoidSpawnTabCompleter(commandHandler));
 
-        Bukkit.getScheduler().runTaskTimer(this, new TouchTracker(), 5, 5);
+        // This is a small hack to allow for pre-1.13 servers to run this version.
+        // It should be a temporary measure and at some point VoidSpawn should just
+        // disable itself if running on an unsupported version. But that will come
+        // another day.
+        boolean compatibilityMode = false;
+        try {
+            Class.forName("org.bukkit.Tag");
+        } catch (ClassNotFoundException e) {
+            compatibilityMode = true;
+            log("&cWARNING: Unsupported version of Spigot detected!");
+            log("&cWARNING: Enabling incompatibility mode, there is no guarantee this mode");
+            log("&cWARNING: will work properly. This also disables some features. Bugs on");
+            log("&cWARNING: this version may not be fixed.");
+        }
+
+        Bukkit.getScheduler().runTaskTimer(this, new TouchTracker(compatibilityMode), 5, 5);
 
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
     }
