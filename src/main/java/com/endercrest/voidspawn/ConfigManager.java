@@ -234,7 +234,7 @@ public class ConfigManager {
         world = WorldUtil.configSafe(world);
 
 
-        return new Location(Bukkit.getWorld(getString(world + ".spawn.x", null)),
+        return new Location(Bukkit.getWorld(getString(world + ".spawn.world", null)),
                 getDouble(world + ".spawn.x", 0.0),
                 getDouble(world + ".spawn.y", 0.0),
                 getDouble(world + ".spawn.z", 0.0),
