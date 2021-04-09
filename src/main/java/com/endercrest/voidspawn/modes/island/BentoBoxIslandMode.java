@@ -30,10 +30,10 @@ public class BentoBoxIslandMode extends BaseIslandMode {
         // First checks if spawn can be found in current world. If not, iterate through worlds until we find one.
         Location location;
         try {
-            location = bentoBox.getIslands().getSafeHomeLocation(world, user, 1);
+            location = bentoBox.getIslands().getSafeHomeLocation(world, user, "");
             if (location == null) {
                 for (World w: Bukkit.getWorlds()) {
-                    location = bentoBox.getIslands().getSafeHomeLocation(w, user, 1);
+                    location = bentoBox.getIslands().getSafeHomeLocation(w, user, "");
                     if (location != null) break;
                 }
             }
