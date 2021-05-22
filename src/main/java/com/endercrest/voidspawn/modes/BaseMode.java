@@ -19,6 +19,7 @@ public abstract class BaseMode implements Mode {
     public static final OptionIdentifier<Integer> OPTION_OFFSET = new OptionIdentifier<>(Integer.class, "offset", "The offset for the detector");
     public static final OptionIdentifier<String> OPTION_COMMAND = new OptionIdentifier<>(String.class, "command", "The command(s) for either command mode or hybrid");
     public static final OptionIdentifier<Boolean> OPTION_INC_DEATH_STAT = new OptionIdentifier<>(Boolean.class, "inc_death_stat", "Whether to increment the death statistic");
+    public static final OptionIdentifier<Integer> OPTION_DAMAGE = new OptionIdentifier<>(Integer.class, "damage", "Amount of damage applied upon entering the void");
 
     private final Map<String, Option<?>> options = new HashMap<>();
 
@@ -32,6 +33,7 @@ public abstract class BaseMode implements Mode {
         attachOption(new IntegerOption(OPTION_OFFSET, 0));
         attachOption(new StringOption(OPTION_COMMAND));
         attachOption(new BooleanOption(OPTION_INC_DEATH_STAT, false));
+        attachOption(new IntegerOption(OPTION_DAMAGE, 0));
     }
 
     protected void attachOption(Option<?> option) {

@@ -78,6 +78,7 @@ public class VoidListener implements Listener {
             activateSound(mode, player, world);
             activateHybrid(mode, player, world);
             activateDeathIncrement(mode, player, world);
+            activateDamage(mode, player, world);
         }
 
 
@@ -152,6 +153,13 @@ public class VoidListener implements Listener {
     private void activateDeathIncrement(Mode mode, Player player, World world) {
         if (mode.getOption(BaseMode.OPTION_INC_DEATH_STAT).getValue(world).orElse(false)) {
             player.incrementStatistic(Statistic.DEATHS, 1);
+        }
+    }
+
+    private void activateDamage(Mode mode, Player player, World world) {
+        int damage = mode.getOption(BaseMode.OPTION_DAMAGE).getValue(world).orElse(0);
+        if (damage > 0) {
+            player.damage(damage);
         }
     }
 }
