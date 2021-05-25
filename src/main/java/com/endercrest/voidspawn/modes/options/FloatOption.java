@@ -31,6 +31,11 @@ public class FloatOption extends BaseOption<Float> {
 
     @Override
     public void setValue(@NotNull World world, String value) {
+        if (value == null) {
+            super.setValue(world, (String) null);
+            return;
+        }
+
         try {
             Float.parseFloat(value); // Check if number
             super.setValue(world, value);

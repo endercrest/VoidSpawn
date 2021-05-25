@@ -31,6 +31,11 @@ public class IntegerOption extends BaseOption<Integer> {
 
     @Override
     public void setValue(@NotNull World world, String value) {
+        if (value == null) {
+            super.setValue(world, (String) null);
+            return;
+        }
+
         try {
             Integer.parseInt(value); // Check if number
             super.setValue(world, value);

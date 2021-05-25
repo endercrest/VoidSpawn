@@ -39,7 +39,7 @@ public class OptionCommand implements SubCommand {
         switch (args[1].toLowerCase()) {
             case "clear":
                 option.setValue(world, (String) null);
-                p.sendMessage(MessageUtil.colorize(String.format("%s Option '&6%s&f' cleared.", VoidSpawn.prefix, optionName)));
+                p.sendMessage(MessageUtil.colorize(String.format("%sOption '&6%s&f' cleared.", VoidSpawn.prefix, optionName)));
                 return true;
             case "set":
                 if (args.length == 3) {
@@ -49,9 +49,9 @@ public class OptionCommand implements SubCommand {
 
                 try {
                     option.setValue(world, Arrays.copyOfRange(args, 3, args.length));
-                    p.sendMessage(MessageUtil.colorize("%s Option '&6%s&f' updated.", VoidSpawn.prefix, optionName));
+                    p.sendMessage(MessageUtil.colorize("%sOption '&6%s&f' updated.", VoidSpawn.prefix, optionName));
                 } catch (IllegalArgumentException e) {
-                    p.sendMessage(MessageUtil.colorize("%s &c%s.", VoidSpawn.prefix, e.getMessage()));
+                    p.sendMessage(MessageUtil.colorize("%s&c%s.", VoidSpawn.prefix, e.getMessage()));
                 }
                 return true;
         }

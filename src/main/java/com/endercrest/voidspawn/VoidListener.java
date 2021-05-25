@@ -7,21 +7,21 @@ import com.endercrest.voidspawn.modes.options.Option;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.Statistic;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,6 +32,9 @@ public class VoidListener implements Listener {
     private final VoidSpawn plugin;
     private final Cache<UUID, Instant> activationTracker = CacheBuilder.newBuilder()
             .expireAfterWrite(30, TimeUnit.SECONDS)
+            .build();
+    private final Cache<UUID, Integer> bounceTracker = CacheBuilder.newBuilder()
+            .expireAfterWrite(5, TimeUnit.SECONDS)
             .build();
 
     public VoidListener(VoidSpawn plugin) {
@@ -53,6 +56,7 @@ public class VoidListener implements Listener {
 
         Detector detector = DetectorManager.getInstance().getWorldDetector(worldName);
         if (!detector.isDetected(mode, player, world)) {
+            activationTracker.invalidate(player.getUniqueId());
             return;
         }
 
@@ -67,6 +71,32 @@ public class VoidListener implements Listener {
 
         Instant instant = activationTracker.getIfPresent(player.getUniqueId());
         if (mode != null) {
+            try {
+                Integer bounceMax = mode.getOption(BaseMode.OPTION_BOUNCE).getValue(world).orElse(0);
+                if (bounceMax > 0) {
+
+                    Integer bounce = bounceTracker.get(player.getUniqueId(), () -> 0);
+                    if (bounce < bounceMax) {
+                        // We are going to bounce the player instead of activate the mode
+                        float minBounceVelocity = mode.getOption(BaseMode.OPTION_MIN_BOUNCE_VELOCITY).getValue(world).orElse(2f);
+
+                        Vector bounceVector = player.getVelocity();
+                        bounceVector.setY(Math.max(Math.abs(bounceVector.getY()), minBounceVelocity));
+                        player.setVelocity(bounceVector);
+
+                        if (instant == null || Instant.now().isAfter(instant.plus(2, ChronoUnit.SECONDS))) {
+                            player.sendMessage("Bounce!" + player.getVelocity());
+                            bounceTracker.put(player.getUniqueId(), bounce + 1);
+                        }
+
+                        activationTracker.put(player.getUniqueId(), Instant.now());
+                        return;
+                    }
+
+                    bounceTracker.invalidate(player.getUniqueId());
+                }
+            } catch (ExecutionException ignored) {}
+
             activateMessage(mode, player, world);
             activateInventoryClear(mode, player, world);
 

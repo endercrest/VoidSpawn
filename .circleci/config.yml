@@ -42,7 +42,7 @@ jobs:
       - run: echo $(ls endercrest/VoidSpawn/target)
       - store_artifacts:
           path: target/VoidSpawn.jar
-          destination: /Voidspawn.jar
+          destination: /VoidSpawn.jar
 
 workflows:
   version: 2
