@@ -85,7 +85,6 @@ public class VoidListener implements Listener {
                         player.setVelocity(bounceVector);
 
                         if (instant == null || Instant.now().isAfter(instant.plus(2, ChronoUnit.SECONDS))) {
-                            player.sendMessage("Bounce!" + player.getVelocity());
                             bounceTracker.put(player.getUniqueId(), bounce + 1);
                         }
 
