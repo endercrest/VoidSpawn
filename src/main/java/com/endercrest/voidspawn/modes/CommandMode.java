@@ -5,6 +5,7 @@ import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.modes.options.Option;
+import com.endercrest.voidspawn.modes.status.Status;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -89,7 +90,7 @@ public class CommandMode extends BaseMode {
 
         Optional<String> command = commandOption.getValue(world);
         return new Status[]{
-                new Status(!command.isPresent() ? StatusType.INCOMPLETE : StatusType.COMPLETE,
+                new Status(!command.isPresent() ? Status.Type.INCOMPLETE : Status.Type.COMPLETE,
                         String.format("Command Set %s", !command.isPresent() ? "" : String.format("(%s)", command.get())))
         };
     }

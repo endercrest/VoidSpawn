@@ -16,7 +16,7 @@ public class SoundOption extends BaseOption<Sound> {
     }
 
     @Override
-    public Optional<Sound> getValue(World world) {
+    public Optional<Sound> getLoadedValue(@NotNull World world) {
         String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
         if (value == null)
             return Optional.empty();

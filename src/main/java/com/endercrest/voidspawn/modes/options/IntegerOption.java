@@ -17,15 +17,15 @@ public class IntegerOption extends BaseOption<Integer> {
     }
 
     @Override
-    public Optional<Integer> getValue(World world) {
+    public Optional<Integer> getLoadedValue(@NotNull World world) {
         String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
         if (value == null)
-            return getDefaultValue();
+            return Optional.empty();
 
         try {
             return Optional.of(Integer.parseInt(value));
         } catch (NumberFormatException e) {
-            return getDefaultValue();
+            return Optional.empty();
         }
     }
 

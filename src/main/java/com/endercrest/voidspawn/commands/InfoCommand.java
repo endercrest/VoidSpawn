@@ -6,6 +6,8 @@ import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.detectors.Detector;
 import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
+import com.endercrest.voidspawn.modes.options.Option;
+import com.endercrest.voidspawn.modes.status.Status;
 import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.endercrest.voidspawn.utils.WorldUtil;
@@ -35,18 +37,19 @@ public class InfoCommand implements SubCommand {
         ));
 
         if (mode != null) {
-            for (Mode.Status status: mode.getStatus(worldName)) {
+            for (Status status: mode.getStatus(worldName)) {
                 messages.add(format(status.getType(), status.getMessage()));
             }
 
             Detector detector = DetectorManager.getInstance().getWorldDetector(worldName);
+            messages.add(format(Status.Type.INFO, String.format("Void Detector: %s", detector.getName())));
 
             messages.add("Options:");
-            messages.add(format(toType(mode.getOption(BaseMode.OPTION_HYBRID).getValue(world).orElse(false)), "Hybrid Mode"));
-            messages.add(format(toType(mode.getOption(BaseMode.OPTION_KEEP_INVENTORY).getValue(world).orElse(false)), "Keep Inventory"));
-            messages.add(format(toType(!mode.getOption(BaseMode.OPTION_MESSAGE).getValue(world).orElse("").isEmpty()), "Message Set"));
-            messages.add(format(toType(mode.getOption(BaseMode.OPTION_SOUND).getValue(world).isPresent()), "Sound Set"));
-            messages.add(format(Mode.StatusType.INFO, String.format("Void Detector: %s", detector.getName())));
+            for (Option<?> option: mode.getOptions()) {
+                Status status = option.getStatus(world);
+                messages.add(format(status.getType(), status.getMessage()));
+            }
+
         }
 
         for (String message: messages) {
@@ -55,22 +58,12 @@ public class InfoCommand implements SubCommand {
         return false;
     }
 
-    private String getStatusText(Mode.StatusType type) {
-        if (type == Mode.StatusType.COMPLETE) {
-            return "[&a+&f]";
-        } else if (type == Mode.StatusType.INCOMPLETE) {
-            return "[&c-&f]";
-        } else {
-            return "[&b!&f]";
-        }
+    private Status.Type toType(boolean status) {
+        return status ? Status.Type.COMPLETE : Status.Type.INCOMPLETE;
     }
 
-    private Mode.StatusType toType(boolean status) {
-        return status ? Mode.StatusType.COMPLETE : Mode.StatusType.INCOMPLETE;
-    }
-
-    private String format(Mode.StatusType type, String message) {
-        return String.format("  %s %s", getStatusText(type), message);
+    private String format(Status.Type type, String message) {
+        return String.format("  %s %s", type.getSymbol(), message);
     }
 
     @Override

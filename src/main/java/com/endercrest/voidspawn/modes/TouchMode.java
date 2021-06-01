@@ -1,8 +1,8 @@
 package com.endercrest.voidspawn.modes;
 
-import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.entity.Player;
 
 public class TouchMode extends BaseMode {

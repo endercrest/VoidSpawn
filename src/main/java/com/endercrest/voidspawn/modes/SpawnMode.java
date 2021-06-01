@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
+import com.endercrest.voidspawn.modes.status.Status;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.entity.Player;
 
@@ -43,7 +44,7 @@ public class SpawnMode extends BaseMode {
 
         return new Status[]{
                 new Status(
-                        isSpawnSet ? StatusType.COMPLETE : StatusType.INCOMPLETE,
+                        isSpawnSet ? Status.Type.COMPLETE : Status.Type.INCOMPLETE,
                         String.format(
                                 "Spawn point set (%s)",
                                 isSpawnSet ? location : "/vs set")

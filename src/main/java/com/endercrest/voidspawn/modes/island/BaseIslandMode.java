@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.modes.BaseMode;
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -40,9 +41,9 @@ public abstract class BaseIslandMode extends BaseMode {
         }
 
         return new Status[]{
-                new Status(isEnabled() ? StatusType.COMPLETE : StatusType.INCOMPLETE, "Mode Enabled"),
+                new Status(isEnabled() ? Status.Type.COMPLETE : Status.Type.INCOMPLETE, "Mode Enabled"),
                 new Status(
-                        location != null ? StatusType.COMPLETE : StatusType.INCOMPLETE,
+                        location != null ? Status.Type.COMPLETE : Status.Type.INCOMPLETE,
                         String.format("Fallback Spawn Set (%s)", msg)
                 ),
         };

@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.modes.options.BooleanOption;
 import com.endercrest.voidspawn.modes.options.IntegerOption;
 import com.endercrest.voidspawn.modes.options.OptionIdentifier;
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;

@@ -21,15 +21,15 @@ public class BooleanOption extends BaseOption<Boolean> {
     }
 
     @Override
-    public Optional<Boolean> getValue(World world) {
+    public Optional<Boolean> getLoadedValue(@NotNull World world) {
         String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
         if (value == null)
-            return getDefaultValue();
+            return Optional.empty();
 
         if (options.contains(value)) {
             return Optional.of(Boolean.valueOf(value));
         }
-        return getDefaultValue();
+        return Optional.empty();
     }
 
     @Override

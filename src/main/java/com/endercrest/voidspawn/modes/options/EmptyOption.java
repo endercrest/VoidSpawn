@@ -13,7 +13,7 @@ public final class EmptyOption<T> extends BaseOption<T> {
     }
 
     @Override
-    public Optional<T> getValue(World world) {
+    public Optional<T> getLoadedValue(@NotNull World world) {
         return Optional.empty();
     }
 

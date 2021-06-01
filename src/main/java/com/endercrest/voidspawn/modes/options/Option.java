@@ -1,5 +1,6 @@
 package com.endercrest.voidspawn.modes.options;
 
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,4 +51,12 @@ public interface Option<T> {
      * Get description of the option.
      */
     String getDescription();
+
+    /**
+     * Get the status of this option. This is useful to get a state of the option
+     * @param world The world
+     * @return
+     */
+    @NotNull
+    Status getStatus(World world);
 }

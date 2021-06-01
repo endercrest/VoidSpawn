@@ -13,7 +13,7 @@ public class StringOption extends BaseOption<String> {
     }
 
     @Override
-    public Optional<String> getValue(World world) {
+    public Optional<String> getLoadedValue(@NotNull World world) {
         return Optional.ofNullable(ConfigManager.getInstance().getOption(world.getName(), getIdentifier()));
     }
 

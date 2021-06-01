@@ -1,6 +1,7 @@
 package com.endercrest.voidspawn.modes.island;
 
 import com.endercrest.voidspawn.TeleportResult;
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import us.talabrek.ultimateskyblock.api.IslandInfo;

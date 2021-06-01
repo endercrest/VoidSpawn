@@ -17,15 +17,15 @@ public class FloatOption extends BaseOption<Float> {
     }
 
     @Override
-    public Optional<Float> getValue(World world) {
+    public Optional<Float> getLoadedValue(@NotNull World world) {
         String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
         if (value == null)
-            return getDefaultValue();
+            return Optional.empty();
 
         try {
             return Optional.of(Float.parseFloat(value));
         } catch (NumberFormatException e) {
-            return getDefaultValue();
+            return Optional.empty();
         }
     }
 

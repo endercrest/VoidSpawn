@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.modes.options.Option;
 import com.endercrest.voidspawn.modes.options.OptionIdentifier;
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -87,27 +88,4 @@ public interface Mode {
      */
     Collection<Option<?>> getOptions();
 
-    enum StatusType {
-        COMPLETE,
-        INCOMPLETE,
-        INFO,
-    }
-
-    class Status {
-        private final StatusType type;
-        private final String message;
-
-        public Status(StatusType type, String message) {
-            this.type = type;
-            this.message = message;
-        }
-
-        public StatusType getType() {
-            return type;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
 }

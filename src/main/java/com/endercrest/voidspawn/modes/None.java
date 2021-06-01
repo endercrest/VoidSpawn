@@ -5,6 +5,7 @@ import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.modes.options.EmptyOption;
 import com.endercrest.voidspawn.modes.options.Option;
 import com.endercrest.voidspawn.modes.options.OptionIdentifier;
+import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
