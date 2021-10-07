@@ -14,6 +14,17 @@ public class VoidSpawn extends JavaPlugin {
     public static String prefix = "[&6VS&f] ";
 
     public void onEnable(){
+        try {
+            // This is the class we check for as it was added in 1.13 and should remain in place for the long term.
+            Class.forName("org.bukkit.Tag");
+        } catch (ClassNotFoundException e) {
+            log("&cERROR: Unsupported version of Spigot/Paper detected!");
+            log("&cERROR: Disabling plugin! Please update to latest version");
+            log("&cERROR: or use an unsupported version of VoidSpawn");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
         /* if[PROD] */
         Metrics metrics = new Metrics(this, 3514);
         /* end[PROD] */
@@ -31,22 +42,7 @@ public class VoidSpawn extends JavaPlugin {
         command.setExecutor(commandHandler);
         command.setTabCompleter(new VoidSpawnTabCompleter(commandHandler));
 
-        // This is a small hack to allow for pre-1.13 servers to run this version.
-        // It should be a temporary measure and at some point VoidSpawn should just
-        // disable itself if running on an unsupported version. But that will come
-        // another day.
-        boolean compatibilityMode = false;
-        try {
-            Class.forName("org.bukkit.Tag");
-        } catch (ClassNotFoundException e) {
-            compatibilityMode = true;
-            log("&cWARNING: Unsupported version of Spigot detected!");
-            log("&cWARNING: Enabling incompatibility mode, there is no guarantee this mode");
-            log("&cWARNING: will work properly. This also disables some features. Bugs on");
-            log("&cWARNING: this version may not be fixed.");
-        }
-
-        Bukkit.getScheduler().runTaskTimer(this, new TouchTracker(compatibilityMode), 5, 5);
+        Bukkit.getScheduler().runTaskTimer(this, new TouchTracker(), 5, 5);
 
         log("&ev" + getDescription().getVersion() + " by EnderCrest enabled");
     }

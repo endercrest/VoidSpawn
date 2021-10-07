@@ -24,7 +24,7 @@ public class TouchMode extends BaseMode {
 
     @Override
     public String getHelp() {
-        return "&6Touch &f- Will teleport player to place they last touched the ground.";
+        return "Will teleport player to place they last touched the ground.";
     }
 
     @Override

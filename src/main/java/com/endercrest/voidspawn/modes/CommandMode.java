@@ -102,7 +102,7 @@ public class CommandMode extends BaseMode {
 
     @Override
     public String getHelp() {
-        return "&6Command &f- Uses configurable command(s) to send player to spawn";
+        return "Uses configurable command(s) to send player to spawn";
     }
 
     @Override

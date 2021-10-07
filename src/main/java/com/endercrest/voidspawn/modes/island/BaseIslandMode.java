@@ -51,7 +51,7 @@ public abstract class BaseIslandMode extends BaseMode {
 
     @Override
     public String getHelp() {
-        return "&6Island &f- Will teleport player back to their island";
+        return "Will teleport player back to their island";
     }
 
     @Override

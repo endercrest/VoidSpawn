@@ -59,7 +59,7 @@ public class SpawnMode extends BaseMode {
 
     @Override
     public String getHelp() {
-        return "&6Spawn &f- Will teleport player to set spot.";
+        return "Will teleport player to set spot.";
     }
 
     @Override

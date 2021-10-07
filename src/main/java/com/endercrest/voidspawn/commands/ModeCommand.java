@@ -21,7 +21,10 @@ public class ModeCommand implements SubCommand {
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
             for (String s: ModeManager.getInstance().getModes().keySet()) {
                 Mode mode = ModeManager.getInstance().getMode(s);
-                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));
+
+                String modeSummary = String.format("&6%s &f- %s", mode.getName(), mode.getHelp());
+
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + modeSummary));
             }
         } else if (args.length >= 2) {
             String world = CommandUtil.constructWorldFromArgs(args, 2, p.getWorld().getName());

@@ -57,7 +57,7 @@ public class LooperMode extends BaseMode {
 
     @Override
     public String getHelp() {
-        return "&6Looper &f- Will teleport player to the top of the world at the same x,z location.";
+        return "Will teleport player to the top of the world at the same x,z location.";
     }
 
     @Override

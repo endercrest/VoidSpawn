@@ -38,7 +38,7 @@ public class None implements Mode {
 
     @Override
     public String getHelp() {
-        return "&6None &f- Sets the world to have no mode";
+        return "Sets the world to have no mode";
     }
 
     @Override
