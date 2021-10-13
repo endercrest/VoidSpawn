@@ -56,7 +56,6 @@ public class VoidListener implements Listener {
 
         Detector detector = DetectorManager.getInstance().getWorldDetector(worldName);
         if (!detector.isDetected(mode, player, world)) {
-            activationTracker.invalidate(player.getUniqueId());
             return;
         }
 
@@ -129,14 +128,17 @@ public class VoidListener implements Listener {
 
         Player player = (Player) event.getEntity();
         Instant instant = activationTracker.getIfPresent(player.getUniqueId());
-        if (instant == null)
+        if (instant == null) {
             return;
+        }
 
         Instant future = instant.plus(500, ChronoUnit.MILLIS);
-        if (Instant.now().isAfter(future))
+        if (Instant.now().isAfter(future)) {
             return;
+        }
 
         event.setCancelled(true);
+        activationTracker.invalidate(player.getUniqueId());
     }
 
     private void activateHybrid(Mode mode, Player player, World world) {

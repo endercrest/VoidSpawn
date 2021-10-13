@@ -44,7 +44,7 @@ public abstract class BaseMode implements Mode {
         options.put(option.getIdentifier().getName(), option);
     }
 
-    protected void detachOption(OptionIdentifier<?> identifier) {
+    protected void detachOption(@NotNull OptionIdentifier<?> identifier) {
         options.remove(identifier.getName());
     }
 
