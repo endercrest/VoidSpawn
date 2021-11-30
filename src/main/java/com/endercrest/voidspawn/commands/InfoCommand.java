@@ -4,9 +4,8 @@ import com.endercrest.voidspawn.DetectorManager;
 import com.endercrest.voidspawn.ModeManager;
 import com.endercrest.voidspawn.VoidSpawn;
 import com.endercrest.voidspawn.detectors.Detector;
-import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
-import com.endercrest.voidspawn.modes.options.Option;
+import com.endercrest.voidspawn.options.Option;
 import com.endercrest.voidspawn.modes.status.Status;
 import com.endercrest.voidspawn.utils.CommandUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
@@ -46,6 +45,11 @@ public class InfoCommand implements SubCommand {
 
             messages.add("Options:");
             for (Option<?> option: mode.getOptions()) {
+                Status status = option.getStatus(world);
+                messages.add(format(status.getType(), status.getMessage()));
+            }
+
+            for (Option<?> option: detector.getOptions()) {
                 Status status = option.getStatus(world);
                 messages.add(format(status.getType(), status.getMessage()));
             }

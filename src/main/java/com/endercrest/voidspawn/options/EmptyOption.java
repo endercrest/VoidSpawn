@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.options;
+package com.endercrest.voidspawn.options;
 
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;

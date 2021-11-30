@@ -4,7 +4,7 @@ import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportManager;
 import com.endercrest.voidspawn.TeleportResult;
 import com.endercrest.voidspawn.VoidSpawn;
-import com.endercrest.voidspawn.modes.options.Option;
+import com.endercrest.voidspawn.options.Option;
 import com.endercrest.voidspawn.modes.status.Status;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bukkit.Bukkit;
@@ -101,7 +101,7 @@ public class CommandMode extends BaseMode {
     }
 
     @Override
-    public String getHelp() {
+    public String getDescription() {
         return "Uses configurable command(s) to send player to spawn";
     }
 

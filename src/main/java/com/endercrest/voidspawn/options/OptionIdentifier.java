@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.options;
+package com.endercrest.voidspawn.options;
 
 public class OptionIdentifier<T> {
     private final Class<T> type;

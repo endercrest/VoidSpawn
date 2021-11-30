@@ -3,7 +3,7 @@ package com.endercrest.voidspawn;
 import com.endercrest.voidspawn.detectors.Detector;
 import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
-import com.endercrest.voidspawn.modes.options.Option;
+import com.endercrest.voidspawn.options.Option;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -18,7 +18,6 @@ import org.bukkit.util.Vector;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;

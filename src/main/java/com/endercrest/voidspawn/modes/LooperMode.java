@@ -1,9 +1,9 @@
 package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.TeleportResult;
-import com.endercrest.voidspawn.modes.options.BooleanOption;
-import com.endercrest.voidspawn.modes.options.IntegerOption;
-import com.endercrest.voidspawn.modes.options.OptionIdentifier;
+import com.endercrest.voidspawn.options.BooleanOption;
+import com.endercrest.voidspawn.options.IntegerOption;
+import com.endercrest.voidspawn.options.OptionIdentifier;
 import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,7 +56,7 @@ public class LooperMode extends BaseMode {
     }
 
     @Override
-    public String getHelp() {
+    public String getDescription() {
         return "Will teleport player to the top of the world at the same x,z location.";
     }
 

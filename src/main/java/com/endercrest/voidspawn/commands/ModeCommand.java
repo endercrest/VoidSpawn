@@ -19,10 +19,8 @@ public class ModeCommand implements SubCommand {
     public boolean onCommand(Player p, String[] args) {
         if (args.length == 1) {
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Modes&f ---"));
-            for (String s: ModeManager.getInstance().getModes().keySet()) {
-                Mode mode = ModeManager.getInstance().getMode(s);
-
-                String modeSummary = String.format("&6%s &f- %s", mode.getName(), mode.getHelp());
+            for (Mode mode: ModeManager.getInstance().getModes().values()) {
+                String modeSummary = String.format("&6%s &f- %s", mode.getName(), mode.getDescription());
 
                 p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + modeSummary));
             }

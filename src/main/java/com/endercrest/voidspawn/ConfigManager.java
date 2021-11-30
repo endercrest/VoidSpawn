@@ -1,7 +1,7 @@
 package com.endercrest.voidspawn;
 
 import com.endercrest.voidspawn.modes.BaseMode;
-import com.endercrest.voidspawn.modes.options.OptionIdentifier;
+import com.endercrest.voidspawn.options.OptionIdentifier;
 import com.endercrest.voidspawn.utils.WorldUtil;
 
 import java.io.File;
@@ -90,7 +90,7 @@ public class ConfigManager {
     }
 
     private void migrateV2() {
-        if (config.getInt("version", 0) >= CURRENT_VERSION)
+        if (config.getInt("version", 0) >= 2)
             return;
 
         long time = Instant.now().toEpochMilli();
@@ -116,7 +116,7 @@ public class ConfigManager {
             if (section == null)
                 continue;
 
-            section.set("options." + BaseMode.OPTION_OFFSET.getName(), section.get("offset"));
+            section.set("options.offset", section.get("offset"));
             section.set("options." + BaseMode.OPTION_MESSAGE.getName(), section.get("message"));
             section.set("options." + BaseMode.OPTION_HYBRID.getName(), section.get("hybrid"));
             section.set("options." + BaseMode.OPTION_SOUND.getName(), section.get("sound.name"));

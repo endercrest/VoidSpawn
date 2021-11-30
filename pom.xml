@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.endercrest.voidspawn</groupId>
     <artifactId>VoidSpawn</artifactId>
-    <version>1.19.5${snapshot}</version>
+    <version>1.20.0${snapshot}</version>
     <name>VoidSpawn</name>
     <developers>
         <developer>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <version>1.18-rc3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -117,6 +117,14 @@
         </profile>
     </profiles>
 
+    <!-- TEMP While maven-shade-plugin snapshot is used -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven-snapshots</id>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <finalName>${project.name}</finalName>
         <defaultGoal>clean package install</defaultGoal>
@@ -143,14 +151,14 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.1-SNAPSHOT</version>
                 <configuration>
                     <relocations>
                         <relocation>

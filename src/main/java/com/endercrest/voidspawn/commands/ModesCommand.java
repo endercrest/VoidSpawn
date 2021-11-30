@@ -18,7 +18,7 @@ public class ModesCommand implements SubCommand {
             Mode mode = ModeManager.getInstance().getMode(s);
             if (!mode.isEnabled())
                 continue;
-            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getHelp()));
+            p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + mode.getDescription()));
         }
         return true;
     }

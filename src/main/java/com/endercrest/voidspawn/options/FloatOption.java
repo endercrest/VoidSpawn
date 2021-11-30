@@ -1,4 +1,4 @@
-package com.endercrest.voidspawn.modes.options;
+package com.endercrest.voidspawn.options;
 
 import com.endercrest.voidspawn.ConfigManager;
 import org.bukkit.World;

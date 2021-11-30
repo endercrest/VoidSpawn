@@ -21,7 +21,9 @@ public class DetectorCommand implements SubCommand {
         if(args.length == 1){
             p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + "--- &6Available Detectors&f ---"));
             for(Detector detector : DetectorManager.getInstance().getDetectors().values()){
-                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + detector.getInfo()));
+                String detectorSummary = String.format("&6%s &f- %s", detector.getName(), detector.getDescription());
+
+                p.sendMessage(MessageUtil.colorize(VoidSpawn.prefix + detectorSummary));
             }
         }else if(args.length >= 2) {
             String world = CommandUtil.constructWorldFromArgs(args, 2, p.getWorld().getName());

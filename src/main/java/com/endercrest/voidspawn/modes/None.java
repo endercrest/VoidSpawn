@@ -2,9 +2,9 @@ package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportResult;
-import com.endercrest.voidspawn.modes.options.EmptyOption;
-import com.endercrest.voidspawn.modes.options.Option;
-import com.endercrest.voidspawn.modes.options.OptionIdentifier;
+import com.endercrest.voidspawn.options.EmptyOption;
+import com.endercrest.voidspawn.options.Option;
+import com.endercrest.voidspawn.options.OptionIdentifier;
 import com.endercrest.voidspawn.modes.status.Status;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +37,7 @@ public class None implements Mode {
     }
 
     @Override
-    public String getHelp() {
+    public String getDescription() {
         return "Sets the world to have no mode";
     }
 
