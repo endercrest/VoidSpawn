@@ -1,6 +1,5 @@
 package com.endercrest.voidspawn.detectors;
 
-import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.options.IntegerOption;
 import com.endercrest.voidspawn.options.Option;

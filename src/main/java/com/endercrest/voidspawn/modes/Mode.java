@@ -2,15 +2,9 @@ package com.endercrest.voidspawn.modes;
 
 import com.endercrest.voidspawn.ConfigManager;
 import com.endercrest.voidspawn.TeleportResult;
-import com.endercrest.voidspawn.options.Option;
-import com.endercrest.voidspawn.options.OptionIdentifier;
 import com.endercrest.voidspawn.modes.status.Status;
 import com.endercrest.voidspawn.options.container.OptionContainer;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collection;
 
 public interface Mode extends OptionContainer {
 

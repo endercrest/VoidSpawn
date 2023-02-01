@@ -7,7 +7,6 @@ import com.endercrest.voidspawn.utils.MessageUtil;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoidSpawn extends JavaPlugin {

@@ -1,10 +1,7 @@
 package com.endercrest.voidspawn.detectors;
 
-import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
-import com.endercrest.voidspawn.options.IntegerOption;
 import com.endercrest.voidspawn.options.Option;
-import com.endercrest.voidspawn.options.OptionIdentifier;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 

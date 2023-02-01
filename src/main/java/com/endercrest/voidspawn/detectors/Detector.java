@@ -1,15 +1,9 @@
 package com.endercrest.voidspawn.detectors;
 
 import com.endercrest.voidspawn.modes.Mode;
-import com.endercrest.voidspawn.options.Option;
-import com.endercrest.voidspawn.options.OptionIdentifier;
 import com.endercrest.voidspawn.options.container.OptionContainer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collection;
 
 public interface Detector extends OptionContainer {
 

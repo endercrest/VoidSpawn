@@ -3,7 +3,6 @@ package com.endercrest.voidspawn.options.container;
 import com.endercrest.voidspawn.options.EmptyOption;
 import com.endercrest.voidspawn.options.Option;
 import com.endercrest.voidspawn.options.OptionIdentifier;
-import com.endercrest.voidspawn.options.container.OptionContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
