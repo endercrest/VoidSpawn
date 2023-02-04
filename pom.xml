@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.endercrest.voidspawn</groupId>
     <artifactId>VoidSpawn</artifactId>
-    <version>1.20.0${snapshot}</version>
+    <version>1.20.1${snapshot}</version>
     <name>VoidSpawn</name>
     <developers>
         <developer>
