@@ -14,8 +14,10 @@ public abstract class BaseMode extends BasicOptionContainer implements Mode {
     public static final OptionIdentifier<String> OPTION_COMMAND = new OptionIdentifier<>(String.class, "command", "The command(s) for either command mode or hybrid");
     public static final OptionIdentifier<Boolean> OPTION_INC_DEATH_STAT = new OptionIdentifier<>(Boolean.class, "inc_death_stat", "Whether to increment the death statistic");
     public static final OptionIdentifier<Integer> OPTION_DAMAGE = new OptionIdentifier<>(Integer.class, "damage", "Amount of damage applied upon entering the void");
-    public static final OptionIdentifier<Integer> OPTION_BOUNCE = new OptionIdentifier<>(Integer.class, "bounce", "Number of times to bounce from the void before activating mode");
+    public static final OptionIdentifier<Integer> OPTION_BOUNCE = new OptionIdentifier<>(Integer.class, "bounce", "Number of times to bounce from the void before activating mode (in count mode) " +
+                                                                                                                    " or the percentage of each subsequent bounce (in physics mode)");
     public static final OptionIdentifier<Float> OPTION_MIN_BOUNCE_VELOCITY = new OptionIdentifier<>(Float.class, "min_bounce_velocity", "The minimum bounce velocity");
+    public static final OptionIdentifier<String> OPTION_BOUNCE_MODE = new OptionIdentifier<>(String.class, "bounce_mode", " Bounce mode - count (default) or physics");
 
     public BaseMode() {
         attachOption(new SoundOption(OPTION_SOUND));
@@ -29,5 +31,6 @@ public abstract class BaseMode extends BasicOptionContainer implements Mode {
         attachOption(new IntegerOption(OPTION_DAMAGE, 0));
         attachOption(new IntegerOption(OPTION_BOUNCE, 0));
         attachOption(new FloatOption(OPTION_MIN_BOUNCE_VELOCITY, 2.0f));
+        attachOption(new StringOption(OPTION_BOUNCE_MODE));
     }
 }

@@ -66,33 +66,37 @@ public class VoidListener implements Listener {
             return;
         }
 
-
         Instant instant = activationTracker.getIfPresent(player.getUniqueId());
         if (mode != null) {
             try {
                 Integer bounceMax = mode.getOption(BaseMode.OPTION_BOUNCE).getValue(world).orElse(0);
-                if (bounceMax > 0) {
-
-                    Integer bounce = bounceTracker.get(player.getUniqueId(), () -> 0);
-                    if (bounce < bounceMax) {
-                        // We are going to bounce the player instead of activate the mode
-                        float minBounceVelocity = mode.getOption(BaseMode.OPTION_MIN_BOUNCE_VELOCITY).getValue(world).orElse(2f);
-
+                BounceMode bounceMode = BounceMode
+                        .getMode(mode.getOption(BaseMode.OPTION_BOUNCE_MODE).getValue(world).orElse("count"));
+                float minBounceVelocity = mode.getOption(BaseMode.OPTION_MIN_BOUNCE_VELOCITY).getValue(world)
+                        .orElse(2f);
+                Integer bounce = bounceTracker.get(player.getUniqueId(), () -> 0);
+                if (shouldBeInBounceMode(bounceMode, bounce, bounceMax)) {
+                    // // We are going to bounce the player instead of activate the mode
+                    if (player.getVelocity().getY() > 0) {
+                        return; // ignore when moving upwards
+                    }
+                    if (shouldStopBouncing(bounceMode, bounce, bounceMax, minBounceVelocity, player)) {
+                        bounceTracker.invalidate(player.getUniqueId());
+                    } else {
                         Vector bounceVector = player.getVelocity();
-                        bounceVector.setY(Math.max(Math.abs(bounceVector.getY()), minBounceVelocity));
+                        double bounceY = getBounceYVelocity(bounceMode, bounceMax, minBounceVelocity, player);
+                        bounceVector.setY(bounceY);
                         player.setVelocity(bounceVector);
 
-                        if (instant == null || Instant.now().isAfter(instant.plus(2, ChronoUnit.SECONDS))) {
-                            bounceTracker.put(player.getUniqueId(), bounce + 1);
-                        }
+                        bounceTracker.put(player.getUniqueId(), bounce + 1);
 
                         activationTracker.put(player.getUniqueId(), Instant.now());
                         return;
                     }
 
-                    bounceTracker.invalidate(player.getUniqueId());
                 }
-            } catch (ExecutionException ignored) {}
+            } catch (ExecutionException ignored) {
+            }
 
             activateMessage(mode, player, world);
             activateInventoryClear(mode, player, world);
@@ -108,15 +112,55 @@ public class VoidListener implements Listener {
             activateDamage(mode, player, world);
         }
 
+        if (result != TeleportResult.SUCCESS && instant == null)
 
-        if (result != TeleportResult.SUCCESS && instant == null) {
+        {
             player.sendMessage(MessageUtil.colorize("&cAn error occurred, notify an administrator."));
             plugin.log("Error while teleporting player: " + result.getMessage());
             if (mode != null) {
-                player.sendMessage(MessageUtil.colorize(String.format("&cDetails, World: %s, Mode: %s", worldName, mode.getName())));
+                player.sendMessage(MessageUtil
+                        .colorize(String.format("&cDetails, World: %s, Mode: %s", worldName, mode.getName())));
                 plugin.log(String.format("Details, World: %s, Mode: %s", worldName, mode.getName()));
 
             }
+        }
+    }
+
+    private boolean shouldBeInBounceMode(BounceMode mode, int bounce, int bounceMax) {
+        if (mode == BounceMode.COUNT) {
+            if (bounceMax <= 0) {
+                return false;
+            }
+            return bounce < bounceMax;
+        } else if (mode == BounceMode.PHYSICS) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("Unknown mode: " + mode);
+        }
+    }
+
+    private boolean shouldStopBouncing(BounceMode mode, int bounce, int bounceMax, float minBounceVelocity,
+            Player player) {
+        if (mode == BounceMode.COUNT) {
+            return bounce >= bounceMax;
+        } else if (mode == BounceMode.PHYSICS) {
+            if (bounce == 0) {
+                return false; // allow first bounce
+            }
+            return Math.abs(player.getVelocity().getY()) < minBounceVelocity;
+        } else {
+            throw new IllegalArgumentException("Unknown mode: " + mode);
+        }
+    }
+
+    private double getBounceYVelocity(BounceMode mode, int configBounce, float minVelocity, Player player) {
+        if (mode == BounceMode.COUNT) {
+            return Math.max(minVelocity, Math.abs(player.getVelocity().getY()));
+        } else if (mode == BounceMode.PHYSICS) {
+            double cor = configBounce / 100.0D;
+            return Math.abs(player.getVelocity().getY()) * cor;
+        } else {
+            throw new IllegalArgumentException("Unknown mode: " + mode);
         }
     }
 
@@ -190,6 +234,20 @@ public class VoidListener implements Listener {
         int damage = mode.getOption(BaseMode.OPTION_DAMAGE).getValue(world).orElse(0);
         if (damage > 0) {
             player.damage(damage);
+        }
+    }
+
+    public static enum BounceMode {
+        COUNT, PHYSICS;
+
+        public static BounceMode getMode(String mode) {
+            if (mode.equalsIgnoreCase("count")) {
+                return COUNT;
+            } else if (mode.equalsIgnoreCase("physics")) {
+                return PHYSICS;
+            } else {
+                throw new IllegalArgumentException("Unknown mode: " + mode);
+            }
         }
     }
 }
