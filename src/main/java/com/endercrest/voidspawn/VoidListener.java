@@ -76,15 +76,21 @@ public class VoidListener implements Listener {
                         .orElse(2f);
                 Integer bounce = bounceTracker.get(player.getUniqueId(), () -> 0);
                 if (shouldBeInBounceMode(bounceMode, bounce, bounceMax)) {
+                    plugin.logDebug("In bounce mode w bounce mode: " + bounceMode + ", option bounce: " + bounceMax
+                            + ", and current bounce: " + bounce);
                     // // We are going to bounce the player instead of activate the mode
                     if (player.getVelocity().getY() > 0) {
+                        plugin.logDebug("Not registering bounce since already moving upwards");
                         return; // ignore when moving upwards
                     }
                     if (shouldStopBouncing(bounceMode, bounce, bounceMax, minBounceVelocity, player)) {
+                        plugin.logDebug("Stopping bouncing in mode: " + bounceMode + ", option bounce: " + bounceMax
+                                + ", current bounce: " + bounce + " min bounce velocity: " + minBounceVelocity);
                         bounceTracker.invalidate(player.getUniqueId());
                     } else {
                         Vector bounceVector = player.getVelocity();
                         double bounceY = getBounceYVelocity(bounceMode, bounceMax, minBounceVelocity, player);
+                        plugin.logDebug("Setting bounce y-velocity: " + bounceY);
                         bounceVector.setY(bounceY);
                         player.setVelocity(bounceVector);
 

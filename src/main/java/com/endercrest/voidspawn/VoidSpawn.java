@@ -73,4 +73,15 @@ public class VoidSpawn extends JavaPlugin {
         }
     }
 
+    public boolean isDebugModeOn() {
+        return getConfig().getBoolean("debug", false);
+    }
+
+    public void logDebug(String msg) {
+        if (!isDebugModeOn()) {
+            return;
+        }
+        getLogger().info("DEBUG: " + msg);
+    }
+
 }
