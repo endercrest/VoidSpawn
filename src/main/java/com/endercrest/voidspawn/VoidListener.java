@@ -4,6 +4,7 @@ import com.endercrest.voidspawn.detectors.Detector;
 import com.endercrest.voidspawn.modes.BaseMode;
 import com.endercrest.voidspawn.modes.Mode;
 import com.endercrest.voidspawn.options.Option;
+import com.endercrest.voidspawn.utils.BounceUtil;
 import com.endercrest.voidspawn.utils.MessageUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -164,7 +165,8 @@ public class VoidListener implements Listener {
             return Math.max(minVelocity, Math.abs(player.getVelocity().getY()));
         } else if (mode == BounceMode.PHYSICS) {
             double cor = configBounce / 100.0D;
-            return Math.abs(player.getVelocity().getY()) * cor;
+            double height = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId()).getY() - player.getLocation().getY();
+            return BounceUtil.getVelocityForHeight(height * cor);
         } else {
             throw new IllegalArgumentException("Unknown mode: " + mode);
         }
