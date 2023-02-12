@@ -90,7 +90,7 @@ public class VoidListener implements Listener {
                         bounceTracker.invalidate(player.getUniqueId());
                     } else {
                         Vector bounceVector = player.getVelocity();
-                        double bounceY = getBounceYVelocity(bounceMode, bounceMax, minBounceVelocity, player);
+                        double bounceY = getBounceYVelocity(bounceMode, bounce, bounceMax, minBounceVelocity, player);
                         plugin.logDebug("Setting bounce y-velocity: " + bounceY);
                         bounceVector.setY(bounceY);
                         player.setVelocity(bounceVector);
@@ -160,13 +160,15 @@ public class VoidListener implements Listener {
         }
     }
 
-    private double getBounceYVelocity(BounceMode mode, int configBounce, float minVelocity, Player player) {
+    private double getBounceYVelocity(BounceMode mode, int curBounce, int configBounce, float minVelocity,
+            Player player) {
         if (mode == BounceMode.COUNT) {
             return Math.max(minVelocity, Math.abs(player.getVelocity().getY()));
         } else if (mode == BounceMode.PHYSICS) {
             double cor = configBounce / 100.0D;
-            double height = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId()).getY() - player.getLocation().getY();
-            return BounceUtil.getVelocityForHeight(height * cor);
+            double height = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId()).getY()
+                    - player.getLocation().getY();
+            return BounceUtil.getVelocityForHeight(height * Math.pow(cor, curBounce));
         } else {
             throw new IllegalArgumentException("Unknown mode: " + mode);
         }
