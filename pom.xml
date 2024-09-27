@@ -28,10 +28,9 @@
         </dependency>
         <dependency>
             <groupId>com.bgsoftware</groupId>
-            <artifactId>SuperiorSkyblock2</artifactId>
-            <version>1.5.2</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/SuperiorSkyblock2-b38.jar</systemPath>
+            <artifactId>SuperiorSkyblockAPI</artifactId>
+            <version>2024.3</version>
+            <scope>provided</scope>
         </dependency>
 <!--        uSkyblock Maven is offline: https://github.com/uskyblock/uSkyBlock/issues/57 -->
 <!--        <dependency>-->
@@ -72,6 +71,10 @@
         <repository>
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
+        <repository>
+            <id>bg-repo</id>
+            <url>https://repo.bg-software.com/repository/api/</url>
         </repository>
 <!--        uSkyblock Maven is offline: https://github.com/uskyblock/uSkyBlock/issues/57 -->
 <!--        <repository>-->
