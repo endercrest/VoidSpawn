@@ -14,7 +14,6 @@ Requirements
 * Java 21+
 * Spigot MC 1.21.1+ (1.21.1-R0.1-SNAPSHOT or Higher)
 * IslandWorld 8.0 (Optional) - Adds additional features.
-* ASkyBlock 3.0.9.3 (Optional) - Adds additional features.
 * uSkyBlock 2.7.5 (Optional) - Adds additional features.
 * BentoBox 2.5.4 (Optional) - Adds additional features.
 

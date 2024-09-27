@@ -32,13 +32,7 @@ public class ModeManager {
             addMode("looper", new LooperMode());
 
             // Load the correct island mode.
-            if (ASkyblockIslandMode.isModeEnabled()) {
-                plugin.log("&eASkyBlock found, initializing support.");
-                plugin.log("&cASkyBlock has been deprecated, ASkyBlock has been discontinued and it is recommended to switch to BentoBox");
-
-                addMode("island", new ASkyblockIslandMode());
-                plugin.log("&eASkyBlock support initialized.");
-            } else if (BentoBoxIslandMode.isModeEnabled()) {
+            if (BentoBoxIslandMode.isModeEnabled()) {
                 plugin.log("&eBentoBox found, initializing support.");
                 addMode("island", new BentoBoxIslandMode());
                 plugin.log("&eBentoBox support initialized.");
