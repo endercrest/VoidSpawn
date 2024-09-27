@@ -4,7 +4,7 @@ version: ${project.version}
 website: ${project.url}
 description: Teleports player on contact with the void.
 authors: [tcvs]
-softdepend: [IslandWorld, ASkyblock, BentoBox, uSkyBlock]
+softdepend: [BentoBox, uSkyBlock, SuperiorSkyblock2]
 api-version: 1.21
 commands:
     voidspawn:

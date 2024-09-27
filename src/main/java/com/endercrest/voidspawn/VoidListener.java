@@ -99,6 +99,7 @@ public class VoidListener implements Listener {
 
             result = mode.onActivate(player, worldName);
             if (result == TeleportResult.SUCCESS) {
+                player.setFallDistance(0);
                 activationTracker.put(player.getUniqueId(), Instant.now());
             }
 

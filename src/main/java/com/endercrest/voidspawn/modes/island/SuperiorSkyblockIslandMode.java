@@ -33,6 +33,7 @@ public class SuperiorSkyblockIslandMode extends BaseIslandMode{
         }
 
         if (location != null) {
+            player.teleport(location);
             return TeleportResult.SUCCESS;
         }
 
