@@ -36,10 +36,6 @@ public class ModeManager {
                 plugin.log("&eBentoBox found, initializing support.");
                 addMode("island", new BentoBoxIslandMode());
                 plugin.log("&eBentoBox support initialized.");
-            } else if (IslandWorldIslandMode.isModeEnabled()) {
-                plugin.log("&eIslandWorld found, initializing support.");
-                addMode("island", new IslandWorldIslandMode());
-                plugin.log("&eIslandWorld support initialized.");
             } else if (USkyBlockIslandMode.isModeEnabled()) {
                 plugin.log("&eUSkyBlock found, initializing support.");
                 addMode("island", new USkyBlockIslandMode());

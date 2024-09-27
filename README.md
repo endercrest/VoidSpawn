@@ -13,7 +13,6 @@ Requirements
 ------
 * Java 21+
 * Spigot MC 1.21.1+ (1.21.1-R0.1-SNAPSHOT or Higher)
-* IslandWorld 8.0 (Optional) - Adds additional features.
 * ~~uSkyBlock 2.7.5 (Optional) - Adds additional features.~~ (See https://github.com/endercrest/VoidSpawn/issues/107)
 * BentoBox 2.5.4 (Optional) - Adds additional features.
 * SuperiorSkyblock2 2024.3 (Optional) - Adds additional features.

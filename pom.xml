@@ -20,13 +20,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>pl.islandworld.api</groupId>
-            <artifactId>IslandWorld</artifactId>
-            <version>8.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/IslandWorld.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.bgsoftware</groupId>
             <artifactId>SuperiorSkyblockAPI</artifactId>
             <version>2024.3</version>
