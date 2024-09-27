@@ -25,9 +25,9 @@ public class VoidSpawn extends JavaPlugin {
             return;
         }
 
-        /* if[PROD] */
-        Metrics metrics = new Metrics(this, 3514);
-        /* end[PROD] */
+        if (!this.getDescription().getVersion().contains("SNAPSHOT")) {
+            Metrics metrics = new Metrics(this, 3514);
+        }
 
         loadConfiguration();
         ConfigManager.getInstance().setUp(this);
