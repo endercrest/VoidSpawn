@@ -43,7 +43,8 @@ public class ModeManager {
             } else if (USkyBlockIslandMode.isModeEnabled()) {
                 plugin.log("&eUSkyBlock found, initializing support.");
                 addMode("island", new USkyBlockIslandMode());
-                plugin.log("&eUSkyBlock support initialized.");
+//                plugin.log("&eUSkyBlock support initialized.");
+                plugin.log("&cUSkyBlock failed to initialize. See https://github.com/endercrest/VoidSpawn/issues/107.");
             } else if (SuperiorSkyblockIslandMode.isModeEnabled()) {
                 plugin.log("&eSuperiorSkyblock2 found, initializing support.");
                 addMode("island", new SuperiorSkyblockIslandMode());
