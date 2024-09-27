@@ -16,7 +16,7 @@ Requirements
 * IslandWorld 8.0 (Optional) - Adds additional features.
 * ASkyBlock 3.0.9.3 (Optional) - Adds additional features.
 * uSkyBlock 2.7.5 (Optional) - Adds additional features.
-* BentoBox 0.13.0-SNAPSHOT (Optional) - Adds additional features.
+* BentoBox 2.5.4 (Optional) - Adds additional features.
 
 VoidSpawn 1.17.0 and above only supports MC/Spigot 1.13 and above. For MC/Spigot versions below,
 there are unsupported versions under the releases tab.

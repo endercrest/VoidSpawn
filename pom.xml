@@ -47,7 +47,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.16.1</version>
+            <version>2.5.4</version>
             <scope>provided</scope>
         </dependency>
         <!-- Deprecated, but keeping for legacy purposes -->
@@ -75,11 +75,6 @@
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>bintray-tastybento-maven-repo</id>
-            <name>bintray</name>
-            <url>http://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
         <repository>
             <id>CodeMC</id>
