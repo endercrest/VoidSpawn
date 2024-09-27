@@ -46,11 +46,15 @@ public class SuperiorSkyblockIslandMode extends BaseIslandMode {
 
     @Override
     public Status[] getStatus(String worldName) {
-        boolean isSuperiorConfiguredCorrect = !SuperiorSkyblockAPI.getSettings().getVoidTeleport().isMembers() && !SuperiorSkyblockAPI.getSettings().getVoidTeleport().isVisitors();
+        boolean isSuperiorConfiguredCorrect =
+                !SuperiorSkyblockAPI.getSettings().getVoidTeleport().isMembers() &&
+                !SuperiorSkyblockAPI.getSettings().getVoidTeleport().isVisitors();
+
+        Status.Type statusType = isSuperiorConfiguredCorrect ? Status.Type.COMPLETE : Status.Type.INCOMPLETE;
 
         return Stream.concat(
                 Arrays.stream(super.getStatus(worldName)),
-                Stream.of(new Status(isSuperiorConfiguredCorrect ? Status.Type.COMPLETE : Status.Type.INCOMPLETE, "SuperiorSkyblock's 'void-teleport' disabled"))
+                Stream.of(new Status(statusType, "SuperiorSkyblock's 'void-teleport' disabled"))
         ).toArray(Status[]::new);
     }
 
