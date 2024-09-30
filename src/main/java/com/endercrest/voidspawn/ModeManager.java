@@ -45,6 +45,10 @@ public class ModeManager {
                 plugin.log("&eSuperiorSkyblock2 found, initializing support.");
                 addMode("island", new SuperiorSkyblockIslandMode());
                 plugin.log("&eSuperiorSkyblock2 support initialized.");
+            } else if (IridiumSkyblockIslandMode.isModeEnabled()) {
+                plugin.log("&eIridiumSkyblock found, initializing support.");
+                addMode("island", new IridiumSkyblockIslandMode());
+                plugin.log("&eIridiumSkyblock support initialized.");
             } else {
                 plugin.log("&eNo SkyBlock plugins found, disabling island mode support.");
                 addMode("island", new DisabledIslandMode());

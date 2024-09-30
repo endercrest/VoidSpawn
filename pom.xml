@@ -25,6 +25,11 @@
             <version>2024.3</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.iridium</groupId>
+            <artifactId>IridiumSkyblock</artifactId>
+            <version>4.0.9.1</version>
+        </dependency>
 <!--        uSkyblock Maven is offline: https://github.com/uskyblock/uSkyBlock/issues/57 -->
 <!--        <dependency>-->
 <!--            <groupId>com.github.rlf</groupId>-->
@@ -68,6 +73,10 @@
         <repository>
             <id>bg-repo</id>
             <url>https://repo.bg-software.com/repository/api/</url>
+        </repository>
+        <repository>
+            <id>iridiumdevelopment</id>
+            <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
         </repository>
 <!--        uSkyblock Maven is offline: https://github.com/uskyblock/uSkyBlock/issues/57 -->
 <!--        <repository>-->
