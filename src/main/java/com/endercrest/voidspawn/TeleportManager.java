@@ -1,9 +1,10 @@
 package com.endercrest.voidspawn;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import java.util.UUID;
 public class TeleportManager {
     private static TeleportManager instance = new TeleportManager();
     private VoidSpawn plugin;
-    private HashMap<UUID, Location> playerLocation;
     private List<UUID> playerToggle;
+    private TouchUtil touchUtil;
 
     public static TeleportManager getInstance() {
         return instance;
@@ -23,8 +24,8 @@ public class TeleportManager {
 
     public void setUp(VoidSpawn plugin) {
         this.plugin = plugin;
-        playerLocation = new HashMap<>();
         playerToggle = new ArrayList<>();
+        touchUtil = new TouchUtil(plugin);
     }
 
     /**
@@ -52,16 +53,16 @@ public class TeleportManager {
     /**
      * Update the players location for touch spawn mode.
      *
-     * @param uuid The UUID of the player.
+     * @param player The player.
      * @param loc  The location of the player.
      */
-    public void setPlayerLocation(UUID uuid, Location loc) {
-        playerLocation.put(uuid, loc);
+    public void setPlayerLocation(Player player, Location loc) {
+        touchUtil.setLocation(player, loc);
     }
 
     @Nullable
-    public Location getPlayerLocation(UUID uuid) {
-        return playerLocation.get(uuid);
+    public Location getPlayerLocation(Player player) {
+        return touchUtil.getLocation(player);
     }
 
     /**
@@ -71,12 +72,9 @@ public class TeleportManager {
      * @return Whether the teleport was successful.
      */
     public TeleportResult teleportTouch(Player p) {
-        UUID uuid = p.getUniqueId();
-        Location loc;
-        if (playerLocation.get(uuid) == null) {
+        Location loc = touchUtil.getLocation(p);
+        if (loc == null) {
             loc = p.getLocation();
-        } else {
-            loc = playerLocation.get(uuid);
         }
         Location below = new Location(loc.getWorld(), loc.getX(), loc.getY() - 1, loc.getZ());
         if (below.getBlock().getType().equals(Material.AIR)) {
@@ -154,7 +152,51 @@ public class TeleportManager {
      */
     public void removePlayer(UUID uuid) {
         playerToggle.remove(uuid);
-        playerLocation.remove(uuid);
+    }
+
+    /** Utility useful for reading and writing touch location onto the player entity */
+    private static class TouchUtil {
+        private NamespacedKey worldUidKey;
+        private NamespacedKey xKey;
+        private NamespacedKey yKey;
+        private NamespacedKey zKey;
+
+        public TouchUtil(VoidSpawn plugin) {
+            this.worldUidKey = new NamespacedKey(plugin, "touchWorldUid");
+            this.xKey = new NamespacedKey(plugin, "touchX");
+            this.yKey = new NamespacedKey(plugin, "touchY");
+            this.zKey = new NamespacedKey(plugin, "touchZ");
+        }
+
+        public void setLocation(@NotNull Player player, @NotNull Location location) {
+            PersistentDataContainer container = player.getPersistentDataContainer();
+
+            container.set(worldUidKey, PersistentDataType.STRING, location.getWorld().getUID().toString());
+            container.set(xKey, PersistentDataType.DOUBLE, location.getX());
+            container.set(yKey, PersistentDataType.DOUBLE, location.getY());
+            container.set(zKey, PersistentDataType.DOUBLE, location.getZ());
+        }
+
+        @Nullable
+        public Location getLocation(Player player) {
+            PersistentDataContainer container = player.getPersistentDataContainer();
+
+            String worldUid = container.get(worldUidKey, PersistentDataType.STRING);
+            Double locX = container.get(xKey, PersistentDataType.DOUBLE);
+            Double locY = container.get(yKey, PersistentDataType.DOUBLE);
+            Double locZ = container.get(zKey, PersistentDataType.DOUBLE);
+
+            if (worldUid == null || locX == null || locY == null || locZ == null) {
+                return null;
+            }
+
+            World world = Bukkit.getWorld(UUID.fromString(worldUid));
+            if (world == null) {
+                return null;
+            }
+
+            return new Location(world, locX, locY, locZ);
+        }
     }
 
 }

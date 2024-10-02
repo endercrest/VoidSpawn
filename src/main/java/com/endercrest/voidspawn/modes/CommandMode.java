@@ -24,7 +24,7 @@ public class CommandMode extends BaseMode {
 
     @Override
     public TeleportResult onActivate(Player player, String worldName) {
-        Location touch = TeleportManager.getInstance().getPlayerLocation(player.getUniqueId());
+        Location touch = TeleportManager.getInstance().getPlayerLocation(player);
         World world = Bukkit.getWorld(worldName);
         if (world == null) {
             return TeleportResult.INVALID_WORLD;
