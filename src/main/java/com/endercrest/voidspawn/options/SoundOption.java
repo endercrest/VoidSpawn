@@ -5,11 +5,24 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class SoundOption extends BaseOption<Sound> {
-    private static final List<String> sounds = Collections.unmodifiableList(Arrays.stream(Sound.values()).map(Sound::name).collect(Collectors.toList()));
+    private static final List<String> sounds = new ArrayList<>();
+
+    static {
+        try {
+            // Use reflection to get all available sounds
+            for (Sound sound : Sound.class.getEnumConstants()) {
+                sounds.add(sound.name());
+            }
+        } catch (Exception e) {
+            System.err.println("Error initializing sounds: " + e.getMessage());
+        }
+    }
 
     public SoundOption(OptionIdentifier<Sound> identifier) {
         super(identifier);
@@ -18,12 +31,10 @@ public class SoundOption extends BaseOption<Sound> {
     @Override
     public Optional<Sound> getLoadedValue(@NotNull World world) {
         String value = ConfigManager.getInstance().getOption(world.getName(), getIdentifier());
-        if (value == null)
-            return Optional.empty();
+        if (value == null) return Optional.empty();
 
         try {
-            Sound sound = Sound.valueOf(value.toUpperCase());
-            return Optional.of(sound);
+            return Optional.of(Sound.valueOf(value.toUpperCase()));
         } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
@@ -31,12 +42,10 @@ public class SoundOption extends BaseOption<Sound> {
 
     @Override
     public void setValue(@NotNull World world, String value) {
-        try {
-            Sound.valueOf(value);
-            super.setValue(world, value);
-        } catch (IllegalArgumentException e) {
+        if (!sounds.contains(value.toUpperCase())) {
             throw new IllegalArgumentException(value + " is not a valid sound!");
         }
+        super.setValue(world, value);
     }
 
     @Override
@@ -46,6 +55,6 @@ public class SoundOption extends BaseOption<Sound> {
 
     @Override
     public List<String> getOptions() {
-        return sounds;
+        return Collections.unmodifiableList(sounds);
     }
 }
