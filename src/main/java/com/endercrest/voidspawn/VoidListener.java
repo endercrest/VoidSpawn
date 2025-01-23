@@ -151,9 +151,9 @@ public class VoidListener implements Listener {
     }
 
     private void activateSound(Mode mode, Player player, World world) {
-        Option<Sound> soundOption = mode.getOption(BaseMode.OPTION_SOUND);
+        Option<String> soundOption = mode.getOption(BaseMode.OPTION_SOUND);
 
-        Optional<Sound> sound = soundOption.getValue(world);
+        Optional<String> sound = soundOption.getValue(world);
         if (sound.isPresent()) {
             Option<Float> volumeOption = mode.getOption(BaseMode.OPTION_SOUND_VOLUME);
             Option<Float> pitchOption = mode.getOption(BaseMode.OPTION_SOUND_PITCH);

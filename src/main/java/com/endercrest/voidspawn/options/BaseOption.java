@@ -32,11 +32,6 @@ public abstract class BaseOption<T> implements Option<T> {
 
     @Override
     public void setValue(@NotNull World world, String value) {
-        List<String> options = getOptions();
-        if (value != null && options != null && !options.contains(value)) {
-            throw new IllegalArgumentException("Invalid value!");
-        }
-
         ConfigManager.getInstance().setOption(world.getName(), getIdentifier().getName(), value);
     }
 

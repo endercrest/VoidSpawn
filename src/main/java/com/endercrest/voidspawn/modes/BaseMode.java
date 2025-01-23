@@ -5,7 +5,7 @@ import com.endercrest.voidspawn.options.container.BasicOptionContainer;
 import org.bukkit.Sound;
 
 public abstract class BaseMode extends BasicOptionContainer implements Mode {
-    public static final OptionIdentifier<Sound> OPTION_SOUND = new OptionIdentifier<>(Sound.class, "sound", "The sound played when detected in void");
+    public static final OptionIdentifier<String> OPTION_SOUND = new OptionIdentifier<>(String.class, "sound", "The sound played when detected in void");
     public static final OptionIdentifier<Float> OPTION_SOUND_VOLUME = new OptionIdentifier<>(Float.class, "sound_volume", "The sound volume");
     public static final OptionIdentifier<Float> OPTION_SOUND_PITCH = new OptionIdentifier<>(Float.class, "sound_pitch", "The sound pitch");
     public static final OptionIdentifier<Boolean> OPTION_HYBRID = new OptionIdentifier<>(Boolean.class, "hybrid", "Whether to run in hybrid mode (mode and command)");

@@ -115,8 +115,16 @@ public class OptionCommand implements SubCommand {
 
         if (option.getOptions() != null)
             return option.getOptions().stream()
-                    .filter(val -> val.contains(String.join(" ", Arrays.copyOfRange(args, 2, args.length))))
+                    .filter(val -> filterOption(val, String.join(" ", Arrays.copyOfRange(args, 2, args.length))))
                     .collect(Collectors.toList());
         return Collections.singletonList("<value>");
+    }
+
+    private boolean filterOption(String option, String search) {
+        if (option.startsWith("<") && option.endsWith(">")) {
+            return true;
+        }
+
+        return option.contains(search);
     }
 }
